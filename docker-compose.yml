@@ -23,13 +23,11 @@ services:
     container_name: agendamentoseconsultas-app-container
     image: agendamentoseconsultas-app-image
     build:
-      context: ./agendamentoseconsultas-microservice
+      context: ./agendamentoseconsultas
       dockerfile: Dockerfile
     restart: always
     depends_on:
       agendamentoseconsultas-postgres:
-        condition: service_healthy
-      rabbitmq:
         condition: service_healthy
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://agendamentoseconsultas-postgres:5432/agendamentoseconsultas-db
