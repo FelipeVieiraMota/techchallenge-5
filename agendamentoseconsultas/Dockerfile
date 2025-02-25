@@ -16,10 +16,10 @@ WORKDIR /app
 RUN mvn clean package -DskipTests
 
 # O arquivo JAR gerado na fase de build é copiado para o diretório /app e o container
-# é configurado para expor a porta 8080.
+# é configurado para expor a porta 9000.
 FROM eclipse-temurin:17-jre
 RUN groupadd --system spring && useradd --system --gid spring --create-home spring
 USER spring:spring
 COPY --from=build /app/target/*.jar /app/app.jar
-EXPOSE 8080
+EXPOSE 9000
 ENTRYPOINT ["java","-jar","/app/app.jar"]
