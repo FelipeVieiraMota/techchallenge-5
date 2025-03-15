@@ -2,7 +2,8 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <annotationProcessing>
-      <profile name="Annotation profile for API de Notificacoes (notificacao-service)" enabled="true">
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Annotation profile for autorizacaoeusuarios" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
@@ -10,8 +11,8 @@
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/unknown/lombok-unknown.jar" />
         </processorPath>
         <module name="agendamentoseconsultas" />
-        <module name="notificacoes" />
         <module name="autorizacaoeusuarios" />
+        <module name="notificacoes" />
       </profile>
     </annotationProcessing>
   </component>
