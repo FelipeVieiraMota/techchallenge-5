@@ -1,5 +1,6 @@
 package br.com.agendafacilsus.autorizacaoeusuarios.service;
 
+import br.com.agendafacilsus.autorizacaoeusuarios.domains.entity.User;
 import br.com.agendafacilsus.autorizacaoeusuarios.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,5 +14,9 @@ public class UserService {
 
     public UserDetails findByLogin(String username) {
         return repository.findByLogin(username);
+    }
+
+    public User save(User newUser) {
+        return repository.save(newUser);
     }
 }

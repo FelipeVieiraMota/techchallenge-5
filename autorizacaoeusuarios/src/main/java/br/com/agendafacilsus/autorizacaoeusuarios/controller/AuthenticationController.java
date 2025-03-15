@@ -3,9 +3,10 @@ package br.com.agendafacilsus.autorizacaoeusuarios.controller;
 
 import br.com.agendafacilsus.autorizacaoeusuarios.domains.dto.AuthenticationDto;
 import br.com.agendafacilsus.autorizacaoeusuarios.domains.dto.LoginResponseDto;
+import br.com.agendafacilsus.autorizacaoeusuarios.domains.dto.RegisterDto;
 import br.com.agendafacilsus.autorizacaoeusuarios.domains.entity.User;
 import br.com.agendafacilsus.autorizacaoeusuarios.security.TokenService;
-import br.com.agendafacilsus.autorizacaoeusuarios.service.UserService;
+import br.com.agendafacilsus.autorizacaoeusuarios.service.AuthorizationService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -22,17 +23,30 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthenticationController {
 
     private final AuthenticationManager authenticationManager;
-    private final UserService repository;
     private final TokenService tokenService;
+    private final AuthorizationService authorizationService;
 
     @PostMapping("/login")
     public ResponseEntity<LoginResponseDto> login(@RequestBody @Valid AuthenticationDto data){
+
         var usernamePassword = new UsernamePasswordAuthenticationToken(data.login(), data.password());
         var auth = this.authenticationManager.authenticate(usernamePassword);
 
         var token = tokenService.generateToken((User) auth.getPrincipal());
 
         return ResponseEntity.ok(new LoginResponseDto(token));
+    }
+
+    @PostMapping("/register")
+    public ResponseEntity<User> register(@RequestBody @Valid RegisterDto data){
+
+        var newUser = authorizationService.register(data);
+
+        if( newUser != null ) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        return ResponseEntity.ok().body(newUser);
     }
 
 }

@@ -1,10 +1,15 @@
 package br.com.agendafacilsus.autorizacaoeusuarios.service;
 
+import br.com.agendafacilsus.autorizacaoeusuarios.domains.dto.RegisterDto;
+import br.com.agendafacilsus.autorizacaoeusuarios.domains.entity.User;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @Service
 @RequiredArgsConstructor
@@ -15,5 +20,20 @@ public class AuthorizationService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return service.findByLogin(username);
+    }
+
+    public User register(@RequestBody @Valid RegisterDto data) {
+
+        final var user = service.findByLogin(data.login());
+
+        if( user != null ) {
+            // It is not a good practice to show that a user already exists,
+            // instead we are returning a null reference.
+            return null;
+        }
+
+        final String encryptedPassword = new BCryptPasswordEncoder().encode(data.password());
+        final User newUser = new User(data.login(), encryptedPassword, data.role());
+        return service.save(newUser);
     }
 }
