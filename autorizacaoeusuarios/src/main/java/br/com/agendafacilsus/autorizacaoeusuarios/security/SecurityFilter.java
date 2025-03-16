@@ -1,7 +1,5 @@
 package br.com.agendafacilsus.autorizacaoeusuarios.security;
 
-
-import br.com.agendafacilsus.autorizacaoeusuarios.repository.UserRepository;
 import br.com.agendafacilsus.autorizacaoeusuarios.service.UserService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -22,6 +20,7 @@ public class SecurityFilter extends OncePerRequestFilter {
     private final TokenService tokenService;
     private final UserService service;
 
+    @SuppressWarnings("null")
     @Override
     protected void doFilterInternal(
         final HttpServletRequest request,
