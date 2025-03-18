@@ -20,7 +20,6 @@ public class SecurityFilter extends OncePerRequestFilter {
     private final TokenService tokenService;
     private final UserService service;
 
-    @SuppressWarnings("null")
     @Override
     protected void doFilterInternal(
         final HttpServletRequest request,
