@@ -28,25 +28,15 @@ public class AuthenticationController {
 
     @PostMapping("/login")
     public ResponseEntity<LoginResponseDto> login(@RequestBody @Valid AuthenticationDto data){
-
         var usernamePassword = new UsernamePasswordAuthenticationToken(data.login(), data.password());
         var auth = this.authenticationManager.authenticate(usernamePassword);
-
         var token = tokenService.generateToken((User) auth.getPrincipal());
-
         return ResponseEntity.ok(new LoginResponseDto(token));
     }
 
     @PostMapping("/register")
     public ResponseEntity<User> register(@RequestBody @Valid RegisterDto data){
-
         var newUser = authorizationService.register(data);
-
-        if( newUser != null ) {
-            return ResponseEntity.badRequest().build();
-        }
-
         return ResponseEntity.ok().body(newUser);
     }
-
 }

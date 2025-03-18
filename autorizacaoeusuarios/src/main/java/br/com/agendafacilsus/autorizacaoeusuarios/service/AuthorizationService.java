@@ -1,5 +1,6 @@
 package br.com.agendafacilsus.autorizacaoeusuarios.service;
 
+import br.com.agendafacilsus.autorizacaoeusuarios.controller.exceptions.UserAlreadyExistsException;
 import br.com.agendafacilsus.autorizacaoeusuarios.domains.dto.RegisterDto;
 import br.com.agendafacilsus.autorizacaoeusuarios.domains.entity.User;
 import jakarta.validation.Valid;
@@ -27,9 +28,7 @@ public class AuthorizationService implements UserDetailsService {
         final var user = service.findByLogin(data.login());
 
         if( user != null ) {
-            // It is not a good practice to show that a user already exists,
-            // instead we are returning a null reference.
-            return null;
+            throw new UserAlreadyExistsException();
         }
 
         final String encryptedPassword = new BCryptPasswordEncoder().encode(data.password());
