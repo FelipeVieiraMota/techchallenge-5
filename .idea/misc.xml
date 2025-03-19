@@ -4,11 +4,11 @@
   <component name="MavenProjectsManager">
     <option name="originalFiles">
       <list>
-        <option value="$PROJECT_DIR$/notificacoes/pom.xml" />
         <option value="$PROJECT_DIR$/autorizacaoeusuarios/pom.xml" />
         <option value="$PROJECT_DIR$/agendamentoseconsultas/pom.xml" />
         <option value="$PROJECT_DIR$/gateway/pom.xml" />
         <option value="$PROJECT_DIR$/rabbitmq/pom.xml" />
+        <option value="$PROJECT_DIR$/notificacoes/pom.xml" />
       </list>
     </option>
   </component>

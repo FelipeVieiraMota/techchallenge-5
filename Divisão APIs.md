@@ -14,7 +14,7 @@ Para tornar o sistema escalável, seguro e modular, dividimos a API em **múltip
 |---------|-----------------|-------------|
 | `auth-service` | Cadastro e autenticação | Node.js/Django, PostgreSQL, JWT |
 | `agendamento-service` | Gestão de consultas | FastAPI/Express, PostgreSQL, RabbitMQ |
-| `notificacao-service` | Envio de notificações | NestJS/Celery, Redis, Twilio |
+| `notificacaoDTO-service` | Envio de notificações | NestJS/Celery, Redis, Twilio |
 | `relatorios-service` *(opcional)* | Análises e relatórios | Flask/FastAPI, ElasticSearch |
 
 ---
@@ -45,7 +45,7 @@ Para tornar o sistema escalável, seguro e modular, dividimos a API em **múltip
 
 ---
 
-## **3️⃣ API de Notificações (`notificacao-service`)**
+## **3️⃣ API de Notificações (`notificacaoDTO-service`)**
 🔔 **Responsável por envios de mensagens para pacientes e médicos**  
 📂 **Banco de Dados:** `notificacoes_db`  
 
@@ -72,11 +72,11 @@ Para tornar o sistema escalável, seguro e modular, dividimos a API em **múltip
 Para conectar os microsserviços, usamos **mensageria (RabbitMQ, Kafka)** ou **requisições HTTP internas**. Algumas sugestões:
 - `auth-service` autentica usuários e retorna tokens JWT.
 - `agendamento-service` valida JWT com `auth-service`.
-- `notificacao-service` escuta eventos de agendamentos para enviar mensagens.
+- `notificacaoDTO-service` escuta eventos de agendamentos para enviar mensagens.
 
 > 🔥 **Exemplo de Comunicação:**  
 1️⃣ **Paciente agenda consulta** → `agendamento-service` grava no DB.  
-2️⃣ **Notificação é enviada** → `notificacao-service` recebe evento via RabbitMQ e envia e-mail/SMS.  
+2️⃣ **Notificação é enviada** → `notificacaoDTO-service` recebe evento via RabbitMQ e envia e-mail/SMS.  
 3️⃣ **Admin consulta relatório** → `relatorios-service` agrega estatísticas.  
 
 ---

@@ -1,0 +1,14 @@
+spring:
+  cloud:
+    stream:
+      default-binder: rabbit
+      bindings:
+        enviar-out-0:
+          destination: notificacao.exchange
+          content-type: application/json
+          producer:
+            exchange-type: fanout
+        receber-in-0:
+          destination: notificacao.exchange
+          consumer:
+            exchange-type: fanout
