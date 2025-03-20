@@ -1,8 +1,8 @@
-package com.notificacoes.usecase.processador.modosenvio;
+package br.com.notificacoes.usecase.processador.modosenvio;
 
-import com.notificacoes.controller.NotificacaoDTO;
-import com.notificacoes.enums.TipoNotificacao;
-import com.notificacoes.usecase.processador.ProcessarNotificacao;
+import br.com.notificacoes.usecase.processador.ProcessarNotificacao;
+import br.com.notificacoes.controller.NotificacaoDTO;
+import br.com.notificacoes.enums.TipoNotificacao;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;

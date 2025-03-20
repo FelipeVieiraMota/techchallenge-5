@@ -1,6 +1,6 @@
-package com.notificacoes.controller;
+package br.com.notificacoes.controller;
 
-import com.notificacoes.usecase.EnviarNotificacaoUseCase;
+import br.com.notificacoes.usecase.EnviarNotificacaoUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

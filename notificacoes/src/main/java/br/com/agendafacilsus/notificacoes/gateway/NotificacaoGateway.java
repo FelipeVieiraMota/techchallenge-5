@@ -1,6 +1,6 @@
-package com.notificacoes.gateway;
+package br.com.notificacoes.gateway;
 
-import com.notificacoes.controller.NotificacaoDTO;
+import br.com.notificacoes.controller.NotificacaoDTO;
 
 public interface NotificacaoGateway {
 

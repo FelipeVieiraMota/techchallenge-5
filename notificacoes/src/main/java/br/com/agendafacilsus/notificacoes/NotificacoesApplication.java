@@ -1,4 +1,4 @@
-package com.notificacoes;
+package br.com.notificacoes;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

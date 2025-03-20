@@ -1,4 +1,4 @@
-package com.notificacoes.enums;
+package br.com.notificacoes.enums;
 
 public enum TipoNotificacao {
     EMAIL,

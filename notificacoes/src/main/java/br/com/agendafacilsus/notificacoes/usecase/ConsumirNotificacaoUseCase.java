@@ -1,7 +1,7 @@
-package com.notificacoes.usecase;
+package br.com.notificacoes.usecase;
 
-import com.notificacoes.controller.NotificacaoDTO;
-import com.notificacoes.usecase.processador.ProcessarNotificacaoImpl;
+import br.com.notificacoes.controller.NotificacaoDTO;
+import br.com.notificacoes.usecase.processador.ProcessarNotificacaoImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
