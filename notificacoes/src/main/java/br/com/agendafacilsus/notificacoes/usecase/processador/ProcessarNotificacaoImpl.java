@@ -1,7 +1,7 @@
-package br.com.notificacoes.usecase.processador;
+package br.com.agendafacilsus.notificacoes.usecase.processador;
 
-import br.com.notificacoes.controller.NotificacaoDTO;
-import br.com.notificacoes.enums.TipoNotificacao;
+import br.com.agendafacilsus.notificacoes.controller.NotificacaoDTO;
+import br.com.agendafacilsus.notificacoes.enums.TipoNotificacao;
 import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

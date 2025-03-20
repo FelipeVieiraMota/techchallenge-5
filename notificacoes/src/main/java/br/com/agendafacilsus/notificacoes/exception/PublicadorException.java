@@ -1,4 +1,4 @@
-package br.com.notificacoes.exception;
+package br.com.agendafacilsus.notificacoes.exception;
 
 public class PublicadorException extends RuntimeException {
     public PublicadorException(String message) {

@@ -1,4 +1,4 @@
-package br.com.notificacoes;
+package br.com.agendafacilsus.notificacoes;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

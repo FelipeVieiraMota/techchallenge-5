@@ -1,7 +1,7 @@
-package br.com.notificacoes.gateway;
+package br.com.agendafacilsus.notificacoes.gateway;
 
-import br.com.notificacoes.controller.NotificacaoDTO;
-import br.com.notificacoes.exception.PublicadorException;
+import br.com.agendafacilsus.notificacoes.controller.NotificacaoDTO;
+import br.com.agendafacilsus.notificacoes.exception.PublicadorException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;

@@ -1,7 +1,7 @@
-package br.com.notificacoes.usecase;
+package br.com.agendafacilsus.notificacoes.usecase;
 
-import br.com.notificacoes.controller.NotificacaoDTO;
-import br.com.notificacoes.gateway.NotificacaoGateway;
+import br.com.agendafacilsus.notificacoes.controller.NotificacaoDTO;
+import br.com.agendafacilsus.notificacoes.gateway.NotificacaoGateway;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

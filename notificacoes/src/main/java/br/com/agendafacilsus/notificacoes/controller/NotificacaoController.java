@@ -1,6 +1,6 @@
-package br.com.notificacoes.controller;
+package br.com.agendafacilsus.notificacoes.controller;
 
-import br.com.notificacoes.usecase.EnviarNotificacaoUseCase;
+import br.com.agendafacilsus.notificacoes.usecase.EnviarNotificacaoUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

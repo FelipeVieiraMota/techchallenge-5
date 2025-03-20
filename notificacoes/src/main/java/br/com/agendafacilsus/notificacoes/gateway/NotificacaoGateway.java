@@ -1,6 +1,6 @@
-package br.com.notificacoes.gateway;
+package br.com.agendafacilsus.notificacoes.gateway;
 
-import br.com.notificacoes.controller.NotificacaoDTO;
+import br.com.agendafacilsus.notificacoes.controller.NotificacaoDTO;
 
 public interface NotificacaoGateway {
 

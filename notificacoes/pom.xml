@@ -11,9 +11,9 @@
 		<relativePath/>
 	</parent>
 
-	<groupId>com.notificacoes</groupId>
+	<groupId>br.com.agendafacilsus</groupId>
 	<artifactId>notificacoes</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<name>notificacoes</name>
 	<description>notificacoes</description>
 
@@ -83,11 +83,6 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.8.1</version>
-				<configuration>
-					<source>${java.version}</source>
-					<target>${java.version}</target>
-				</configuration>
 			</plugin>
 
 			<plugin>

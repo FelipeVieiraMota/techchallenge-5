@@ -7,6 +7,7 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="agendamentoseconsultas" />
         <module name="gateway" />
         <module name="notificacoes" />
       </profile>
@@ -19,7 +20,6 @@
           <entry name="$MAVEN_REPOSITORY$/org/springframework/boot/spring-boot-configuration-processor/unknown/spring-boot-configuration-processor-unknown.jar" />
         </processorPath>
         <module name="jwt-security-library" />
-        <module name="agendamentoseconsultas" />
         <module name="autorizacaoeusuarios" />
       </profile>
     </annotationProcessing>
