@@ -7,6 +7,8 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="gateway" />
+        <module name="notificacoes" />
       </profile>
       <profile name="Annotation profile for jwt-security-library" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
@@ -15,33 +17,24 @@
         <processorPath useClasspath="false">
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.32/lombok-1.18.32.jar" />
           <entry name="$MAVEN_REPOSITORY$/org/springframework/boot/spring-boot-configuration-processor/unknown/spring-boot-configuration-processor-unknown.jar" />
-          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.32/lombok-1.18.32.jar" />
-          <entry name="$MAVEN_REPOSITORY$/org/springframework/boot/spring-boot-configuration-processor/unknown/spring-boot-configuration-processor-unknown.jar" />
         </processorPath>
         <module name="jwt-security-library" />
-        <module name="autorizacaoeusuarios" />
-      </profile>
-      <profile name="Annotation profile for API de Notificacoes (notificacao-service)" enabled="true">
-        <sourceOutputDir name="target/generated-sources/annotations" />
-        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
-        <outputRelativeToContentRoot value="true" />
-        <processorPath useClasspath="false">
-          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/unknown/lombok-unknown.jar" />
-        </processorPath>
         <module name="agendamentoseconsultas" />
-        <module name="notificacoes" />
+        <module name="autorizacaoeusuarios" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="api-for-tests" target="17" />
+      <module name="notificacao" target="17" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="agendamentoseconsultas" options="-parameters" />
-      <module name="api-for-tests" options="-parameters" />
       <module name="autorizacaoeusuarios" options="-parameters" />
+      <module name="gateway" options="-parameters" />
       <module name="jwt-security-library" options="-parameters" />
+      <module name="notificacao" options="-parameters" />
       <module name="notificacoes" options="-parameters" />
     </option>
   </component>

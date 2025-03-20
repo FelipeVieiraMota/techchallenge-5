@@ -1,13 +1,13 @@
-package br.com.agendafacilsus.notificacoes;
+package com.notificacoes;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class Application {
+public class NotificacoesApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(Application.class, args);
+		SpringApplication.run(NotificacoesApplication.class, args);
 	}
 
 }
