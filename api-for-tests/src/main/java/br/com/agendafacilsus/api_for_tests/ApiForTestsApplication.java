@@ -1,13 +1,13 @@
-package br.com.agendafacilsus.jwt_security_library;
+package br.com.agendafacilsus.api_for_tests;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class JwtSecurityLibraryApplication {
+public class ApiForTestsApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(JwtSecurityLibraryApplication.class, args);
+		SpringApplication.run(ApiForTestsApplication.class, args);
 	}
 
 }
