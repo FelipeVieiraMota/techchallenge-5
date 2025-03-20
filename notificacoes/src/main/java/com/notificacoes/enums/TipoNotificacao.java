@@ -1,4 +1,4 @@
-package com.notificacoes.domain.entidade;
+package com.notificacoes.enums;
 
 public enum TipoNotificacao {
     EMAIL,

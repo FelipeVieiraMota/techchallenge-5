@@ -1,7 +1,22 @@
 package com.notificacoes.usecase;
 
-import com.notificacoes.domain.entidade.NotificacaoDTO;
+import com.notificacoes.controller.NotificacaoDTO;
+import com.notificacoes.gateway.NotificacaoGateway;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
-public interface EnviarNotificacaoUseCase {
-    void enviar(NotificacaoDTO notificacaoDTO);
+@Service
+@RequiredArgsConstructor
+public class EnviarNotificacaoUseCase {
+
+    private final NotificacaoGateway notificacaoGateway;
+
+
+    public void enviar(NotificacaoDTO notificacaoDTO) {
+        notificacaoGateway.enviar(notificacaoDTO);
+    }
+
+    public int getTotalNotificacoesEnviadas(String queueName) {
+        return notificacaoGateway.getTotalNotificacoesEnviadas(queueName);
+    }
 }
