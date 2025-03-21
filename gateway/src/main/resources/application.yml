@@ -1,0 +1,25 @@
+
+server:
+  port: 9999
+
+spring:
+  application:
+    name: gateway
+  cloud:
+    gateway:
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedMethods: "*"
+            allowedHeaders: "*"
+      routes:
+        - id: authentication
+          uri: http://localhost:9000
+          predicates:
+            - Path=/auth/**
+
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Methods Access-Control-Allow-Headers RETAIN_FIRST
+        - CustomPreRequestFilter
+
