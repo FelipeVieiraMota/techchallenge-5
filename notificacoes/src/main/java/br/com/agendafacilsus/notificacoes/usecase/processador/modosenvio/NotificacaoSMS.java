@@ -1,8 +1,8 @@
-package com.notificacoes.usecase.processador.modosenvio;
+package br.com.agendafacilsus.notificacoes.usecase.processador.modosenvio;
 
-import com.notificacoes.controller.NotificacaoDTO;
-import com.notificacoes.enums.TipoNotificacao;
-import com.notificacoes.usecase.processador.ProcessarNotificacao;
+import br.com.agendafacilsus.notificacoes.controller.NotificacaoDTO;
+import br.com.agendafacilsus.notificacoes.enums.TipoNotificacao;
+import br.com.agendafacilsus.notificacoes.usecase.processador.ProcessarNotificacao;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;
