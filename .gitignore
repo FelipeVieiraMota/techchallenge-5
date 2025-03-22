@@ -1,24 +1,18 @@
-HELP.md
+# Ignorar diretórios e arquivos do Maven
 target/
-!.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
 
-# IntelliJ project files
+# Ignorar arquivos de configuração do IntelliJ IDEA e VS Code
 .idea/
-*.iml
-out/
-gen/
-
-# VisualStudioCode template
 .vscode/
-.history/
-*.vsix
 
-# Java template
+# Ignorar arquivos compilados do Java
 *.class
 *.log
 .mtj.tmp/
+
+# Ignorar arquivos empacotados
 *.jar
 *.war
 *.nar
@@ -26,39 +20,3 @@ gen/
 *.zip
 *.tar.gz
 *.rar
-hs_err_pid*
-replay_pid*
-
-# Windows template
-Thumbs.db
-Thumbs.db:encryptable
-ehthumbs.db
-ehthumbs_vista.db
-*.stackdump
-[Dd]esktop.ini
-$RECYCLE.BIN/
-*.cab
-*.msi
-*.msix
-*.msm
-*.msp
-*.lnk
-
-# macOS template
-.DS_Store
-.AppleDouble
-.LSOverride
-Icon
-._*
-.DocumentRevisions-V100
-.fseventsd
-.Spotlight-V100
-.TemporaryItems
-.Trashes
-.VolumeIcon.icns
-.com.apple.timemachine.donotpresent
-.AppleDB
-.AppleDesktop
-Network Trash Folder
-Temporary Items
-.apdisk

@@ -14,13 +14,15 @@ public class ServiceTest {
 
     public void test() {
 
-        final var dto = new NotificacaoDTO(
-            "Joao da Silva",
-            "Test",
-            "Test",
-            TipoNotificacao.EMAIL
-        );
+        for (int i = 1; i <= 2; i++) {
+            final var dto = new NotificacaoDTO(
+                    "Lucas Alves",
+                    "lcalves012@gmail.com",
+                    i + " mensagem enviada do microserviço de agendamento.",
+                    TipoNotificacao.EMAIL
+            );
 
-        notificacaoGateway.enviar(dto);
+            notificacaoGateway.enviar(dto);
+        }
     }
 }
