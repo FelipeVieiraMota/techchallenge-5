@@ -57,11 +57,22 @@ public class CustomPreRequestFilter extends AbstractGatewayFilterFactory<CustomP
                     .toEntity(Boolean.class)
                     .flatMap(responseEntity -> checkAnswer(exchange, chain, responseEntity))
                     .onErrorResume(error -> {
-                        System.out.println(error.getMessage());
-                        exchange.getResponse().setStatusCode(HttpStatus.INTERNAL_SERVER_ERROR);
+                        var statusCode = extractHttpStatusCode(error);
+                        exchange.getResponse().setStatusCode(statusCode);
                         return exchange.getResponse().setComplete();
                     });
         };
+    }
+
+    private HttpStatus extractHttpStatusCode(Throwable error) {
+
+        var statusCode = HttpStatus.INTERNAL_SERVER_ERROR;
+
+        if (error instanceof org.springframework.web.reactive.function.client.WebClientResponseException exception) {
+            statusCode = HttpStatus.valueOf(exception.getStatusCode().value());
+        }
+
+        return statusCode;
     }
 
     private Mono<Void> checkAnswer(final ServerWebExchange exchange,
