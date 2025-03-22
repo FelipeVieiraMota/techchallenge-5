@@ -1,13 +1,16 @@
 package br.com.agendafacilsus.gateway.filters;
 
+import br.com.agendafacilsus.commonlibrary.domains.dtos.TokenDto;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
+import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
-import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.server.ServerWebExchange;
+import reactor.core.publisher.Mono;
 
 import java.util.List;
 
@@ -26,44 +29,64 @@ public class CustomPreRequestFilter extends AbstractGatewayFilterFactory<CustomP
     private static final List<String> IGNORED_PATHS = List.of("/auth/login");
 
     @Override
-    public GatewayFilter apply(Config config) {
+    public GatewayFilter apply(final Config config) {
 
         return (exchange, chain) -> {
 
             final ServerHttpRequest request = exchange.getRequest();
             final String path = request.getPath().value();
 
-            // Ignore some endpoints as necessary.
             for (String ignoredPath : IGNORED_PATHS) {
                 if (path.startsWith(ignoredPath)) {
                     return chain.filter(exchange);
                 }
             }
 
-            // TODO: Adicionar o body na requisição, e validar se o token está presente antes mesmo de
-            //      chamar o endpoint.
+            final String token = checkTokenBeforeSend(request);
 
-            System.out.println(request.getHeaders());
-
+            if(token == null) {
+                exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
+                return exchange.getResponse().setComplete();
+            }
 
             return webClient.post()
                     .uri(END_POINT)
                     .headers(headers -> headers.addAll(request.getHeaders()))
+                    .bodyValue(new TokenDto(token))
                     .retrieve()
-                    .toEntity(new ParameterizedTypeReference<>() {})
-                    .flatMap(responseEntity -> {
-                        if (responseEntity.getStatusCode().is2xxSuccessful()) {
-                            return chain.filter(exchange);
-                        } else {
-                            exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
-                            return exchange.getResponse().setComplete();
-                        }
-                    })
+                    .toEntity(Boolean.class)
+                    .flatMap(responseEntity -> checkAnswer(exchange, chain, responseEntity))
                     .onErrorResume(error -> {
+                        System.out.println(error.getMessage());
                         exchange.getResponse().setStatusCode(HttpStatus.INTERNAL_SERVER_ERROR);
                         return exchange.getResponse().setComplete();
                     });
         };
+    }
+
+    private Mono<Void> checkAnswer(final ServerWebExchange exchange,
+                                   final GatewayFilterChain chain,
+                                   final ResponseEntity<Boolean> responseEntity) {
+        if (Boolean.TRUE.equals(responseEntity.getBody())) {
+            return chain.filter(exchange);
+        } else {
+            exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
+            return exchange.getResponse().setComplete();
+        }
+    }
+
+
+    private String checkTokenBeforeSend(final ServerHttpRequest request) {
+
+        var nonFilteredToken = request.getHeaders().getFirst("Authorization");
+
+        if(nonFilteredToken == null || !nonFilteredToken.contains("Bearer")) {
+            return null;
+        }
+
+        final var token = nonFilteredToken.split("Bearer")[1];
+
+        return token == null || token.isBlank() || token.isEmpty() ? null : token.trim();
     }
 
     public static class Config { }

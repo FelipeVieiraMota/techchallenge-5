@@ -1,14 +1,16 @@
 package br.com.agendafacilsus.autorizacaoeusuarios.controller;
 
 
-import br.com.agendafacilsus.autorizacaoeusuarios.domains.dto.AuthenticationDto;
-import br.com.agendafacilsus.autorizacaoeusuarios.domains.dto.LoginResponseDto;
-import br.com.agendafacilsus.autorizacaoeusuarios.domains.dto.RegisterDto;
 import br.com.agendafacilsus.autorizacaoeusuarios.domains.entity.User;
 import br.com.agendafacilsus.autorizacaoeusuarios.security.TokenService;
 import br.com.agendafacilsus.autorizacaoeusuarios.service.AuthorizationService;
+import br.com.agendafacilsus.commonlibrary.domains.dtos.AuthenticationDto;
+import br.com.agendafacilsus.commonlibrary.domains.dtos.LoginResponseDto;
+import br.com.agendafacilsus.commonlibrary.domains.dtos.RegisterDto;
+import br.com.agendafacilsus.commonlibrary.domains.dtos.TokenDto;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -16,8 +18,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import static br.com.agendafacilsus.autorizacaoeusuarios.domains.enums.UserRole.ADMIN;
 
 @RestController
 @RequestMapping("auth")
@@ -36,11 +36,14 @@ public class AuthenticationController {
         return ResponseEntity.ok(new LoginResponseDto(token));
     }
 
-    // TODO: Precisa realmente validar o token....
     @PostMapping("/validation")
-    public ResponseEntity<User> tokenValidation() {
-        var user = new User("b1a5f58e-8af5-4b67-bbdc-61c964c4507d", "admin", "$2a$10$opfcew1E18S4QyxZap7AHuO5UHgHrRCeKz4NDGdUCoJAxAd3wqP7a", ADMIN);
-        return ResponseEntity.ok().body(user);
+    public ResponseEntity<Boolean> tokenValidation(@RequestBody TokenDto data) {
+
+        if(tokenService.validateToken(data.token())) {
+            return ResponseEntity.ok(true);
+        }
+
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
     }
 
     @PostMapping("/register")

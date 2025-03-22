@@ -1,4 +1,4 @@
-package br.com.agendafacilsus.autorizacaoeusuarios.domains.enums;
+package br.com.agendafacilsus.commonlibrary.domains.enums;
 
 import lombok.Getter;
 

@@ -44,6 +44,18 @@ public class TokenService {
         }
     }
 
+    public boolean validateToken(String token) {
+        try {
+            JWT.require(Algorithm.HMAC256(secret))
+                    .withIssuer("auth-api")
+                    .build()
+                    .verify(token);
+            return true;
+        } catch (JWTVerificationException exception) {
+            return false;
+        }
+    }
+
     private Instant genExpirationDate() {
         return LocalDateTime.now().plusHours(2).toInstant(ZoneOffset.of("-03:00"));
     }

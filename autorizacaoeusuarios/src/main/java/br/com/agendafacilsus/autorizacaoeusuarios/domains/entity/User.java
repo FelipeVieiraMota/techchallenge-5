@@ -1,6 +1,6 @@
 package br.com.agendafacilsus.autorizacaoeusuarios.domains.entity;
 
-import br.com.agendafacilsus.autorizacaoeusuarios.domains.enums.UserRole;
+import br.com.agendafacilsus.commonlibrary.domains.enums.UserRole;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;

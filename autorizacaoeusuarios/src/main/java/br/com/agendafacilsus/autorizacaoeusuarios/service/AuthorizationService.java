@@ -1,8 +1,8 @@
 package br.com.agendafacilsus.autorizacaoeusuarios.service;
 
 import br.com.agendafacilsus.autorizacaoeusuarios.controller.exceptions.UserAlreadyExistsException;
-import br.com.agendafacilsus.autorizacaoeusuarios.domains.dto.RegisterDto;
 import br.com.agendafacilsus.autorizacaoeusuarios.domains.entity.User;
+import br.com.agendafacilsus.commonlibrary.domains.dtos.RegisterDto;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;

@@ -1,3 +1,3 @@
-package br.com.agendafacilsus.autorizacaoeusuarios.domains.dto;
+package br.com.agendafacilsus.commonlibrary.domains.dtos;
 
 public record AuthenticationDto(String login, String password) { }

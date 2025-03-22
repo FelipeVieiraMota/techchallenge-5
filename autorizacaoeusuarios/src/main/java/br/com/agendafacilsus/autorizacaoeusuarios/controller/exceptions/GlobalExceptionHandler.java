@@ -1,11 +1,10 @@
 package br.com.agendafacilsus.autorizacaoeusuarios.controller.exceptions;
 
+import br.com.agendafacilsus.autorizacaoeusuarios.domains.dtos.ErrorResponseDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-
-import br.com.agendafacilsus.autorizacaoeusuarios.domains.dto.ErrorResponseDto;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
