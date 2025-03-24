@@ -12,3 +12,7 @@ spring:
           destination: notificacao.exchange
           consumer:
             exchange-type: fanout
+twilio:
+    conta_sid: AC1173eb313a4cab7140cb6140ed2b0ecf
+    auth_token: 876740ff405eb8219a27bf3b4782834d
+    numero: +19497827123
