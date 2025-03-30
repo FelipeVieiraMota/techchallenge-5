@@ -78,12 +78,13 @@ public class CustomPreRequestFilter extends AbstractGatewayFilterFactory<CustomP
     private Mono<Void> checkAnswer(final ServerWebExchange exchange,
                                    final GatewayFilterChain chain,
                                    final ResponseEntity<Boolean> responseEntity) {
+
         if (Boolean.TRUE.equals(responseEntity.getBody())) {
             return chain.filter(exchange);
-        } else {
-            exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
-            return exchange.getResponse().setComplete();
         }
+
+        exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
+        return exchange.getResponse().setComplete();
     }
 
 
