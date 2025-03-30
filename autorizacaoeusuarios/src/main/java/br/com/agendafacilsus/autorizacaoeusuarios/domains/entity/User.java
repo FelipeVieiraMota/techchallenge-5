@@ -1,5 +1,6 @@
 package br.com.agendafacilsus.autorizacaoeusuarios.domains.entity;
 
+import br.com.agendafacilsus.autorizacaoeusuarios.controller.exceptions.ForbiddenException;
 import br.com.agendafacilsus.commonlibrary.domains.enums.UserRole;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -12,6 +13,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.List;
+
+import static br.com.agendafacilsus.commonlibrary.domains.enums.UserRole.*;
 
 @Table(name = "tb_users")
 @Entity(name = "tb_users")
@@ -44,14 +47,27 @@ public class User implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
 
-        if(this.role == UserRole.ADMIN) {
-            return List.of (
+        if(this.role == ADMIN) {
+            return List.of(
                 new SimpleGrantedAuthority("ROLE_ADMIN"),
-                new SimpleGrantedAuthority("ROLE_USER")
+                new SimpleGrantedAuthority("ROLE_MEDICO"),
+                new SimpleGrantedAuthority("ROLE_PACIENTE")
             );
         }
 
-        return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+        if(this.role == PACIENTE) {
+            return List.of(
+                new SimpleGrantedAuthority("ROLE_PACIENTE")
+            );
+        }
+
+        if(this.role == MEDICO) {
+            return List.of(
+                new SimpleGrantedAuthority("ROLE_MEDICO")
+            );
+        }
+
+        throw new ForbiddenException("Not Allowed.");
     }
 
     @Override
