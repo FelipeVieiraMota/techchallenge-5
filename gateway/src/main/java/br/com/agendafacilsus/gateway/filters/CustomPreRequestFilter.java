@@ -33,16 +33,16 @@ public class CustomPreRequestFilter extends AbstractGatewayFilterFactory<CustomP
 
         return (exchange, chain) -> {
 
-            final ServerHttpRequest request = exchange.getRequest();
-            final String path = request.getPath().value();
+            final var request = exchange.getRequest();
+            final var path = request.getPath().value();
 
-            for (String ignoredPath : IGNORED_PATHS) {
+            for (var ignoredPath : IGNORED_PATHS) {
                 if (path.startsWith(ignoredPath)) {
                     return chain.filter(exchange);
                 }
             }
 
-            final String token = checkTokenBeforeSend(request);
+            final var token = checkTokenBeforeSend(request);
 
             if(token == null) {
                 exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
@@ -64,7 +64,7 @@ public class CustomPreRequestFilter extends AbstractGatewayFilterFactory<CustomP
         };
     }
 
-    private HttpStatus extractHttpStatusCode(Throwable error) {
+    private HttpStatus extractHttpStatusCode(final Throwable error) {
 
         var statusCode = HttpStatus.INTERNAL_SERVER_ERROR;
 
@@ -89,7 +89,7 @@ public class CustomPreRequestFilter extends AbstractGatewayFilterFactory<CustomP
 
     private String checkTokenBeforeSend(final ServerHttpRequest request) {
 
-        var nonFilteredToken = request.getHeaders().getFirst("Authorization");
+        final var nonFilteredToken = request.getHeaders().getFirst("Authorization");
 
         if(nonFilteredToken == null || !nonFilteredToken.contains("Bearer")) {
             return null;
