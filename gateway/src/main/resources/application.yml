@@ -17,7 +17,11 @@ spring:
         - id: authentication
           uri: http://localhost:9000
           predicates:
-            - Path=/auth/**, /ping/**
+            - Path=/auth/**
+        - id: dummy-api
+          uri: http://localhost:10000
+          predicates:
+            - Path=/dummy-api/**
 
       default-filters:
         - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Methods Access-Control-Allow-Headers RETAIN_FIRST

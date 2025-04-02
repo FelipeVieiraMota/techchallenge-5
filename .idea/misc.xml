@@ -11,6 +11,7 @@
         <option value="$PROJECT_DIR$/notificacoes/pom.xml" />
         <option value="$PROJECT_DIR$/jwt-security-library/pom.xml" />
         <option value="$PROJECT_DIR$/commonlibrary/pom.xml" />
+        <option value="$PROJECT_DIR$/dummy-api/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">
