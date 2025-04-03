@@ -50,9 +50,7 @@ public class TokenService {
                 if (!isTokenExpired(claims)) {
                     final var roles = claims.get("roles", List.class);
                     final List<SimpleGrantedAuthority> authorities =
-                            roles.stream()
-                                    .map(role -> new SimpleGrantedAuthority(role.toString()))
-                                    .toList();
+                            roles.stream().map(role -> new SimpleGrantedAuthority(role.toString())).toList();
 
                     final var authentication = new UsernamePasswordAuthenticationToken(
                             claims.getSubject(),
