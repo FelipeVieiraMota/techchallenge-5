@@ -10,8 +10,11 @@
     <packaging>pom</packaging>
 
     <modules>
+        <module>commonlibrary</module>
         <module>notificacoes</module>
         <module>agendamentoseconsultas</module>
+        <module>gateway</module>
+        <module>autorizacaoeusuarios</module>
     </modules>
 
 </project>

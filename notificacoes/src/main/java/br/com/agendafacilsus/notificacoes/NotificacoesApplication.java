@@ -2,10 +2,8 @@ package br.com.agendafacilsus.notificacoes;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.ComponentScan;
 
-@SpringBootApplication
-@ComponentScan(basePackages = "br.com.agendafacilsus.notificacoes.configs")
+@SpringBootApplication(scanBasePackages = "br.com.agendafacilsus.notificacoes")
 public class NotificacoesApplication {
 
 	public static void main(String[] args) {
