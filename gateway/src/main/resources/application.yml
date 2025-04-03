@@ -14,10 +14,12 @@ spring:
             allowedMethods: "*"
             allowedHeaders: "*"
       routes:
+
         - id: authentication
           uri: http://localhost:9000
           predicates:
             - Path=/auth/**
+
         - id: dummy-api
           uri: http://localhost:10000
           predicates:
@@ -25,5 +27,3 @@ spring:
 
       default-filters:
         - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Methods Access-Control-Allow-Headers RETAIN_FIRST
-        - CustomPreRequestFilter
-

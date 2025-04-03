@@ -1,4 +1,4 @@
-package br.com.agendafacilsus.dummy_api.filter;
+package br.com.agendafacilsus.dummy_api.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,8 +14,10 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import br.com.agendafacilsus.dummy_api.filter.SecurityFilter;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -23,17 +25,19 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class SecurityConfiguration {
 
+    private final SecurityFilter securityFilter;
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
-        System.out.println("AQUIIII!!!!!!");
-        return  httpSecurity
+        return httpSecurity
                 .csrf(AbstractHttpConfigurer::disable)
                 .headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(authorize -> authorize
-                    .requestMatchers(HttpMethod.POST, "/protected-ping").hasRole("PACIENTE")
-                    .anyRequest().authenticated()
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers(HttpMethod.GET, "/ping", "/welcome").permitAll()
+                        .anyRequest().authenticated()
                 )
+                .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
 

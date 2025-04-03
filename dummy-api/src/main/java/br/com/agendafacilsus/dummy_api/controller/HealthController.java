@@ -12,14 +12,18 @@ import java.util.UUID;
 public class HealthController {
     
     @GetMapping("/ping")
-    @PreAuthorize("hasRole('PACIENTE')")
     public String pong(){
         return "pong";
     }
 
-    @GetMapping("/protected-ping")
-    @PreAuthorize("hasRole('PACIENTE')")
-    public String adminProtected(){
-        return "End point protected. Only patients has access. " + UUID.randomUUID().toString();
+    @GetMapping("/welcome")
+    public String welcome(){
+        return "welcome";
+    }
+
+    @GetMapping("/private")
+    @PreAuthorize("hasRole('ADMIN')")
+    public String privateEndPoint(){
+        return "This is a private URI : " + UUID.randomUUID().toString();
     }
 }
