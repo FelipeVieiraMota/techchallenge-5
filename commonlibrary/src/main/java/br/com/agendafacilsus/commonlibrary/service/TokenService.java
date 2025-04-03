@@ -9,15 +9,17 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
+import jakarta.servlet.FilterChain;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
@@ -28,6 +30,46 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class TokenService {
+
+    private static final String APPLICATION_JSON = "application/json";
+
+    public void checkTokenRoles(
+        final String secret,
+        final HttpServletRequest request,
+        final HttpServletResponse response,
+        final FilterChain filterChain
+    ) throws IOException {
+        try {
+
+            final var token = request.getHeader("authorization");
+
+            if (token != null && token.startsWith("Bearer ")) {
+                String jwt = token.substring(7);
+                Claims claims = extractClaims(secret, jwt);
+
+                if (!isTokenExpired(claims)) {
+                    final var roles = claims.get("roles", List.class);
+                    final List<SimpleGrantedAuthority> authorities =
+                            roles.stream()
+                                    .map(role -> new SimpleGrantedAuthority(role.toString()))
+                                    .toList();
+
+                    final var authentication = new UsernamePasswordAuthenticationToken(
+                            claims.getSubject(),
+                            null,
+                            authorities
+                    );
+                    SecurityContextHolder.getContext().setAuthentication(authentication);
+                }
+            }
+
+            filterChain.doFilter(request, response);
+        } catch (Exception exception) {
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            response.setContentType(APPLICATION_JSON);
+            response.getWriter().write("{\"error\":\"Unauthorized access\"}");
+        }
+    }
 
     public Claims extractClaims(final String secret, final String token) {
         try {
@@ -91,7 +133,7 @@ public class TokenService {
         }
     }
 
-    private Instant genExpirationDate() {
+    private Instant genExpirationDate()  {
         return LocalDateTime.now().plusHours(2).toInstant(ZoneOffset.of("-03:00"));
     }
 
