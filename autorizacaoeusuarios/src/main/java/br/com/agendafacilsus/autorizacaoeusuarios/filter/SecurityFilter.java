@@ -1,8 +1,8 @@
-package br.com.agendafacilsus.autorizacaoeusuarios.security;
+package br.com.agendafacilsus.autorizacaoeusuarios.filter;
 
-import br.com.agendafacilsus.autorizacaoeusuarios.controller.exceptions.ForbiddenException;
 import br.com.agendafacilsus.autorizacaoeusuarios.domains.dtos.ErrorResponseDto;
 import br.com.agendafacilsus.autorizacaoeusuarios.service.PermissionsService;
+import br.com.agendafacilsus.commonlibrary.domains.exceptions.ForbiddenException;
 import io.micrometer.common.lang.NonNullApi;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.http.HttpServletRequest;

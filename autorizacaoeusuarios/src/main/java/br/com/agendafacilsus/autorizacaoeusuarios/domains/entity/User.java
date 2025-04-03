@@ -1,7 +1,7 @@
 package br.com.agendafacilsus.autorizacaoeusuarios.domains.entity;
 
-import br.com.agendafacilsus.autorizacaoeusuarios.controller.exceptions.ForbiddenException;
 import br.com.agendafacilsus.commonlibrary.domains.enums.UserRole;
+import br.com.agendafacilsus.commonlibrary.domains.exceptions.ForbiddenException;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -12,7 +12,6 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 import static br.com.agendafacilsus.commonlibrary.domains.enums.UserRole.*;

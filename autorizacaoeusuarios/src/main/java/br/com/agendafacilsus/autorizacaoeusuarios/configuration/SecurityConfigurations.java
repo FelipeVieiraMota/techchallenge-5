@@ -1,5 +1,8 @@
-package br.com.agendafacilsus.autorizacaoeusuarios.security;
+package br.com.agendafacilsus.autorizacaoeusuarios.configuration;
 
+import br.com.agendafacilsus.autorizacaoeusuarios.filter.SecurityFilter;
+import br.com.agendafacilsus.autorizacaoeusuarios.mappers.IUserMapper;
+import br.com.agendafacilsus.autorizacaoeusuarios.mappers.UserMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -51,5 +54,10 @@ public class SecurityConfigurations {
     @Bean
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public IUserMapper userMapper() {
+        return new UserMapper();
     }
 }
