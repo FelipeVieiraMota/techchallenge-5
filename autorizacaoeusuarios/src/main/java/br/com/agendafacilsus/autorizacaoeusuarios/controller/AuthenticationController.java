@@ -7,12 +7,9 @@ import br.com.agendafacilsus.autorizacaoeusuarios.service.AuthorizationService;
 import br.com.agendafacilsus.commonlibrary.domains.dtos.*;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("auth")
@@ -22,10 +19,14 @@ public class AuthenticationController {
     private final AuthenticationService authenticationService;
     private final AuthorizationService authorizationService;
 
+    @GetMapping("/ping")
+    public String pong(){
+        return "pong";
+    }
+
     @PostMapping("/login")
     public ResponseEntity<LoginResponseDto> login(@RequestBody @Valid AuthenticationDto data){
-        final var token = authenticationService.login(data);
-        return ResponseEntity.ok(new LoginResponseDto(token));
+        return ResponseEntity.ok(new LoginResponseDto(authenticationService.login(data)));
     }
 
     @PostMapping("/validation")
@@ -35,10 +36,11 @@ public class AuthenticationController {
             return ResponseEntity.ok(true);
         }
 
-        return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        return ResponseEntity.ok(false);
     }
 
     @PostMapping("/register")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<User> register(@RequestBody @Valid RegisterDto data){
         return ResponseEntity.ok().body(authorizationService.register(data));
     }

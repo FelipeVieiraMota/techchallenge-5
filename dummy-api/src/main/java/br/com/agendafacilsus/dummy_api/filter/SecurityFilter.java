@@ -28,12 +28,7 @@ public class SecurityFilter extends OncePerRequestFilter {
             final HttpServletRequest request,
             final HttpServletResponse response,
             final FilterChain filterChain
-    ) throws IOException, ServletException {
-        final var path = request.getRequestURI();
-        if ("/dummy-api/ping".equals(path) || "/dummy-api/welcome".equals(path)) {
-            filterChain.doFilter(request, response);
-            return;
-        }
+    ) throws IOException {
         tokenService.checkTokenRoles(secret, request, response, filterChain);
     }
 }

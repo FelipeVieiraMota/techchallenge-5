@@ -1,6 +1,7 @@
 package br.com.agendafacilsus.commonlibrary.service;
 
 import br.com.agendafacilsus.commonlibrary.domains.dtos.UserDto;
+import br.com.agendafacilsus.commonlibrary.domains.exceptions.ForbiddenException;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
@@ -33,6 +34,9 @@ public class TokenService {
 
     private static final String APPLICATION_JSON = "application/json";
 
+    /*
+    * Use this method to validate JWT inside your API filter.
+    * */
     public void checkTokenRoles(
         final String secret,
         final HttpServletRequest request,
@@ -41,24 +45,26 @@ public class TokenService {
     ) throws IOException {
         try {
 
-            final var token = request.getHeader("authorization");
+            final var token = recoverToken(request);
 
-            if (token != null && token.startsWith("Bearer ")) {
-                String jwt = token.substring(7);
-                Claims claims = extractClaims(secret, jwt);
+            if (token != null) {
 
-                if (!isTokenExpired(claims)) {
-                    final var roles = claims.get("roles", List.class);
-                    final List<SimpleGrantedAuthority> authorities =
-                            roles.stream().map(role -> new SimpleGrantedAuthority(role.toString())).toList();
+                final var claims = extractClaims(secret, token);
 
-                    final var authentication = new UsernamePasswordAuthenticationToken(
-                            claims.getSubject(),
-                            null,
-                            authorities
-                    );
-                    SecurityContextHolder.getContext().setAuthentication(authentication);
+                if (isTokenExpired(claims)) {
+                    throw new ForbiddenException("Not Allowed.");
                 }
+
+                final var roles = claims.get("roles", List.class);
+
+                final List<SimpleGrantedAuthority> authorities = getAuthorities(roles);
+
+                final var authentication = new UsernamePasswordAuthenticationToken(
+                        claims.getSubject(),
+                        null,
+                        authorities
+                );
+                SecurityContextHolder.getContext().setAuthentication(authentication);
             }
 
             filterChain.doFilter(request, response);
@@ -67,6 +73,10 @@ public class TokenService {
             response.setContentType(APPLICATION_JSON);
             response.getWriter().write("{\"error\":\"Unauthorized access\"}");
         }
+    }
+
+    private static List getAuthorities(List roles) {
+        return roles.stream().map(role -> new SimpleGrantedAuthority(role.toString())).toList();
     }
 
     public Claims extractClaims(final String secret, final String token) {
