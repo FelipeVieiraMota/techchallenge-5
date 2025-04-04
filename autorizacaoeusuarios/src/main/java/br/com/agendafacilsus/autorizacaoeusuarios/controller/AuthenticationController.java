@@ -7,9 +7,12 @@ import br.com.agendafacilsus.autorizacaoeusuarios.service.AuthorizationService;
 import br.com.agendafacilsus.commonlibrary.domains.dtos.*;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.UUID;
 
 @RestController
 @RequestMapping("auth")
@@ -21,7 +24,7 @@ public class AuthenticationController {
 
     @GetMapping("/ping")
     public String pong(){
-        return "pong";
+        return "Pong " + UUID.randomUUID();
     }
 
     @PostMapping("/login")
@@ -43,5 +46,20 @@ public class AuthenticationController {
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<User> register(@RequestBody @Valid RegisterDto data){
         return ResponseEntity.ok().body(authorizationService.register(data));
+    }
+
+    @PostMapping("/delete/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<Void> deleteUserById(@PathVariable String id){
+        authorizationService.deleteUserById(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/all-users")
+    public ResponseEntity<Page<FetchUserDto>> getAllUsers (
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size
+    ) {
+        return ResponseEntity.ok(authorizationService.getAllUsers(page, size));
     }
 }

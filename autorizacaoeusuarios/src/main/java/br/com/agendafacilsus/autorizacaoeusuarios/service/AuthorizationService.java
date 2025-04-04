@@ -2,9 +2,12 @@ package br.com.agendafacilsus.autorizacaoeusuarios.service;
 
 import br.com.agendafacilsus.autorizacaoeusuarios.controller.exceptions.UserAlreadyExistsException;
 import br.com.agendafacilsus.autorizacaoeusuarios.domains.entity.User;
+import br.com.agendafacilsus.autorizacaoeusuarios.mappers.IFetchMapper;
+import br.com.agendafacilsus.commonlibrary.domains.dtos.FetchUserDto;
 import br.com.agendafacilsus.commonlibrary.domains.dtos.RegisterDto;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -17,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 public class AuthorizationService implements UserDetailsService {
 
     private final UserService service;
+    private final IFetchMapper mapper;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -34,5 +38,13 @@ public class AuthorizationService implements UserDetailsService {
         final String encryptedPassword = new BCryptPasswordEncoder().encode(data.password());
         final User newUser = new User(data.login(), encryptedPassword, data.role());
         return service.save(newUser);
+    }
+
+    public void deleteUserById(final String id) {
+        service.deleteUserById(id);
+    }
+
+    public Page<FetchUserDto> getAllUsers(final int page, final int size) {
+        return service.getAllUsers(page, size).map(mapper::toDto);
     }
 }

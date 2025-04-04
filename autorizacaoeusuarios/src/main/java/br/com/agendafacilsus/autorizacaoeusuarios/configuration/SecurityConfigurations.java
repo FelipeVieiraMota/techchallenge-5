@@ -1,6 +1,8 @@
 package br.com.agendafacilsus.autorizacaoeusuarios.configuration;
 
 import br.com.agendafacilsus.autorizacaoeusuarios.filter.SecurityFilter;
+import br.com.agendafacilsus.autorizacaoeusuarios.mappers.FetchMapper;
+import br.com.agendafacilsus.autorizacaoeusuarios.mappers.IFetchMapper;
 import br.com.agendafacilsus.autorizacaoeusuarios.mappers.IUserMapper;
 import br.com.agendafacilsus.autorizacaoeusuarios.mappers.UserMapper;
 import org.springframework.context.annotation.Bean;
@@ -40,7 +42,6 @@ public class SecurityConfigurations {
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/validation").permitAll()
                         .requestMatchers(HttpMethod.GET, "/auth/ping").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/auth/register").authenticated()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
@@ -57,8 +58,11 @@ public class SecurityConfigurations {
         return new BCryptPasswordEncoder();
     }
 
-    @Bean
-    public IUserMapper userMapper() {
+    @Bean public IUserMapper userMapper() {
         return new UserMapper();
+    }
+
+    @Bean public IFetchMapper fetchMapper() {
+        return new FetchMapper();
     }
 }
