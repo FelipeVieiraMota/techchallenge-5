@@ -43,10 +43,10 @@ public class SecurityConfigurations {
                         .requestMatchers(HttpMethod.POST, "/auth/validation").permitAll()
                         .requestMatchers(HttpMethod.GET, "/auth/ping").permitAll()
                         .requestMatchers(
-                    "/v3/api-docs/**",
-                            "/api-docs/**",
-                            "/swagger-ui/**",
-                            "/swagger-ui.html"
+                                "/v3/api-docs/**",
+                                "/swagger-ui/**",
+                                "/swagger-ui.html",
+                                "/springdoc/**"
                         ).permitAll()
                         .anyRequest().authenticated()
                 )

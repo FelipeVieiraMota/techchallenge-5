@@ -23,9 +23,16 @@ api:
     token:
       secret: ${JWT_SECRET:this_is_my_super_secure_secret_key_123!}
 
+logging:
+  level:
+    org.springframework.security: TRACE
+    org.springframework.security.web.FilterChainProxy: TRACE
+
 springdoc:
-  api-docs:
-    path: /api-docs
   swagger-ui:
-    path: /swagger-ui.html
+    path: /springdoc/swagger-ui.html
     enabled: true
+    disable-swagger-default-url: true
+    url: /springdoc/api-docs
+  api-docs:
+    path: /springdoc/api-docs
