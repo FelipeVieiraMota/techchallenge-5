@@ -47,4 +47,16 @@ public class AuthorizationService implements UserDetailsService {
     public Page<FetchUserDto> getAllUsers(final int page, final int size) {
         return service.getAllUsers(page, size).map(mapper::toDto);
     }
+
+    public Page<FetchUserDto> getAllPatients(final int page, final int size) {
+        return service.getAllPatients(page, size).map(mapper::toDto);
+    }
+
+    public Page<FetchUserDto> getAllDoctors(final int page, final int size) {
+        return service.getAllDoctors(page, size).map(mapper::toDto);
+    }
+
+    public FetchUserDto findUserById(final String id) {
+        return mapper.toDto(service.findUserById(id));
+    }
 }

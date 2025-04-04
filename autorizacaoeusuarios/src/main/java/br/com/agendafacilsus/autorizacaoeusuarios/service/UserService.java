@@ -30,4 +30,16 @@ public class UserService {
     public Page<User> getAllUsers(int page, int size) {
         return repository.findByRoleNot(UserRole.ADMIN, PageRequest.of(page, size));
     }
+
+    public Page<User> getAllPatients(int page, int size) {
+        return repository.findByRole(UserRole.PACIENTE, PageRequest.of(page, size));
+    }
+
+    public Page<User> getAllDoctors(int page, int size) {
+        return repository.findByRole(UserRole.MEDICO, PageRequest.of(page, size));
+    }
+
+    public User findUserById(final String id) {
+        return repository.findUserById(id);
+    }
 }
