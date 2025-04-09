@@ -7,9 +7,11 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="agendamentoseconsultas" />
-        <module name="gateway" />
         <module name="notificacoes" />
+        <module name="agendamentos" />
+        <module name="consultas" />
+        <module name="gateway" />
+        <module name="exames" />
       </profile>
       <profile name="Annotation profile for dummy-api" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
@@ -32,10 +34,12 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="agendamentoseconsultas" options="-parameters" />
+      <module name="agendamentos" options="-parameters" />
       <module name="autorizacaoeusuarios" options="-parameters" />
       <module name="commonlibrary" options="-parameters" />
+      <module name="consultas" options="-parameters" />
       <module name="dummy-api" options="-parameters" />
+      <module name="exames" options="-parameters" />
       <module name="gateway" options="-parameters" />
       <module name="jwt-security-library" options="-parameters" />
       <module name="notificacao" options="-parameters" />

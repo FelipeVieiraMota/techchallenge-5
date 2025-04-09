@@ -31,8 +31,8 @@ O sistema de agendamento de consultas médicas visa facilitar o processo de marc
 
 ## 🔄 Regras e Lógica do Agendamento
 - **Disponibilidade**: Bloqueio automático de horários já ocupados.
-- **Tempo de consulta**: Definir tempos padrão (ex.: 30 min, 1h) por especialidade.
-- **Confirmação obrigatória**: Pacientes devem confirmar a consulta dentro de um período pré-definido.
+- **Tempo de exame**: Definir tempos padrão (ex.: 30 min, 1h) por especialidade.
+- **Confirmação obrigatória**: Pacientes devem confirmar a exame dentro de um período pré-definido.
 - **Cancelamento**: Estabelecer prazos para cancelamento sem multas.
 - **Fila de espera**: Notificação automática para pacientes na lista de espera quando houver desistências.
 

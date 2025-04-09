@@ -1,0 +1,23 @@
+server:
+  port: 9000
+
+spring:
+
+  application:
+    name: agendamentos
+
+  # Database Configuration
+  datasource:
+    url: jdbc:postgresql://localhost:5432/agendamentos-db
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create
+    show-sql: true
+
+api:
+  security:
+    token:
+      secret: ${JWT_SECRET:this_is_my_super_secure_secret_key_123!}

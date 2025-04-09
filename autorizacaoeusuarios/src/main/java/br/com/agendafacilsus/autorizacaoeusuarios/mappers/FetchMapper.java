@@ -8,6 +8,7 @@ public class FetchMapper implements IFetchMapper{
     public FetchUserDto toDto(User entity) {
         return new FetchUserDto (
                 entity.getId(),
+                entity.getName(),
                 entity.getLogin(),
                 entity.getRole()
         );
