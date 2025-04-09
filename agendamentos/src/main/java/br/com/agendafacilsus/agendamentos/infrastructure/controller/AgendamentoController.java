@@ -5,9 +5,11 @@ import br.com.agendafacilsus.agendamentos.infrastructure.controller.dto.Agendame
 import br.com.agendafacilsus.agendamentos.infrastructure.controller.dto.AgendamentoResponseDTO;
 import br.com.agendafacilsus.agendamentos.infrastructure.controller.dto.AlteracaoStatusRequestDTO;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/agendamentos")
@@ -15,6 +17,12 @@ import java.util.List;
 public class AgendamentoController {
 
     private final AgendamentoUseCase useCase;
+
+    @GetMapping("/ping")
+    @PreAuthorize("hasRole('PACIENTE')")
+    public String pong(){
+        return "Pong " + UUID.randomUUID();
+    }
 
     @PostMapping
     public AgendamentoResponseDTO criar(@RequestBody AgendamentoRequestDTO dto) {
