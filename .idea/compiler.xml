@@ -7,9 +7,9 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="consultas" />
         <module name="notificacoes" />
         <module name="agendamentos" />
-        <module name="consultas" />
         <module name="gateway" />
         <module name="exames" />
       </profile>
@@ -27,6 +27,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="agendamentoseconsultas" target="17" />
       <module name="api-for-tests" target="17" />
       <module name="jwt-security-library" target="17" />
       <module name="notificacao" target="17" />
