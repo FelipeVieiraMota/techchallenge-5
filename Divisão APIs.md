@@ -37,11 +37,11 @@ Para tornar o sistema escalável, seguro e modular, dividimos a API em **múltip
 📂 **Banco de Dados:** `agendamentos_db`  
 
 ### **Endpoints**
-- `POST /consultas` → Cria nova consulta
+- `POST /consultas` → Cria nova exame
 - `GET /consultas/paciente/{id}` → Histórico do paciente
 - `GET /consultas/medico/{id}` → Consultas do médico
-- `PUT /consultas/{id}/cancelar` → Cancela consulta
-- `PUT /consultas/{id}/confirmar` → Médico confirma consulta
+- `PUT /consultas/{id}/cancelar` → Cancela exame
+- `PUT /consultas/{id}/confirmar` → Médico confirma exame
 
 ---
 
@@ -75,9 +75,9 @@ Para conectar os microsserviços, usamos **mensageria (RabbitMQ, Kafka)** ou **r
 - `notificacaoDTO-service` escuta eventos de agendamentos para enviar mensagens.
 
 > 🔥 **Exemplo de Comunicação:**  
-1️⃣ **Paciente agenda consulta** → `agendamento-service` grava no DB.  
+1️⃣ **Paciente agenda exame** → `agendamento-service` grava no DB.  
 2️⃣ **Notificação é enviada** → `notificacaoDTO-service` recebe evento via RabbitMQ e envia e-mail/SMS.  
-3️⃣ **Admin consulta relatório** → `relatorios-service` agrega estatísticas.  
+3️⃣ **Admin exame relatório** → `relatorios-service` agrega estatísticas.  
 
 ---
 

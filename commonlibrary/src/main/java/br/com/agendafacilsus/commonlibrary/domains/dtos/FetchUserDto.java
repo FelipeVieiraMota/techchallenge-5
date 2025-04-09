@@ -12,6 +12,7 @@ import static br.com.agendafacilsus.commonlibrary.domains.enums.UserRole.*;
 
 public record FetchUserDto(
         String id,
+        String name,
         String login,
         UserRole role
 ) {

@@ -9,6 +9,7 @@ public class UserMapper implements IUserMapper {
     public UserDto toDto(User entity) {
         return new UserDto (
             entity.getId(),
+            entity.getName(),
             entity.getLogin(),
             entity.getPassword(),
             entity.getRole()
