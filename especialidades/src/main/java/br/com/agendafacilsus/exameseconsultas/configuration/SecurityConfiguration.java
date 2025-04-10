@@ -1,6 +1,6 @@
-package br.com.agendafacilsus.agendamentos.configuration;
+package br.com.agendafacilsus.exameseconsultas.configuration;
 
-import br.com.agendafacilsus.agendamentos.filter.SecurityFilter;
+import br.com.agendafacilsus.exameseconsultas.filter.SecurityFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

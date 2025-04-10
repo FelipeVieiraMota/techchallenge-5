@@ -1,7 +1,6 @@
 package br.com.agendafacilsus.agendamentos.domain.model;
 
 import br.com.agendafacilsus.agendamentos.domain.enums.StatusAgendamento;
-import br.com.agendafacilsus.agendamentos.domain.enums.TipoAgendamento;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,11 +17,12 @@ import java.time.LocalDateTime;
 @Entity(name = "tb_agendamento")
 public class Agendamento {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String paciente;
-    private TipoAgendamento tipo;
+    private Long pacienteId;
+//    private Long medicoId;
+    private String nomePaciente;
     private Long referenciaId; // ID da consulta ou exame relacionado
     private LocalDateTime dataHora;
     private StatusAgendamento status;

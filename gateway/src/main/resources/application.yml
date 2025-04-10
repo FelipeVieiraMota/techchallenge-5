@@ -25,6 +25,26 @@ spring:
           predicates:
             - Path=/api/**, /v3/api-docs/**, /swagger-ui/**, /swagger-ui.html, /springdoc/**
 
+        - id: agendamentos
+          uri: http://localhost:11000
+          predicates:
+            - Path=/agendamentos/**
+
+        - id: agendamentos-swagger
+          uri: http://localhost:11000
+          predicates:
+            - Path=/api/**, /v3/api-docs/**, /swagger-ui/**, /agendamentos/swagger-ui.html, /agendamentos/springdoc/**
+
+        - id: especialidades
+          uri: http://localhost:12000
+          predicates:
+            - Path=/especialidades/**
+
+        - id: especialidades-swagger
+          uri: http://localhost:12000
+          predicates:
+            - Path=/api/**, /v3/api-docs/**, /swagger-ui/**, /especialidades/swagger-ui.html, /especialidades/springdoc/**
+
       default-filters:
         - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Methods Access-Control-Allow-Headers RETAIN_FIRST
 

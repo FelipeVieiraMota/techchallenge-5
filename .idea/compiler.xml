@@ -9,25 +9,17 @@
         <outputRelativeToContentRoot value="true" />
         <module name="notificacoes" />
         <module name="agendamentos" />
-        <module name="consultas" />
-        <module name="gateway" />
-        <module name="exames" />
-      </profile>
-      <profile name="Annotation profile for dummy-api" enabled="true">
-        <sourceOutputDir name="target/generated-sources/annotations" />
-        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
-        <outputRelativeToContentRoot value="true" />
-        <processorPath useClasspath="false">
-          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.32/lombok-1.18.32.jar" />
-          <entry name="$MAVEN_REPOSITORY$/org/springframework/boot/spring-boot-configuration-processor/unknown/spring-boot-configuration-processor-unknown.jar" />
-        </processorPath>
+        <module name="especialidades" />
         <module name="commonlibrary" />
+        <module name="gateway" />
         <module name="dummy-api" />
         <module name="autorizacaoeusuarios" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="agendamentoseconsultas" target="17" />
       <module name="api-for-tests" target="17" />
+      <module name="exames" target="17" />
       <module name="jwt-security-library" target="17" />
       <module name="notificacao" target="17" />
     </bytecodeTargetLevel>
@@ -37,8 +29,8 @@
       <module name="agendamentos" options="-parameters" />
       <module name="autorizacaoeusuarios" options="-parameters" />
       <module name="commonlibrary" options="-parameters" />
-      <module name="consultas" options="-parameters" />
       <module name="dummy-api" options="-parameters" />
+      <module name="especialidades" options="-parameters" />
       <module name="exames" options="-parameters" />
       <module name="gateway" options="-parameters" />
       <module name="jwt-security-library" options="-parameters" />

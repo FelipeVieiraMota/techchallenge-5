@@ -14,8 +14,7 @@ public class AgendamentoMapper {
     public static Agendamento toEntity(AgendamentoRequestDTO dto) {
         return new Agendamento(
                 null, // ID será gerado pelo banco
-                dto.paciente(),
-                dto.tipo(),
+                dto.nomePaciente(),
                 dto.referenciaId(),
                 dto.dataHora(),
                 StatusAgendamento.AGENDADO // status default ao criar
@@ -25,8 +24,7 @@ public class AgendamentoMapper {
     public static AgendamentoResponseDTO toResponseDTO(Agendamento agendamento) {
         return new AgendamentoResponseDTO(
                 agendamento.getId(),
-                agendamento.getPaciente(),
-                agendamento.getTipo(),
+                agendamento.getNomePaciente(),
                 agendamento.getReferenciaId(),
                 agendamento.getDataHora(),
                 agendamento.getStatus()

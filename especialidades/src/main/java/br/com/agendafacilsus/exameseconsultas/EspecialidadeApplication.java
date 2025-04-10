@@ -1,11 +1,11 @@
-package br.com.agendafacilsus.agendamentos;
+package br.com.agendafacilsus.exameseconsultas;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication(scanBasePackages = "br.com.agendafacilsus")
-public class AgendamentoApplication {
+public class EspecialidadeApplication {
 	public static void main(String[] args) {
-		SpringApplication.run(AgendamentoApplication.class, args);
+		SpringApplication.run(EspecialidadeApplication.class, args);
 	}
 }
