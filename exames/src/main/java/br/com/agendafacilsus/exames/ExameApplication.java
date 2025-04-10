@@ -3,7 +3,7 @@ package br.com.agendafacilsus.exames;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootApplication(scanBasePackages = "br.com.agendafacilsus.exames")
+@SpringBootApplication(scanBasePackages = "br.com.agendafacilsus")
 public class ExameApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(ExameApplication.class, args);
