@@ -35,6 +35,16 @@ spring:
           predicates:
             - Path=/api/**, /v3/api-docs/**, /swagger-ui/**, /agendamentos/swagger-ui.html, /agendamentos/springdoc/**
 
+        - id: consultas
+          uri: http://localhost:12000
+          predicates:
+            - Path=/consultas/**
+
+        - id: consultas-swagger
+          uri: http://localhost:12000
+          predicates:
+            - Path=/api/**, /v3/api-docs/**, /swagger-ui/**, /consultas/swagger-ui.html, /consultas/springdoc/**
+
       default-filters:
         - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Methods Access-Control-Allow-Headers RETAIN_FIRST
 

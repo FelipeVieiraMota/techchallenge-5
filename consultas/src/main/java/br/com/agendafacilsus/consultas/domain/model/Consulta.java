@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
 @Entity(name = "tb_consulta")
 public class Consulta {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private EspecialidadeConsulta especialidade;

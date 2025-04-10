@@ -5,9 +5,11 @@ import br.com.agendafacilsus.consultas.infrastructure.controller.dto.ConsultaRes
 import br.com.agendafacilsus.consultas.applicaton.usecase.ConsultaUseCase;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/consultas")
@@ -17,6 +19,12 @@ public class ConsultaController {
 
     public ConsultaController(ConsultaUseCase useCase) {
         this.useCase = useCase;
+    }
+
+    @GetMapping("/ping")
+    @PreAuthorize("hasRole('PACIENTE')")
+    public String pong(){
+        return "Pong " + UUID.randomUUID();
     }
 
     @PostMapping
