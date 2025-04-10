@@ -6,9 +6,9 @@ import br.com.agendafacilsus.agendamentos.infrastructure.controller.dto.Agendame
 import br.com.agendafacilsus.agendamentos.infrastructure.controller.dto.AgendamentoResponseDTO;
 import br.com.agendafacilsus.agendamentos.infrastructure.gateway.AgendamentoGateway;
 import br.com.agendafacilsus.agendamentos.infrastructure.mapper.AgendamentoMapper;
-import br.com.agendafacilsus.notificacoes.controller.NotificacaoDTO;
-import br.com.agendafacilsus.notificacoes.enums.TipoNotificacao;
-import br.com.agendafacilsus.notificacoes.gateway.NotificacaoGateway;
+import br.com.agendafacilsus.notificacoes.infrastructure.dto.NotificacaoDTO;
+import br.com.agendafacilsus.notificacoes.domain.enums.TipoNotificacao;
+import br.com.agendafacilsus.notificacoes.infrastructure.gateway.NotificacaoGateway;
 import lombok.RequiredArgsConstructor;
 import lombok.val;
 import org.springframework.stereotype.Service;

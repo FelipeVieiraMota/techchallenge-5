@@ -1,4 +1,4 @@
-package br.com.agendafacilsus.notificacoes.configs;
+package br.com.agendafacilsus.notificacoes.configuration;
 
 
 import org.springframework.beans.factory.annotation.Value;

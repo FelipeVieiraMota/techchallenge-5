@@ -1,4 +1,4 @@
-package br.com.agendafacilsus.notificacoes.configs;
+package br.com.agendafacilsus.notificacoes.configuration;
 
 import com.twilio.Twilio;
 import org.springframework.stereotype.Component;

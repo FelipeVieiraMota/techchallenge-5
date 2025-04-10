@@ -1,7 +1,7 @@
-package br.com.agendafacilsus.notificacoes.gateway;
+package br.com.agendafacilsus.notificacoes.infrastructure.gateway;
 
-import br.com.agendafacilsus.notificacoes.controller.NotificacaoDTO;
 import br.com.agendafacilsus.notificacoes.exception.PublicadorException;
+import br.com.agendafacilsus.notificacoes.infrastructure.dto.NotificacaoDTO;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
@@ -41,23 +41,5 @@ public class NotificacaoGatewayImpl implements NotificacaoGateway {
             }
         });
     }
-
-    @Override
-    public int getTotalNotificacoesEnviadas(String queueName) {
-        Integer messageCount = rabbitTemplate.execute(channel -> {
-            try {
-                return channel.queueDeclarePassive(queueName).getMessageCount();
-            } catch (Exception e) {
-                getMensagemErro(e);
-                return null;
-            }
-        });
-        return messageCount != null ? messageCount : 0;
-    }
-
-    private static void getMensagemErro(Exception e) {
-        logger.warn("Erro na ao buscar. {}",  e.getMessage());
-    }
-
 
 }

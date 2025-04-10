@@ -1,8 +1,9 @@
-package br.com.agendafacilsus.notificacoes.gateway;
+package br.com.agendafacilsus.notificacoes.infrastructure.gateway;
 
-import br.com.agendafacilsus.notificacoes.controller.NotificacaoDTO;
-import br.com.agendafacilsus.notificacoes.enums.TipoNotificacao;
+import br.com.agendafacilsus.notificacoes.infrastructure.dto.NotificacaoDTO;
+import br.com.agendafacilsus.notificacoes.domain.enums.TipoNotificacao;
 import br.com.agendafacilsus.notificacoes.exception.PublicadorException;
+import br.com.agendafacilsus.notificacoes.infrastructure.gateway.NotificacaoGatewayImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

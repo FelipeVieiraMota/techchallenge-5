@@ -1,9 +1,9 @@
-package br.com.agendafacilsus.notificacoes.usecase.processador.modosenvio;
+package br.com.agendafacilsus.notificacoes.application.usecase.envionotificacao;
 
-import br.com.agendafacilsus.notificacoes.configs.TwilioConfig;
-import br.com.agendafacilsus.notificacoes.controller.NotificacaoDTO;
-import br.com.agendafacilsus.notificacoes.enums.TipoNotificacao;
-import br.com.agendafacilsus.notificacoes.usecase.processador.ProcessarNotificacao;
+import br.com.agendafacilsus.notificacoes.application.usecase.rabbitmq.ProcessarItemFila;
+import br.com.agendafacilsus.notificacoes.configuration.TwilioConfig;
+import br.com.agendafacilsus.notificacoes.domain.enums.TipoNotificacao;
+import br.com.agendafacilsus.notificacoes.infrastructure.dto.NotificacaoDTO;
 import com.twilio.rest.api.v2010.account.Message;
 import com.twilio.type.PhoneNumber;
 import lombok.RequiredArgsConstructor;
@@ -13,9 +13,9 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class NotificacaoSMS implements ProcessarNotificacao {
+public class ItemFilaSMS implements ProcessarItemFila {
 
-    private static final Logger logger = LogManager.getLogger(NotificacaoSMS.class);
+    private static final Logger logger = LogManager.getLogger(ItemFilaSMS.class);
     public static final String CODIGO_PAIS = "+55";
     public final TwilioConfig twilioConfig;
 

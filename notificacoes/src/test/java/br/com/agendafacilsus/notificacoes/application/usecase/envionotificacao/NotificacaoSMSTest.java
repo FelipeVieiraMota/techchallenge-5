@@ -1,9 +1,8 @@
-package br.com.agendafacilsus.notificacoes.usecase.modosenvio;
+package br.com.agendafacilsus.notificacoes.application.usecase.envionotificacao;
 
-import br.com.agendafacilsus.notificacoes.configs.TwilioConfig;
-import br.com.agendafacilsus.notificacoes.controller.NotificacaoDTO;
-import br.com.agendafacilsus.notificacoes.enums.TipoNotificacao;
-import br.com.agendafacilsus.notificacoes.usecase.processador.modosenvio.NotificacaoSMS;
+import br.com.agendafacilsus.notificacoes.configuration.TwilioConfig;
+import br.com.agendafacilsus.notificacoes.infrastructure.dto.NotificacaoDTO;
+import br.com.agendafacilsus.notificacoes.domain.enums.TipoNotificacao;
 import org.junit.jupiter.api.BeforeEach;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -19,7 +18,7 @@ public class NotificacaoSMSTest {
     private Logger logger;
 
     @InjectMocks
-    private NotificacaoSMS notificacaoSMS;
+    private ItemFilaSMS notificacaoSMS;
 
     private NotificacaoDTO notificacaoDTO;
     private NotificacaoDTO notificacaoDTOInvalida;

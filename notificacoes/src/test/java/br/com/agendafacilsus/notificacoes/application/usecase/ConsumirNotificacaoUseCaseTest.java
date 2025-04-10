@@ -1,8 +1,9 @@
-package br.com.agendafacilsus.notificacoes.usecase;
+package br.com.agendafacilsus.notificacoes.application.usecase;
 
-import br.com.agendafacilsus.notificacoes.controller.NotificacaoDTO;
-import br.com.agendafacilsus.notificacoes.enums.TipoNotificacao;
-import br.com.agendafacilsus.notificacoes.usecase.processador.ProcessarNotificacaoImpl;
+import br.com.agendafacilsus.notificacoes.application.usecase.ConsumirNotificacaoUseCase;
+import br.com.agendafacilsus.notificacoes.infrastructure.dto.NotificacaoDTO;
+import br.com.agendafacilsus.notificacoes.domain.enums.TipoNotificacao;
+import br.com.agendafacilsus.notificacoes.application.usecase.rabbitmq.ProcessarFila;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -17,7 +18,7 @@ import static org.mockito.Mockito.*;
 public class ConsumirNotificacaoUseCaseTest {
 
     @Mock
-    private ProcessarNotificacaoImpl processarNotificacaoImpl;
+    private ProcessarFila processarFila;
 
     @InjectMocks
     private ConsumirNotificacaoUseCase consumirNotificacaoUseCase;
@@ -38,6 +39,6 @@ public class ConsumirNotificacaoUseCaseTest {
         consumer.accept(notificacaoDTO);
 
         // Assert
-        verify(processarNotificacaoImpl, times(1)).gerenciarNotificacoes(eq(TipoNotificacao.SMS), eq(notificacaoDTO));
+        verify(processarFila, times(1)).gerenciarNotificacoes(eq(TipoNotificacao.SMS), eq(notificacaoDTO));
     }
 }
