@@ -32,13 +32,13 @@ public class ConsumirNotificacaoUseCaseTest {
 
     @Test
     void testReceberNotificacao() {
-        // Arrange
+        //
         Consumer<NotificacaoDTO> consumer = consumirNotificacaoUseCase.receber();
 
-        // Act
+        //
         consumer.accept(notificacaoDTO);
 
-        // Assert
+        //
         verify(processarFila, times(1)).gerenciarNotificacoes(eq(TipoNotificacao.SMS), eq(notificacaoDTO));
     }
 }
