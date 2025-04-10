@@ -30,7 +30,7 @@ public class AgendamentoUseCase {
         agendamento.setStatus(StatusAgendamento.AGENDADO);
         val salvo = agendamentoGateway.salvar(agendamento);
 
-        enviarNotificacao(dto.paciente(), "Seu agendamento foi criado para " + dto.dataHora() + ".");
+        enviarNotificacao(dto.nomePaciente(), "Seu agendamento foi criado para " + dto.dataHora() + ".");
 
         return toResponseDTO(salvo);
     }
@@ -55,7 +55,7 @@ public class AgendamentoUseCase {
         agendamento.setId(id);
         val atualizado = agendamentoGateway.salvar(agendamento);
 
-        enviarNotificacao(dto.paciente(), "Seu agendamento foi atualizado para " + dto.dataHora() + ".");
+        enviarNotificacao(dto.nomePaciente(), "Seu agendamento foi atualizado para " + dto.dataHora() + ".");
 
         return toResponseDTO(atualizado);
     }
@@ -66,7 +66,7 @@ public class AgendamentoUseCase {
 
         agendamentoGateway.excluir(id);
 
-        enviarNotificacao(agendamento.getPaciente(), "Seu agendamento foi cancelado.");
+        enviarNotificacao(agendamento.getNomePaciente(), "Seu agendamento foi cancelado.");
     }
 
     public AgendamentoResponseDTO alterarStatus(Long id, StatusAgendamento novoStatus) {
@@ -82,7 +82,7 @@ public class AgendamentoUseCase {
             default -> "O status do seu agendamento foi alterado para: " + novoStatus;
         };
 
-        enviarNotificacao(agendamento.getPaciente(), mensagem);
+        enviarNotificacao(agendamento.getNomePaciente(), mensagem);
 
         return toResponseDTO(atualizado);
     }

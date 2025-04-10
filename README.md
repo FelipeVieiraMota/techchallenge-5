@@ -11,10 +11,6 @@ Swaggers:
 
   - http://localhost:8080/agendamentos/swagger-ui/index.html#
 
-* Consultas:
+* Especialidades:
 
-  - http://localhost:8080/consultas/swagger-ui/index.html#
-
-* Exames:
-
-  - http://localhost:8080/exames/swagger-ui/index.html#
+  - http://localhost:8080/especialidades/swagger-ui/index.html#
