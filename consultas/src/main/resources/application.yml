@@ -2,20 +2,14 @@ server:
   port: 12000
 
 spring:
-
+  boot:
+    admin:
+      client:
+        url: http://localhost:20000
+        instances:
+          name: consultas
   application:
     name: consultas
-
-  # Database Configuration
-  # datasource:
-  #   url: jdbc:postgresql://localhost:5432/consultas-db
-  #   username: postgres
-  #   password: postgres
-  #   driver-class-name: org.postgresql.Driver
-  # jpa:
-  #   hibernate:
-  #     ddl-auto: create
-  #   show-sql: true
 
   h2:
     console:
@@ -45,3 +39,9 @@ springdoc:
     url: /consultas/api-docs
   api-docs:
     path: /consultas/api-docs
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"

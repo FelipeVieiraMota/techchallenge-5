@@ -48,6 +48,8 @@ public class SecurityConfiguration implements WebMvcConfigurer {
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .requestMatchers("/error").permitAll()
                         .requestMatchers("/h2-console/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/actuator/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/favicon.ico/**").permitAll()
                         .requestMatchers(swaggerWhiteList).permitAll()
                         .anyRequest().permitAll()
                 )

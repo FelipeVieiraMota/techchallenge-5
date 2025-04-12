@@ -1,22 +1,14 @@
 server:
   port: 13000
-
 spring:
-
+  boot:
+    admin:
+      client:
+        url: http://localhost:20000
+        instances:
+          name: exames
   application:
     name: exames
-
-  # Database Configuration
-  # datasource:
-  #   url: jdbc:postgresql://localhost:5432/exames-db
-  #   username: postgres
-  #   password: postgres
-  #   driver-class-name: org.postgresql.Driver
-  # jpa:
-  #   hibernate:
-  #     ddl-auto: create
-  #   show-sql: true
-
   h2:
     console:
       enabled: true
@@ -45,3 +37,9 @@ springdoc:
     url: /exames/api-docs
   api-docs:
     path: /exames/api-docs
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
