@@ -30,23 +30,17 @@ public class SecurityFilter extends OncePerRequestFilter {
     @Value("${api.security.token.secret}")
     private String secret;
 
-    /*
-    * This validation is different from the others because in this case we are
-    * reaching also database instead only to check JWT.
-    * */
-
     @Override
     protected void doFilterInternal(
-        final HttpServletRequest request,
-        final HttpServletResponse response,
-        final FilterChain filterChain
+            final HttpServletRequest request,
+            final HttpServletResponse response,
+            final FilterChain filterChain
     ) throws IOException {
 
-        try
-        {
+        try {
             var token = tokenService.recoverToken(request);
 
-            if(token != null) {
+            if (token != null) {
 
                 final var login = tokenService.tokenSubject(secret, token);
                 final var user = service.findByLogin(login);
@@ -70,15 +64,11 @@ public class SecurityFilter extends OncePerRequestFilter {
             }
 
             filterChain.doFilter(request, response);
-        }
-        catch (ForbiddenException exception)
-        {
+        } catch (ForbiddenException exception) {
             response.setStatus(HttpServletResponse.SC_FORBIDDEN);
             response.setContentType(APPLICATION_JSON);
             response.getWriter().write(new ErrorResponseDto(exception.getMessage(), HttpStatus.FORBIDDEN).toString());
-        }
-        catch (Throwable exception)
-        {
+        } catch (Throwable exception) {
             response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             response.setContentType(APPLICATION_JSON);
             response.getWriter().write(new ErrorResponseDto("Unpredictable error happened.", HttpStatus.INTERNAL_SERVER_ERROR).toString());

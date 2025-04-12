@@ -22,19 +22,19 @@ public class AuthenticationController {
     private final AuthorizationService authorizationService;
 
     @GetMapping("/ping")
-    public String pong(){
+    public String pong() {
         return "Pong " + UUID.randomUUID();
     }
 
     @PostMapping("/login")
-    public ResponseEntity<LoginResponseDto> login(@RequestBody @Valid AuthenticationDto data){
+    public ResponseEntity<LoginResponseDto> login(@RequestBody @Valid AuthenticationDto data) {
         return ResponseEntity.ok(new LoginResponseDto(authenticationService.login(data)));
     }
 
     @PostMapping("/validation")
     public ResponseEntity<Boolean> tokenValidation(@RequestBody TokenDto data) {
 
-        if(authenticationService.validateToken(data)) {
+        if (authenticationService.validateToken(data)) {
             return ResponseEntity.ok(true);
         }
 
@@ -43,20 +43,20 @@ public class AuthenticationController {
 
     @PostMapping("/register")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<User> register(@RequestBody @Valid RegisterDto data){
+    public ResponseEntity<User> register(@RequestBody @Valid RegisterDto data) {
         return ResponseEntity.ok().body(authorizationService.register(data));
     }
 
     @DeleteMapping("/delete/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Void> deleteUserById(@PathVariable String id){
+    public ResponseEntity<Void> deleteUserById(@PathVariable String id) {
         authorizationService.deleteUserById(id);
         return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/all-users")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Page<FetchUserDto>> getAllUsers (
+    public ResponseEntity<Page<FetchUserDto>> getAllUsers(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size
     ) {
@@ -65,7 +65,7 @@ public class AuthenticationController {
 
     @GetMapping("/all-patients")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Page<FetchUserDto>> getAllPatients (
+    public ResponseEntity<Page<FetchUserDto>> getAllPatients(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size
     ) {
@@ -74,7 +74,7 @@ public class AuthenticationController {
 
     @GetMapping("/all-doctors")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Page<FetchUserDto>> getAllDoctors (
+    public ResponseEntity<Page<FetchUserDto>> getAllDoctors(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size
     ) {
@@ -83,7 +83,7 @@ public class AuthenticationController {
 
     @GetMapping("/all-users/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<FetchUserDto> findUserById(@PathVariable String id){
+    public ResponseEntity<FetchUserDto> findUserById(@PathVariable String id) {
         return ResponseEntity.ok().body(authorizationService.findUserById(id));
     }
 }
