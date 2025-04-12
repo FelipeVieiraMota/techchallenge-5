@@ -1,4 +1,12 @@
 spring:
+  boot:
+    admin:
+      client:
+        instances:
+          name: autorizacaoeusuarios
+        url: http://localhost:20000
+  application:
+    name: autorizacaoeusuarios
   h2:
     console:
       enabled: true
@@ -14,10 +22,10 @@ spring:
   flyway:
     enabled: true
     locations: classpath:db/migration
-application:
-    name: autorizacaoeusuarios
+
 server:
   port: 9000
+
 api:
   security:
     token:
@@ -36,3 +44,9 @@ springdoc:
     url: /springdoc/api-docs
   api-docs:
     path: /springdoc/api-docs
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
