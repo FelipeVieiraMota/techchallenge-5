@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: infra-analytics
+
+server:
+  port: 20000
