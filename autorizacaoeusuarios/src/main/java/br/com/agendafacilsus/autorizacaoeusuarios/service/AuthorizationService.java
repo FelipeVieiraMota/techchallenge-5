@@ -36,7 +36,7 @@ public class AuthorizationService implements UserDetailsService {
         }
 
         final String encryptedPassword = new BCryptPasswordEncoder().encode(data.password());
-        final User newUser = new User(data.login(), encryptedPassword, data.role());
+        final User newUser = new User(data.name(), data.login(), encryptedPassword, data.role());
         return service.save(newUser);
     }
 
