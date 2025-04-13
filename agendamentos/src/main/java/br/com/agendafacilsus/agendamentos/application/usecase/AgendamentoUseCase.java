@@ -1,13 +1,20 @@
 package br.com.agendafacilsus.agendamentos.application.usecase;
 
 import br.com.agendafacilsus.agendamentos.domain.enums.StatusAgendamento;
+import br.com.agendafacilsus.agendamentos.domain.model.Agendamento;
 import br.com.agendafacilsus.agendamentos.exception.AgendamentoNaoEncontradoException;
 import br.com.agendafacilsus.agendamentos.infrastructure.controller.dto.AgendamentoRequestDTO;
 import br.com.agendafacilsus.agendamentos.infrastructure.controller.dto.AgendamentoResponseDTO;
 import br.com.agendafacilsus.agendamentos.infrastructure.gateway.AgendamentoGateway;
 import br.com.agendafacilsus.agendamentos.infrastructure.mapper.AgendamentoMapper;
-import br.com.agendafacilsus.notificacoes.infrastructure.dto.NotificacaoDTO;
+import br.com.agendafacilsus.autorizacaoeusuarios.domain.model.User;
+import br.com.agendafacilsus.autorizacaoeusuarios.exception.UsuarioJPNaoEncontradoException;
+import br.com.agendafacilsus.autorizacaoeusuarios.infrastructure.gateway.user.UsuarioJPGateway;
+import br.com.agendafacilsus.especialidades.domain.model.Especialidade;
+import br.com.agendafacilsus.especialidades.exception.EspecialidadeNaoEncontradaException;
+import br.com.agendafacilsus.especialidades.infrastructure.gateway.EspecialidadeGateway;
 import br.com.agendafacilsus.notificacoes.domain.enums.TipoNotificacao;
+import br.com.agendafacilsus.notificacoes.infrastructure.dto.NotificacaoDTO;
 import br.com.agendafacilsus.notificacoes.infrastructure.gateway.NotificacaoGateway;
 import lombok.RequiredArgsConstructor;
 import lombok.val;
@@ -16,7 +23,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static br.com.agendafacilsus.agendamentos.infrastructure.mapper.AgendamentoMapper.*;
+import static br.com.agendafacilsus.agendamentos.infrastructure.mapper.AgendamentoMapper.toEntity;
+import static br.com.agendafacilsus.agendamentos.infrastructure.mapper.AgendamentoMapper.toResponseDTO;
 
 @Service
 @RequiredArgsConstructor
@@ -24,19 +32,23 @@ public class AgendamentoUseCase {
 
     private final AgendamentoGateway agendamentoGateway;
     private final NotificacaoGateway notificacaoGateway;
+    private final UsuarioJPGateway usuarioGateway;
+    private final EspecialidadeGateway especialidadeGateway;
 
     public AgendamentoResponseDTO criar(AgendamentoRequestDTO dto) {
-        val agendamento = toEntity(dto);
+        val paciente = buscarPaciente(dto.idPaciente());
+        val especialidade = buscarEspecialidade(dto.idEspecialidade());
+        val agendamento = toEntity(dto, paciente, especialidade);
+
         agendamento.setStatus(StatusAgendamento.AGENDADO);
-        val salvo = agendamentoGateway.salvar(agendamento);
 
-        enviarNotificacao(dto.nomePaciente(), "Seu agendamento foi criado para " + dto.dataHora() + ".");
-
-        return toResponseDTO(salvo);
+        val agendamentoSalvo = agendamentoGateway.salvar(agendamento);
+        enviarNotificacao(paciente.getName(), "Seu agendamento foi criado para " + dto.dataHora() + ".");
+        return toResponseDTO(agendamentoSalvo);
     }
 
     public List<AgendamentoResponseDTO> listar() {
-        return agendamentoGateway.listarAgendamentos().stream()
+        return agendamentoGateway.listar().stream()
                 .map(AgendamentoMapper::toResponseDTO)
                 .collect(Collectors.toList());
     }
@@ -48,48 +60,58 @@ public class AgendamentoUseCase {
     }
 
     public AgendamentoResponseDTO atualizar(Long id, AgendamentoRequestDTO dto) {
-        agendamentoGateway.buscarPorId(id)
-                .orElseThrow(() -> new AgendamentoNaoEncontradoException(id));
+        val agendamento = buscarAgendamento(id);
+        val paciente = buscarPaciente(dto.idPaciente());
+        val especialidade = buscarEspecialidade(dto.idEspecialidade());
 
-        val agendamento = toEntity(dto);
-        agendamento.setId(id);
-        val atualizado = agendamentoGateway.salvar(agendamento);
+        agendamento.setPaciente(paciente);
+        agendamento.setEspecialidade(especialidade);
+        agendamento.setDataHora(dto.dataHora());
 
-        enviarNotificacao(dto.nomePaciente(), "Seu agendamento foi atualizado para " + dto.dataHora() + ".");
-
-        return toResponseDTO(atualizado);
+        val agendamentoAtualizado = agendamentoGateway.salvar(agendamento);
+        enviarNotificacao(paciente.getName(), "Seu agendamento foi atualizado para " + dto.dataHora() + ".");
+        return toResponseDTO(agendamentoAtualizado);
     }
 
     public void excluir(Long id) {
-        val agendamento = agendamentoGateway.buscarPorId(id)
-                .orElseThrow(() -> new AgendamentoNaoEncontradoException(id));
-
+        val agendamento = buscarAgendamento(id);
         agendamentoGateway.excluir(id);
-
-        enviarNotificacao(agendamento.getNomePaciente(), "Seu agendamento foi cancelado.");
+        enviarNotificacao(agendamento.getPaciente().getName(), "Seu agendamento foi cancelado.");
     }
 
     public AgendamentoResponseDTO alterarStatus(Long id, StatusAgendamento novoStatus) {
-        val agendamento = agendamentoGateway.buscarPorId(id)
-                .orElseThrow(() -> new AgendamentoNaoEncontradoException(id));
-
+        val agendamento = buscarAgendamento(id);
         agendamento.setStatus(novoStatus);
-        val atualizado = agendamentoGateway.salvar(agendamento);
 
+        val agendamentoAtualizado = agendamentoGateway.salvar(agendamento);
         val mensagem = switch (novoStatus) {
             case REALIZADO -> "Seu agendamento foi marcado como realizado.";
             case CANCELADO -> "Seu agendamento foi cancelado.";
             default -> "O status do seu agendamento foi alterado para: " + novoStatus;
         };
 
-        enviarNotificacao(agendamento.getNomePaciente(), mensagem);
-
-        return toResponseDTO(atualizado);
+        enviarNotificacao(agendamento.getPaciente().getName(), mensagem);
+        return toResponseDTO(agendamentoAtualizado);
     }
 
-    private void enviarNotificacao(String paciente, String mensagem) {
+    private User buscarPaciente(String idPaciente) {
+        return usuarioGateway.buscarPorId(idPaciente)
+                .orElseThrow(() -> new UsuarioJPNaoEncontradoException(idPaciente));
+    }
+
+    private Especialidade buscarEspecialidade(Long idEspecialidade) {
+        return especialidadeGateway.buscarPorId(idEspecialidade)
+                .orElseThrow(() -> new EspecialidadeNaoEncontradaException(idEspecialidade));
+    }
+
+    private Agendamento buscarAgendamento(Long idAgendamento) {
+        return agendamentoGateway.buscarPorId(idAgendamento)
+                .orElseThrow(() -> new AgendamentoNaoEncontradoException(idAgendamento));
+    }
+
+    private void enviarNotificacao(String nomePaciente, String mensagem) {
         final var dto = new NotificacaoDTO(
-                paciente,
+                nomePaciente,
                 "11970583685",
                 mensagem,
                 TipoNotificacao.SMS

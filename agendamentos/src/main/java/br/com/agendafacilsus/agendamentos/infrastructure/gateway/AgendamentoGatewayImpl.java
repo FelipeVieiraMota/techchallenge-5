@@ -37,7 +37,7 @@ public class AgendamentoGatewayImpl implements AgendamentoGateway {
     }
 
     @Override
-    public List<Agendamento> listarAgendamentos() {
+    public List<Agendamento> listar() {
         return agendamentoRepository.findAll();
     }
 

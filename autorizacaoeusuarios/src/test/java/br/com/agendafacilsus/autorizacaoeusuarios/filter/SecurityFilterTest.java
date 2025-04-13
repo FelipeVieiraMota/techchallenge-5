@@ -1,6 +1,6 @@
 package br.com.agendafacilsus.autorizacaoeusuarios.filter;
 
-import br.com.agendafacilsus.autorizacaoeusuarios.domains.entity.User;
+import br.com.agendafacilsus.autorizacaoeusuarios.domain.model.User;
 import br.com.agendafacilsus.autorizacaoeusuarios.service.UserService;
 import br.com.agendafacilsus.commonlibrary.service.TokenService;
 import jakarta.servlet.FilterChain;
@@ -35,11 +35,11 @@ class SecurityFilterTest {
     @Mock
     private FilterChain filterChain;
 
-    private SecurityFilter securityFilter;
+    private SecurityFilterAutorizacaoEUsuarios securityFilter;
 
     @BeforeEach
     void setUp() {
-        securityFilter = new SecurityFilter(tokenService, userService);
+        securityFilter = new SecurityFilterAutorizacaoEUsuarios(tokenService, userService);
     }
 
     @Test

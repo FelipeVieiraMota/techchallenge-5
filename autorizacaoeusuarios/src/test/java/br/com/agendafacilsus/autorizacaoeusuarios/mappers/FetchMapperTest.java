@@ -1,6 +1,7 @@
 package br.com.agendafacilsus.autorizacaoeusuarios.mappers;
 
-import br.com.agendafacilsus.autorizacaoeusuarios.domains.entity.User;
+import br.com.agendafacilsus.autorizacaoeusuarios.domain.model.User;
+import br.com.agendafacilsus.autorizacaoeusuarios.infrastructure.mapper.FetchMapper;
 import br.com.agendafacilsus.commonlibrary.domains.dtos.FetchUserDto;
 import br.com.agendafacilsus.commonlibrary.domains.enums.UserRole;
 import org.junit.jupiter.api.BeforeEach;

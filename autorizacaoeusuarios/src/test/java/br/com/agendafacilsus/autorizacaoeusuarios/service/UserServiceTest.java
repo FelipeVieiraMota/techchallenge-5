@@ -1,7 +1,7 @@
 package br.com.agendafacilsus.autorizacaoeusuarios.service;
 
-import br.com.agendafacilsus.autorizacaoeusuarios.domains.entity.User;
-import br.com.agendafacilsus.autorizacaoeusuarios.repository.UserRepository;
+import br.com.agendafacilsus.autorizacaoeusuarios.domain.model.User;
+import br.com.agendafacilsus.autorizacaoeusuarios.infrastructure.repository.UserRepository;
 import br.com.agendafacilsus.commonlibrary.domains.enums.UserRole;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

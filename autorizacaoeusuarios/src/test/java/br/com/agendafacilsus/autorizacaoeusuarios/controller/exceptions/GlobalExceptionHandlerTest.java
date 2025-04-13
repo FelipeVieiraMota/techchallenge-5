@@ -1,6 +1,8 @@
 package br.com.agendafacilsus.autorizacaoeusuarios.controller.exceptions;
 
-import br.com.agendafacilsus.autorizacaoeusuarios.domains.dtos.ErrorResponseDto;
+import br.com.agendafacilsus.autorizacaoeusuarios.domain.dto.ErrorResponseDto;
+import br.com.agendafacilsus.autorizacaoeusuarios.infrastructure.controller.exceptions.GlobalExceptionHandler;
+import br.com.agendafacilsus.autorizacaoeusuarios.infrastructure.controller.exceptions.UserAlreadyExistsException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;

@@ -1,7 +1,7 @@
 package br.com.agendafacilsus.autorizacaoeusuarios.service;
 
-import br.com.agendafacilsus.autorizacaoeusuarios.domains.entity.User;
-import br.com.agendafacilsus.autorizacaoeusuarios.mappers.IUserMapper;
+import br.com.agendafacilsus.autorizacaoeusuarios.domain.model.User;
+import br.com.agendafacilsus.autorizacaoeusuarios.infrastructure.mapper.IUserMapper;
 import br.com.agendafacilsus.commonlibrary.domains.dtos.AuthenticationDto;
 import br.com.agendafacilsus.commonlibrary.domains.dtos.TokenDto;
 import br.com.agendafacilsus.commonlibrary.domains.dtos.UserDto;
