@@ -3,7 +3,11 @@ package br.com.agendafacilsus.agendamentos;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootApplication(scanBasePackages = "br.com.agendafacilsus")
+@SpringBootApplication(scanBasePackages = {
+		"br.com.agendafacilsus.agendamentos",
+		"br.com.agendafacilsus.commonlibrary",
+		"br.com.agendafacilsus.notificacoes"
+})
 public class AgendamentoApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(AgendamentoApplication.class, args);

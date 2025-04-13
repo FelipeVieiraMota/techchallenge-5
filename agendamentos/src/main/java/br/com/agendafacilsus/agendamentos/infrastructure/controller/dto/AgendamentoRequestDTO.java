@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 
 public record AgendamentoRequestDTO(
         @NotBlank String nomePaciente,
+        @NotNull Long pacienteId,
         @NotNull Long referenciaId,
         @NotNull LocalDateTime dataHora
 ) {}

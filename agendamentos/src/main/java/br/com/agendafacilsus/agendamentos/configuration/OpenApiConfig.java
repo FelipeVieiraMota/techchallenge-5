@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class OpenApiConfig {
 
-    @Bean
+    @Bean(name = "openApiAgendamentos")
     public OpenAPI customOpenAPI() {
         return new OpenAPI()
                 .info(new Info().title("Agendamentos-API").version("v1"))
