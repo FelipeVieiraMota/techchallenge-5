@@ -8,6 +8,6 @@ import java.util.Optional;
 public interface AgendamentoGateway {
     Agendamento salvar(Agendamento agendamento);
     Optional<Agendamento> buscarPorId(Long id);
-    List<Agendamento> listarAgendamentos();
+    List<Agendamento> listar();
     void excluir(Long id);
 }

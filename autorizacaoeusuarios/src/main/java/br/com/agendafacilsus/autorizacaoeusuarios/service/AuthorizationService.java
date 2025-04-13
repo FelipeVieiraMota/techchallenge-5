@@ -1,8 +1,8 @@
 package br.com.agendafacilsus.autorizacaoeusuarios.service;
 
-import br.com.agendafacilsus.autorizacaoeusuarios.controller.exceptions.UserAlreadyExistsException;
-import br.com.agendafacilsus.autorizacaoeusuarios.domains.entity.User;
-import br.com.agendafacilsus.autorizacaoeusuarios.mappers.IFetchMapper;
+import br.com.agendafacilsus.autorizacaoeusuarios.infrastructure.controller.exceptions.UserAlreadyExistsException;
+import br.com.agendafacilsus.autorizacaoeusuarios.domain.model.User;
+import br.com.agendafacilsus.autorizacaoeusuarios.infrastructure.mapper.IFetchMapper;
 import br.com.agendafacilsus.commonlibrary.domains.dtos.FetchUserDto;
 import br.com.agendafacilsus.commonlibrary.domains.dtos.RegisterDto;
 import jakarta.validation.Valid;
@@ -36,7 +36,7 @@ public class AuthorizationService implements UserDetailsService {
         }
 
         final String encryptedPassword = new BCryptPasswordEncoder().encode(data.password());
-        final User newUser = new User(data.login(), encryptedPassword, data.role());
+        final User newUser = new User(data.name(), data.login(), encryptedPassword, data.role());
         return service.save(newUser);
     }
 

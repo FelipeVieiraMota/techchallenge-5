@@ -13,8 +13,9 @@
         <module>commonlibrary</module>
         <module>notificacoes</module>
         <module>especialidades</module>
+        <module>autorizacaoeusuarios</module>
         <module>agendamentos</module>
         <module>gateway</module>
-        <module>autorizacaoeusuarios</module>
+        <module>analytics</module>
     </modules>
 </project>
