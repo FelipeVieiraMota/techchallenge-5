@@ -57,6 +57,8 @@ public class SecurityConfigurations implements WebMvcConfigurer {
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/validation").permitAll()
                         .requestMatchers(HttpMethod.GET, "/auth/ping").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/actuator/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/favicon.ico/**").permitAll()
                         .requestMatchers(swaggerWhiteList).permitAll()
                         .anyRequest().authenticated()
                 )

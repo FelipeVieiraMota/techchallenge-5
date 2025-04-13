@@ -2,7 +2,12 @@ server:
   port: 12000
 
 spring:
-
+  boot:
+    admin:
+      client:
+        url: http://localhost:20000
+        instances:
+          name: especialidades
   application:
     name: especialidades
 
@@ -34,3 +39,9 @@ springdoc:
     url: /especialidades/api-docs
   api-docs:
     path: /especialidades/api-docs
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"

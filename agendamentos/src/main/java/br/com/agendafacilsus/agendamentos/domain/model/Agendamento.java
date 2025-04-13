@@ -20,7 +20,7 @@ public class Agendamento {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long pacienteId;
+//    private Long pacienteId;
 //    private Long medicoId;
     private String nomePaciente;
     private Long referenciaId; // ID da consulta ou exame relacionado

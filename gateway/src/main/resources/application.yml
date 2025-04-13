@@ -3,6 +3,10 @@ server:
   port: 8080
 
 spring:
+  boot:
+    admin:
+      client:
+        url: http://localhost:20000
   application:
     name: gateway
   cloud:
@@ -51,3 +55,9 @@ spring:
 logging:
   level:
     org.springframework.cloud.gateway: TRACE
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
