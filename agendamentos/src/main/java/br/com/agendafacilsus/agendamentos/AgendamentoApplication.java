@@ -6,7 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication(scanBasePackages = {
 		"br.com.agendafacilsus.agendamentos",
 		"br.com.agendafacilsus.commonlibrary",
-		"br.com.agendafacilsus.notificacoes"
+		"br.com.agendafacilsus.notificacoes",
+		"br.com.agendafacilsus.especialidades"
 })
 public class AgendamentoApplication {
 	public static void main(String[] args) {

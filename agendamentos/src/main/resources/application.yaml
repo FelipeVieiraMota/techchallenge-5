@@ -26,6 +26,9 @@ spring:
     driverClassName: org.h2.Driver
     username: sa
     password:
+  jpa:
+    hibernate:
+      ddl-auto: update
 
 api:
   security:

@@ -23,6 +23,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -38,6 +39,7 @@ public class AgendamentoUseCase {
     private final UsuarioJPGateway usuarioGateway;
     private final EspecialidadeGateway especialidadeGateway;
     private final HorarioDisponivelGateway horarioDisponivelGateway;
+    DateTimeFormatter dataFormatada = DateTimeFormatter.ofPattern("HH:mm");
 
     public AgendamentoResponseDTO criar(AgendamentoRequestDTO dto) {
         val paciente = buscarPaciente(dto.idPaciente());
@@ -48,7 +50,7 @@ public class AgendamentoUseCase {
 
         String medicoId = String.valueOf(dto.idMedico());
         LocalDate data = dto.dataHora().toLocalDate();
-        LocalTime hora = dto.dataHora().toLocalTime();
+        LocalTime hora = LocalTime.parse(dto.dataHora().toLocalTime().format(dataFormatada));
 
         horarioDisponivelGateway.marcarComoReservado(medicoId, data, hora);
 
@@ -84,7 +86,7 @@ public class AgendamentoUseCase {
         String medicoId = String.valueOf(dto.idMedico());
 
         LocalDate dataDisponivel = agendamento.getDataHora().toLocalDate();
-        LocalTime horaDisponivel = agendamento.getDataHora().toLocalTime();
+        LocalTime horaDisponivel = LocalTime.parse(agendamento.getDataHora().toLocalTime().format(dataFormatada));
         horarioDisponivelGateway.marcarComoDisponivel(medicoId, dataDisponivel, horaDisponivel);
 
         LocalDate dataReservado = dto.dataHora().toLocalDate();
@@ -101,9 +103,9 @@ public class AgendamentoUseCase {
         val agendamento = buscarAgendamento(id);
         agendamentoGateway.excluir(id);
 
-        String medicoId = String.valueOf(id);
+        String medicoId = String.valueOf(agendamento.getMedico());
         LocalDate dataDisponivel = agendamento.getDataHora().toLocalDate();
-        LocalTime horaDisponivel = agendamento.getDataHora().toLocalTime();
+        LocalTime horaDisponivel = LocalTime.parse(agendamento.getDataHora().toLocalTime().format(dataFormatada));
         horarioDisponivelGateway.marcarComoDisponivel(medicoId, dataDisponivel, horaDisponivel);
 
         enviarNotificacao(agendamento.getPaciente().getName(), "Seu agendamento foi cancelado.");

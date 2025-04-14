@@ -24,12 +24,24 @@
         </processorPath>
         <module name="commonlibrary" />
         <module name="dummy-api" />
+      </profile>
+      <profile name="Annotation profile for techchallenge-fase-5" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.32/lombok-1.18.32.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/springframework/boot/spring-boot-configuration-processor/3.4.3/spring-boot-configuration-processor-3.4.3.jar" />
+        </processorPath>
         <module name="autorizacaoeusuarios" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="agendamentoseconsultas" target="17" />
       <module name="api-for-tests" target="17" />
+      <module name="consultas" target="17" />
+      <module name="dummy-api" target="17" />
+      <module name="exames" target="17" />
       <module name="jwt-security-library" target="17" />
       <module name="notificacao" target="17" />
     </bytecodeTargetLevel>

@@ -7,6 +7,7 @@ import br.com.agendafacilsus.autorizacaoeusuarios.infrastructure.mapper.IUserMap
 import br.com.agendafacilsus.autorizacaoeusuarios.infrastructure.mapper.UserMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -67,6 +68,7 @@ public class SecurityConfigurationsAutorizacaoEUsuarios implements WebMvcConfigu
     }
 
     @Bean
+    @Primary
     public AuthenticationManager authenticationManagerAutorizacaoEUsuarios(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
