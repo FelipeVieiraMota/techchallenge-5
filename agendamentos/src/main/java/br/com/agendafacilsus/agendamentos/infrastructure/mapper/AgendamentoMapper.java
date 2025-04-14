@@ -17,6 +17,7 @@ public class AgendamentoMapper {
         return new Agendamento(
                 null, // ID gerado pelo banco
                 paciente,
+                dto.idMedico(),
                 especialidade,
                 dto.dataHora(),
                 StatusAgendamento.AGENDADO // status default

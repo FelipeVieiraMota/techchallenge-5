@@ -25,6 +25,9 @@ public class Agendamento {
     @JoinColumn(name = "id_paciente", referencedColumnName = "id", nullable = false)
     private User paciente;
 
+    @Column(nullable = false)
+    private Long medico;
+
     @ManyToOne(optional = false)
     @JoinColumn(name = "id_especialidade", referencedColumnName = "id", nullable = false)
     private Especialidade especialidade;

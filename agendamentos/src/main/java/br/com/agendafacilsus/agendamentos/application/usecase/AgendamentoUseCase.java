@@ -46,13 +46,13 @@ public class AgendamentoUseCase {
 
         agendamento.setStatus(StatusAgendamento.AGENDADO);
 
-        String medicoId = String.valueOf(dto.referenciaId());
+        String medicoId = String.valueOf(dto.idMedico());
         LocalDate data = dto.dataHora().toLocalDate();
         LocalTime hora = dto.dataHora().toLocalTime();
 
         horarioDisponivelGateway.marcarComoReservado(medicoId, data, hora);
 
-        enviarNotificacao(dto.nomePaciente(), "Seu agendamento foi criado para " + dto.dataHora() + ".");
+        enviarNotificacao(paciente.getName(), "Seu agendamento foi criado para " + dto.dataHora() + ".");
 
 
         val agendamentoSalvo = agendamentoGateway.salvar(agendamento);
@@ -81,7 +81,7 @@ public class AgendamentoUseCase {
         agendamento.setEspecialidade(especialidade);
         agendamento.setDataHora(dto.dataHora());
 
-        String medicoId = String.valueOf(dto.referenciaId());
+        String medicoId = String.valueOf(dto.idMedico());
 
         LocalDate dataDisponivel = agendamento.getDataHora().toLocalDate();
         LocalTime horaDisponivel = agendamento.getDataHora().toLocalTime();
