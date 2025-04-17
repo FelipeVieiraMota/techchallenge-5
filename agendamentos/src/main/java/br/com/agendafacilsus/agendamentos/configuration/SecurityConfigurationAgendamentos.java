@@ -32,7 +32,8 @@ public class SecurityConfigurationAgendamentos implements WebMvcConfigurer {
             "/v3/api-docs/**",
             "/swagger-ui/**",
             "/swagger-ui.html",
-            "/springdoc/**"
+            "/agendamentos/swagger-ui/**",
+            "/agendamentos/api-docs/**"
     };
 
     private static final String ALLOWED_ORIGIN = "http://localhost:8080";
@@ -49,7 +50,7 @@ public class SecurityConfigurationAgendamentos implements WebMvcConfigurer {
                         .requestMatchers("/error").permitAll()
                         .requestMatchers("/h2-console/**").permitAll()
                         .requestMatchers(swaggerWhiteList).permitAll()
-                        .anyRequest().permitAll()
+                        .anyRequest().authenticated()
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
