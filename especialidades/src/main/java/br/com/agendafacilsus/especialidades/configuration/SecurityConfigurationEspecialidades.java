@@ -32,7 +32,9 @@ public class SecurityConfigurationEspecialidades implements WebMvcConfigurer {
             "/v3/api-docs/**",
             "/swagger-ui/**",
             "/swagger-ui.html",
-            "/springdoc/**"
+            "/springdoc/**",
+            "/especialidades/swagger-ui/**",
+            "/especialidades/api-docs/**"
     };
 
     private static final String ALLOWED_ORIGIN = "http://localhost:8080";
@@ -51,7 +53,7 @@ public class SecurityConfigurationEspecialidades implements WebMvcConfigurer {
                         .requestMatchers(HttpMethod.GET, "/actuator/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/favicon.ico/**").permitAll()
                         .requestMatchers(swaggerWhiteList).permitAll()
-                        .anyRequest().permitAll()
+                        .anyRequest().authenticated()
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();

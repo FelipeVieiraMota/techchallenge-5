@@ -22,7 +22,6 @@
           <entry name="$MAVEN_REPOSITORY$/org/springframework/boot/spring-boot-configuration-processor/unknown/spring-boot-configuration-processor-unknown.jar" />
         </processorPath>
         <module name="commonlibrary" />
-        <module name="dummy-api" />
         <module name="autorizacaoeusuarios" />
       </profile>
     </annotationProcessing>

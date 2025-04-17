@@ -32,7 +32,7 @@ public class EspecialidadeController {
             @ApiResponse(responseCode = "401", description = "Requisição sem autenticação válida", content = @Content),
             @ApiResponse(responseCode = "403", description = "Usuário autenticado, mas sem permissão para acessar o recurso", content = @Content)
     })
-//    @PreAuthorize("hasAnyRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @PostMapping
     public ResponseEntity<EspecialidadeResponseDTO> criarEspecialidade(@Valid @RequestBody EspecialidadeRequestDTO dto) {
         return ResponseEntity.ok(useCase.criar(dto));
