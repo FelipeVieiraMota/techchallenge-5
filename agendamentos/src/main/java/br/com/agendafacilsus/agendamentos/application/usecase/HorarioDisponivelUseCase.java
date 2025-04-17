@@ -14,9 +14,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class HorarioDisponivelUseCase {
-
     private final HorarioDisponivelGateway horarioDisponivelGateway;
-
 
     public void cadastrarHorarios(HorarioDisponivelDTO dto) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
@@ -49,10 +47,7 @@ public class HorarioDisponivelUseCase {
         }
     }
 
-
-
     public List<HorarioDisponivelDTO> listarHorarios(String medicoId, LocalDate data) {
         return horarioDisponivelGateway.listarDisponiveis(medicoId, data);
     }
-
 }

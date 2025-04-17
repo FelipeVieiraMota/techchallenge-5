@@ -6,7 +6,6 @@ CREATE TABLE tb_users (
     role TEXT NOT NULL
 );
 
-
 -- TODO: Remove this insert when the application changes its database from H2 to PostgresSQL.
 -- Don't be in panic about the passwords, this is just for tests purposes, but these inserts must be removed when the application
 -- changes its database from H2 to PostgresSQL.

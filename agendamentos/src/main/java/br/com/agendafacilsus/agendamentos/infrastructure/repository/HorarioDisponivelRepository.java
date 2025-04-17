@@ -9,11 +9,9 @@ import java.util.List;
 import java.util.Optional;
 
 public interface HorarioDisponivelRepository extends JpaRepository<HorarioDisponivel, Long> {
-
     List<HorarioDisponivel> findByMedicoIdAndDataAndReservadoFalse(String medicoId, LocalDate data);
 
     Optional<HorarioDisponivel> findByMedicoIdAndDataAndHora(String medicoId, LocalDate data, LocalTime hora);
 
     boolean existsByMedicoIdAndDataAndHora(String medicoId, LocalDate data, LocalTime hora);
-
 }

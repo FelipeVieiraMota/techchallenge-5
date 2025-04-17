@@ -32,7 +32,7 @@ public class EspecialidadeController {
             @ApiResponse(responseCode = "401", description = "Requisição sem autenticação válida", content = @Content),
             @ApiResponse(responseCode = "403", description = "Usuário autenticado, mas sem permissão para acessar o recurso", content = @Content)
     })
-    @PreAuthorize("hasAnyRole('ADMIN')")
+//    @PreAuthorize("hasAnyRole('ADMIN')")
     @PostMapping
     public ResponseEntity<EspecialidadeResponseDTO> criarEspecialidade(@Valid @RequestBody EspecialidadeRequestDTO dto) {
         return ResponseEntity.ok(useCase.criar(dto));
@@ -45,7 +45,7 @@ public class EspecialidadeController {
             @ApiResponse(responseCode = "401", description = "Requisição sem autenticação válida", content = @Content),
             @ApiResponse(responseCode = "403", description = "Usuário autenticado, mas sem permissão para acessar o recurso", content = @Content)
     })
-    @PreAuthorize("hasAnyRole('ADMIN')")
+//    @PreAuthorize("hasAnyRole('ADMIN')")
     @GetMapping
     public ResponseEntity<List<EspecialidadeResponseDTO>> listarEspecialidades() {
         return ResponseEntity.ok(useCase.listar());
@@ -59,7 +59,7 @@ public class EspecialidadeController {
             @ApiResponse(responseCode = "403", description = "Usuário autenticado, mas sem permissão para acessar o recurso", content = @Content),
             @ApiResponse(responseCode = "404", description = "Especialidade não encontrada", content = @Content)
     })
-    @PreAuthorize("hasAnyRole('ADMIN')")
+//    @PreAuthorize("hasAnyRole('ADMIN')")
     @GetMapping("/{id}")
     public ResponseEntity<EspecialidadeResponseDTO> buscarEspecialidadePorId(@PathVariable Long id) {
         return ResponseEntity.ok(useCase.buscarPorId(id));
@@ -73,7 +73,7 @@ public class EspecialidadeController {
             @ApiResponse(responseCode = "403", description = "Usuário autenticado, mas sem permissão para acessar o recurso", content = @Content),
             @ApiResponse(responseCode = "404", description = "Especialidade não encontrada", content = @Content)
     })
-    @PreAuthorize("hasAnyRole('ADMIN')")
+//    @PreAuthorize("hasAnyRole('ADMIN')")
     @PutMapping("/{id}")
     public ResponseEntity<EspecialidadeResponseDTO> atualizarEspecialidade(@PathVariable Long id,
                                                                            @Valid @RequestBody EspecialidadeRequestDTO dto) {
@@ -87,7 +87,7 @@ public class EspecialidadeController {
             @ApiResponse(responseCode = "403", description = "Usuário autenticado, mas sem permissão para acessar o recurso", content = @Content),
             @ApiResponse(responseCode = "404", description = "Especialidade não encontrada", content = @Content)
     })
-    @PreAuthorize("hasAnyRole('ADMIN')")
+//    @PreAuthorize("hasAnyRole('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> excluirEspecialidade(@PathVariable Long id) {
         useCase.excluir(id);
