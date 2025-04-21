@@ -1,9 +1,12 @@
 package br.com.agendafacilsus.agendamentos.infrastructure.gateway;
 
+import br.com.agendafacilsus.agendamentos.domain.enums.StatusAgendamento;
 import br.com.agendafacilsus.agendamentos.domain.model.Agendamento;
+import br.com.agendafacilsus.agendamentos.exception.AgendamentoDuplicadoException;
 import br.com.agendafacilsus.agendamentos.exception.AgendamentoGatewayException;
 import br.com.agendafacilsus.agendamentos.infrastructure.repository.AgendamentoRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.val;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;
@@ -22,14 +25,32 @@ public class AgendamentoGatewayImpl implements AgendamentoGateway {
     @Override
     public Agendamento salvar(Agendamento agendamento) {
         try {
+            // Verificar se já existe um agendamento para o paciente no mesmo dia e horário
+            val jaExisteAgendamento = agendamentoRepository.existsByUuidPacienteAndDataAndHoraAndStatusNot(
+                    agendamento.getUuidPaciente(),
+                    agendamento.getData(),
+                    agendamento.getHora(),
+                    StatusAgendamento.CANCELADO // Exclui agendamentos cancelados da verificação
+            );
+
+            if (jaExisteAgendamento) {
+                logger.warn("Tentativa de salvar agendamento duplicado para o paciente {} no dia {} às {}",
+                        agendamento.getUuidPaciente(),
+                        agendamento.getData(),
+                        agendamento.getHora());
+                throw new AgendamentoDuplicadoException();
+            }
+
             Agendamento agendamentoSalvo = agendamentoRepository.save(agendamento);
             logger.info("Agendamento salvo com sucesso: {}", agendamentoSalvo::toString);
             return agendamentoSalvo;
+
         } catch (Exception e) {
             logger.error("Erro ao salvar agendamento: {}", e.getMessage());
             throw new AgendamentoGatewayException("Erro ao salvar agendamento", e);
         }
     }
+
 
     @Override
     public Optional<Agendamento> buscarPorId(Long id) {
