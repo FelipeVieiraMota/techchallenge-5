@@ -17,6 +17,11 @@ spring:
             allowedMethods: "*"
             allowedHeaders: "*"
       routes:
+        - id: notificacoes
+          uri: http://localhost:49153
+          predicates:
+            - Path=/notificacoes/**
+
         # ==== AUTORIZAÇÃO E USUÁRIOS ====
         - id: autorizacao-usuarios
           uri: http://localhost:9000
@@ -41,12 +46,12 @@ spring:
 
         # ==== ESPECIALIDADES ====
         - id: especialidades
-          uri: http://localhost:11000
+          uri: http://localhost:12000
           predicates:
             - Path=/especialidades/**
 
         - id: especialidades-swagger
-          uri: http://localhost:11000
+          uri: http://localhost:12000
           predicates:
             - Path=/api/**, /v3/api-docs/**, /swagger-ui/**, /swagger-ui.html, /especialidades/**
 
