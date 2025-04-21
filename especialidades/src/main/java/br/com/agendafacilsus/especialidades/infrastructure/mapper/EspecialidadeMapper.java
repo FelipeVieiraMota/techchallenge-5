@@ -2,7 +2,7 @@ package br.com.agendafacilsus.especialidades.infrastructure.mapper;
 
 import br.com.agendafacilsus.commonlibrary.domain.model.Especialidade;
 import br.com.agendafacilsus.especialidades.infrastructure.controller.dto.EspecialidadeRequestDTO;
-import br.com.agendafacilsus.especialidades.infrastructure.controller.dto.EspecialidadeResponseDTO;
+import br.com.agendafacilsus.commonlibrary.domain.dto.EspecialidadeResponseDTO;
 
 public class EspecialidadeMapper {
 

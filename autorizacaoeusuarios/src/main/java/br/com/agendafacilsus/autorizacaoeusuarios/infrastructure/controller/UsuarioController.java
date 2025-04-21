@@ -3,7 +3,7 @@ package br.com.agendafacilsus.autorizacaoeusuarios.infrastructure.controller;
 import br.com.agendafacilsus.autorizacaoeusuarios.application.usecase.UsuarioUseCase;
 import br.com.agendafacilsus.autorizacaoeusuarios.domain.dto.ListaUsuariosResponseDTO;
 import br.com.agendafacilsus.autorizacaoeusuarios.domain.dto.UsuarioRequestDTO;
-import br.com.agendafacilsus.autorizacaoeusuarios.domain.dto.UsuarioResponseDTO;
+import br.com.agendafacilsus.commonlibrary.domain.dto.UsuarioResponseDTO;
 import br.com.agendafacilsus.commonlibrary.domain.enums.UserRole;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/usuario")
+@RequestMapping("/autorizacao-usuarios")
 public class UsuarioController {
 
     private final UsuarioUseCase usuarioUseCase;
@@ -128,7 +128,7 @@ public class UsuarioController {
             @ApiResponse(responseCode = "500", description = "Erro interno no servidor", content = @Content)
     })
     @PreAuthorize("hasRole('ADMIN')")
-    @GetMapping("/usuario/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<UsuarioResponseDTO> buscarUsuarioPorId(@PathVariable String id) {
         return ResponseEntity.ok(usuarioUseCase.buscarPorId(id));
     }

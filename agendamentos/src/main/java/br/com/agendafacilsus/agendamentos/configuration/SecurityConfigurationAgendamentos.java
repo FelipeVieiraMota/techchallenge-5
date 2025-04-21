@@ -32,7 +32,9 @@ public class SecurityConfigurationAgendamentos implements WebMvcConfigurer {
             "/v3/api-docs/**",
             "/swagger-ui/**",
             "/swagger-ui.html",
-            "/agendamentos/**"
+            "/agendamentos/**",
+            "/especialidades/**",
+            "/autorizacao-usuarios/**"
     };
 
     private static final String ALLOWED_ORIGIN = "http://localhost:8080";

@@ -1,5 +1,6 @@
 package br.com.agendafacilsus.autorizacaoeusuarios.exception;
 
+import br.com.agendafacilsus.commonlibrary.domain.exception.UsuarioNaoEncontradoException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;

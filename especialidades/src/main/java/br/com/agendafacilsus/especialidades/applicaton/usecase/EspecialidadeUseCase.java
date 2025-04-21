@@ -1,8 +1,8 @@
 package br.com.agendafacilsus.especialidades.applicaton.usecase;
 
-import br.com.agendafacilsus.especialidades.exception.EspecialidadeNaoEncontradaException;
+import br.com.agendafacilsus.commonlibrary.domain.exception.EspecialidadeNaoEncontradaException;
 import br.com.agendafacilsus.especialidades.infrastructure.controller.dto.EspecialidadeRequestDTO;
-import br.com.agendafacilsus.especialidades.infrastructure.controller.dto.EspecialidadeResponseDTO;
+import br.com.agendafacilsus.commonlibrary.domain.dto.EspecialidadeResponseDTO;
 import br.com.agendafacilsus.especialidades.infrastructure.gateway.EspecialidadeGateway;
 import br.com.agendafacilsus.especialidades.infrastructure.mapper.EspecialidadeMapper;
 import lombok.RequiredArgsConstructor;

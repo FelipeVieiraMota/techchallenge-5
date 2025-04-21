@@ -6,14 +6,14 @@ import br.com.agendafacilsus.agendamentos.exception.AgendamentoNaoEncontradoExce
 import br.com.agendafacilsus.agendamentos.infrastructure.controller.dto.AgendamentoRequestDTO;
 import br.com.agendafacilsus.agendamentos.infrastructure.controller.dto.AgendamentoResponseDTO;
 import br.com.agendafacilsus.agendamentos.infrastructure.gateway.AgendamentoGateway;
+import br.com.agendafacilsus.agendamentos.infrastructure.gateway.EspecialidadeRestGateway;
 import br.com.agendafacilsus.agendamentos.infrastructure.gateway.HorarioDisponivelGateway;
+import br.com.agendafacilsus.agendamentos.infrastructure.gateway.UsuarioRestGateway;
 import br.com.agendafacilsus.agendamentos.infrastructure.mapper.AgendamentoMapper;
-import br.com.agendafacilsus.autorizacaoeusuarios.exception.UsuarioNaoEncontradoException;
-import br.com.agendafacilsus.autorizacaoeusuarios.infrastructure.gateway.UsuarioGateway;
-import br.com.agendafacilsus.commonlibrary.domain.model.Especialidade;
-import br.com.agendafacilsus.commonlibrary.domain.model.Usuario;
-import br.com.agendafacilsus.especialidades.exception.EspecialidadeNaoEncontradaException;
-import br.com.agendafacilsus.especialidades.infrastructure.gateway.EspecialidadeGateway;
+import br.com.agendafacilsus.commonlibrary.domain.dto.EspecialidadeResponseDTO;
+import br.com.agendafacilsus.commonlibrary.domain.dto.UsuarioResponseDTO;
+import br.com.agendafacilsus.commonlibrary.domain.exception.EspecialidadeNaoEncontradaException;
+import br.com.agendafacilsus.commonlibrary.domain.exception.UsuarioNaoEncontradoException;
 import br.com.agendafacilsus.notificacoes.domain.enums.TipoNotificacao;
 import br.com.agendafacilsus.notificacoes.infrastructure.dto.NotificacaoDTO;
 import br.com.agendafacilsus.notificacoes.infrastructure.gateway.NotificacaoGateway;
@@ -35,26 +35,31 @@ public class AgendamentoUseCase {
 
     private final AgendamentoGateway agendamentoGateway;
     private final NotificacaoGateway notificacaoGateway;
-    private final UsuarioGateway usuarioGateway;
-    private final EspecialidadeGateway especialidadeGateway;
+    private final UsuarioRestGateway usuarioRestGateway;
+    private final EspecialidadeRestGateway especialidadeRestGateway;
     private final HorarioDisponivelGateway horarioDisponivelGateway;
-    DateTimeFormatter dataFormatada = DateTimeFormatter.ofPattern("HH:mm");
 
-    public AgendamentoResponseDTO criar(AgendamentoRequestDTO dto) {
-        val paciente = buscarUsuario(dto.idPaciente());
-        val medico = buscarUsuario(dto.idMedico());
-        val especialidade = buscarEspecialidade(dto.idEspecialidade());
+    public AgendamentoResponseDTO criar(AgendamentoRequestDTO dto, String tokenJWT) {
+        val paciente = buscarUsuario(dto.idPaciente(), tokenJWT);
+        val medico = buscarUsuario(dto.idMedico(), tokenJWT);
+        val especialidade = buscarEspecialidade(dto.idEspecialidade(), tokenJWT);
+
+        val horaConvertida = LocalTime.parse(dto.hora(), DateTimeFormatter.ofPattern("HH:mm"));
+
         val agendamento = toEntity(dto, paciente, medico, especialidade);
-
         agendamento.setStatus(StatusAgendamento.AGENDADO);
 
-        val medicoId = String.valueOf(dto.idMedico());
-        val data = dto.dataHora().toLocalDate();
-        val hora = LocalTime.parse(dto.dataHora().toLocalTime().format(dataFormatada));
-
-        horarioDisponivelGateway.marcarComoReservado(medicoId, data, hora);
+        horarioDisponivelGateway.marcarComoReservado(medico.id(), dto.data(), horaConvertida);
         val agendamentoSalvo = agendamentoGateway.salvar(agendamento);
-        enviarNotificacao(paciente.getNome(), "Seu agendamento foi criado para " + dto.dataHora() + ".");
+        enviarNotificacao(
+                paciente.nome(),
+                String.format(
+                        "Seu agendamento com o Dr. %s foi criado para o dia %s às %s.",
+                        medico.nome(),
+                        dto.data().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
+                        horaConvertida.format(DateTimeFormatter.ofPattern("HH:mm"))
+                )
+        );
         return toResponseDTO(agendamentoSalvo);
     }
 
@@ -70,40 +75,42 @@ public class AgendamentoUseCase {
                 .orElseThrow(() -> new AgendamentoNaoEncontradoException(id));
     }
 
-    public AgendamentoResponseDTO atualizar(Long id, AgendamentoRequestDTO dto) {
+    public AgendamentoResponseDTO atualizar(Long id, AgendamentoRequestDTO dto, String tokenJWT) {
         val agendamento = buscarAgendamento(id);
-        val paciente = buscarUsuario(dto.idPaciente());
-        val especialidade = buscarEspecialidade(dto.idEspecialidade());
+        val paciente = buscarUsuario(dto.idPaciente(), tokenJWT);
+        val especialidade = buscarEspecialidade(dto.idEspecialidade(), tokenJWT);
+        val horaConvertida = LocalTime.parse(dto.hora(), DateTimeFormatter.ofPattern("HH:mm"));
 
-        agendamento.setPaciente(paciente);
-        agendamento.setEspecialidade(especialidade);
-        agendamento.setDataHora(dto.dataHora());
+        agendamento.setUuidPaciente(paciente.id());
+        agendamento.setNomePaciente(paciente.nome());
+        agendamento.setDescricaoEspecialidade(especialidade.descricao());
+        agendamento.setTipoEspecialidade(especialidade.especialidade());
+        agendamento.setData(dto.data());
+        agendamento.setHora(horaConvertida);
 
-        val medicoId = String.valueOf(dto.idMedico());
-
-        val dataDisponivel = agendamento.getDataHora().toLocalDate();
-        val horaDisponivel = LocalTime.parse(agendamento.getDataHora().toLocalTime().format(dataFormatada));
-        horarioDisponivelGateway.marcarComoDisponivel(medicoId, dataDisponivel, horaDisponivel);
-
-        val dataReservado = dto.dataHora().toLocalDate();
-        val horaReservado = dto.dataHora().toLocalTime();
-        horarioDisponivelGateway.marcarComoReservado(medicoId, dataReservado, horaReservado);
+        horarioDisponivelGateway.marcarComoDisponivel(dto.idMedico(), agendamento.getData(), agendamento.getHora());
+        horarioDisponivelGateway.marcarComoReservado(dto.idMedico(), dto.data(), horaConvertida);
 
         val agendamentoAtualizado = agendamentoGateway.salvar(agendamento);
-        enviarNotificacao(paciente.getNome(), "Seu agendamento foi atualizado para " + dto.dataHora() + ".");
+        val medico = buscarUsuario(dto.idMedico(), tokenJWT);
+
+        enviarNotificacao(
+                paciente.nome(),
+                String.format(
+                        "Seu agendamento com o Dr. %s foi atualizado para o dia %s às %s.",
+                        medico.nome(),
+                        dto.data().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
+                        horaConvertida.format(DateTimeFormatter.ofPattern("HH:mm"))
+                )
+        );
         return toResponseDTO(agendamentoAtualizado);
     }
 
     public void excluir(Long id) {
         val agendamento = buscarAgendamento(id);
         agendamentoGateway.excluir(id);
-
-        val medicoId = String.valueOf(agendamento.getMedico());
-        val dataDisponivel = agendamento.getDataHora().toLocalDate();
-        val horaDisponivel = LocalTime.parse(agendamento.getDataHora().toLocalTime().format(dataFormatada));
-        horarioDisponivelGateway.marcarComoDisponivel(medicoId, dataDisponivel, horaDisponivel);
-
-        enviarNotificacao(agendamento.getPaciente().getNome(), "Seu agendamento foi cancelado.");
+        horarioDisponivelGateway.marcarComoDisponivel(agendamento.getUuidMedico(), agendamento.getData(), agendamento.getHora());
+        enviarNotificacao(agendamento.getNomePaciente(), "Seu agendamento foi cancelado.");
     }
 
     public AgendamentoResponseDTO alterarStatus(Long id, StatusAgendamento novoStatus) {
@@ -117,17 +124,17 @@ public class AgendamentoUseCase {
             default -> "O status do seu agendamento foi alterado para: " + novoStatus;
         };
 
-        enviarNotificacao(agendamento.getPaciente().getNome(), mensagem);
+        enviarNotificacao(agendamento.getNomePaciente(), mensagem);
         return toResponseDTO(agendamentoAtualizado);
     }
 
-    private Usuario buscarUsuario(String idPaciente) {
-        return usuarioGateway.buscarPorId(idPaciente)
+    public UsuarioResponseDTO buscarUsuario(String idPaciente, String tokenJWT) {
+        return usuarioRestGateway.buscarPorId(idPaciente, tokenJWT)
                 .orElseThrow(() -> new UsuarioNaoEncontradoException(idPaciente));
     }
 
-    private Especialidade buscarEspecialidade(Long idEspecialidade) {
-        return especialidadeGateway.buscarPorId(idEspecialidade)
+    public EspecialidadeResponseDTO buscarEspecialidade(Long idEspecialidade, String tokenJWT) {
+        return especialidadeRestGateway.buscarPorId(idEspecialidade, tokenJWT)
                 .orElseThrow(() -> new EspecialidadeNaoEncontradaException(idEspecialidade));
     }
 

@@ -1,4 +1,4 @@
-package br.com.agendafacilsus.autorizacaoeusuarios.exception;
+package br.com.agendafacilsus.commonlibrary.domain.exception;
 
 public class UsuarioNaoEncontradoException extends RuntimeException {
     public UsuarioNaoEncontradoException(String idOuToken) {

@@ -19,6 +19,24 @@ Cada microserviço possui sua própria interface Swagger para facilitar a visual
 
 ---
 
+## 📢 Notificações com RabbitMQ + Twilio
+
+O serviço de **notificações** é responsável por enviar mensagens (como SMS) para os usuários utilizando o [Twilio](https://www.twilio.com/) e mensageria via **RabbitMQ**.
+
+### 🔧 Para executar corretamente este serviço, é necessário:
+
+1. **Configurar uma porta livre** no `application.yml` do microserviço de notificações.
+   > ❗ Verifique se a porta não está em uso. Use o comando `netstat -ano | findstr :PORTA` no terminal para verificar.
+
+2. **Cadastrar e configurar um número no Twilio**, incluindo:
+  - `conta_sid`
+  - `auth_token`
+  - `número de envio` (ex: `+19497827123`)
+
+3. Garantir que o serviço do **RabbitMQ** esteja em execução, já que ele é utilizado para enviar e receber eventos de notificação.
+
+---
+
 ## 📊 Monitoramento e Analytics
 
 A aplicação conta com um painel de monitoramento baseado no **Spring Boot Admin**, permitindo visualizar o estado e informações detalhadas dos microserviços em tempo real:

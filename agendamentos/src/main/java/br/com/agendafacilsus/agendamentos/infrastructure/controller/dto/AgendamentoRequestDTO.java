@@ -4,7 +4,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 public record AgendamentoRequestDTO(
         @Schema(description = "ID do paciente", example = "12345")
@@ -16,6 +16,11 @@ public record AgendamentoRequestDTO(
         @Schema(description = "ID do Médico", example = "1")
         @NotBlank String idMedico,
 
-        @Schema(description = "Data e hora do agendamento", example = "2025-04-13T08:00:00.000Z")
-        @NotNull LocalDateTime dataHora
+        @NotNull
+        @Schema(description = "Data do agendamento", example = "2025-04-13")
+        LocalDate data,
+
+        @NotBlank
+        @Schema(description = "Hora do agendamento", example = "08:00")
+        String hora
 ) {}

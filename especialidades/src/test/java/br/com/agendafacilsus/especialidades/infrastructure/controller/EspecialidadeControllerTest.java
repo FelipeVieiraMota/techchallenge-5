@@ -3,7 +3,7 @@ package br.com.agendafacilsus.especialidades.infrastructure.controller;
 import br.com.agendafacilsus.commonlibrary.domain.enums.TipoEspecialidade;
 import br.com.agendafacilsus.especialidades.applicaton.usecase.EspecialidadeUseCase;
 import br.com.agendafacilsus.especialidades.infrastructure.controller.dto.EspecialidadeRequestDTO;
-import br.com.agendafacilsus.especialidades.infrastructure.controller.dto.EspecialidadeResponseDTO;
+import br.com.agendafacilsus.commonlibrary.domain.dto.EspecialidadeResponseDTO;
 import lombok.val;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

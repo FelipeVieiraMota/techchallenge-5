@@ -35,9 +35,8 @@ public class HorarioDisponivelController {
     })
     @PreAuthorize("hasAnyRole('MEDICO', 'ADMIN')")
     @PostMapping
-    public ResponseEntity<Void> cadastrarHorarios(@Valid @RequestBody HorarioDisponivelDTO dto) {
+    public void cadastrarHorarios(@Valid @RequestBody HorarioDisponivelDTO dto) {
         horarioDisponivelUseCase.cadastrarHorarios(dto);
-        return ResponseEntity.ok().build();
     }
 
     @Operation(summary = "Listar horários disponíveis por médico e data")

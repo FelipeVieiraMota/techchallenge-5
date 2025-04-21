@@ -7,6 +7,7 @@ import br.com.agendafacilsus.agendamentos.exception.HorarioNaoEncontradoExceptio
 import br.com.agendafacilsus.agendamentos.infrastructure.controller.dto.HorarioDisponivelDTO;
 import br.com.agendafacilsus.agendamentos.infrastructure.repository.HorarioDisponivelRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.val;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -33,13 +34,14 @@ public class HorarioDisponivelGatewayImpl implements HorarioDisponivelGateway {
             throw new HorarioNaoDisponivelException(data);
         }
 
-        HorarioDisponivelDTO dto = new HorarioDisponivelDTO(medicoId, data, horas);
+        // Criando o DTO com os dados formatados
+        val dto = new HorarioDisponivelDTO(medicoId, data, horas);
         return List.of(dto);
     }
 
     @Override
     public void marcarComoReservado(String medicoId, LocalDate data, LocalTime hora) {
-        HorarioDisponivel horario = repository.findByMedicoIdAndDataAndHora(medicoId, data, hora)
+        val horario = repository.findByMedicoIdAndDataAndHora(medicoId, data, hora)
                 .orElseThrow(() -> new RuntimeException("Horário não encontrado"));
         horario.setReservado(true);
         repository.save(horario);
@@ -47,7 +49,7 @@ public class HorarioDisponivelGatewayImpl implements HorarioDisponivelGateway {
 
     @Override
     public void marcarComoDisponivel(String medicoId, LocalDate data, LocalTime hora) {
-        HorarioDisponivel horario = repository.findByMedicoIdAndDataAndHora(medicoId, data, hora)
+        val horario = repository.findByMedicoIdAndDataAndHora(medicoId, data, hora)
                 .orElseThrow(() -> new RuntimeException("Horário não encontrado"));
         horario.setReservado(false);
         repository.save(horario);
@@ -65,7 +67,7 @@ public class HorarioDisponivelGatewayImpl implements HorarioDisponivelGateway {
 
     @Override
     public void excluir(String medicoId, LocalDate data, LocalTime hora) {
-        HorarioDisponivel horario = repository.findByMedicoIdAndDataAndHora(medicoId, data, hora)
+        val horario = repository.findByMedicoIdAndDataAndHora(medicoId, data, hora)
                 .orElseThrow(() -> new HorarioNaoEncontradoException(medicoId, data, hora));
         repository.delete(horario);
     }

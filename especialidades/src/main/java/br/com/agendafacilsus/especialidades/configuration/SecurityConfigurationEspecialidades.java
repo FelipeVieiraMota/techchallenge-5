@@ -32,14 +32,15 @@ public class SecurityConfigurationEspecialidades implements WebMvcConfigurer {
             "/v3/api-docs/**",
             "/swagger-ui/**",
             "/swagger-ui.html",
-            "/especialidades/**"
+            "/especialidades/**",
+            "/agendamentos/**"
     };
 
     private static final String ALLOWED_ORIGIN = "http://localhost:8080";
 
     @Bean
     public SecurityFilterChain securityFilterChainEspecialidades(HttpSecurity httpSecurity) throws Exception {
-        return  httpSecurity
+        return httpSecurity
                 .csrf(AbstractHttpConfigurer::disable)
                 .headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -55,6 +56,7 @@ public class SecurityConfigurationEspecialidades implements WebMvcConfigurer {
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
+
 
     @Bean
     public AuthenticationManager authenticationManagerEspecialidades(AuthenticationConfiguration authenticationConfiguration) throws Exception {

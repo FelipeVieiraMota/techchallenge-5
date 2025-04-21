@@ -1,12 +1,12 @@
 package br.com.agendafacilsus.agendamentos.domain.model;
 
 import br.com.agendafacilsus.agendamentos.domain.enums.StatusAgendamento;
-import br.com.agendafacilsus.commonlibrary.domain.model.Especialidade;
-import br.com.agendafacilsus.commonlibrary.domain.model.Usuario;
+import br.com.agendafacilsus.commonlibrary.domain.enums.TipoEspecialidade;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Entity(name = "tb_agendamento")
 @Table(name = "tb_agendamento")
@@ -21,20 +21,29 @@ public class Agendamento {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "id_paciente", referencedColumnName = "id", nullable = false)
-    private Usuario paciente;
-
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "id_medico", referencedColumnName = "id", nullable = false)
-    private Usuario medico;
-
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "id_especialidade", referencedColumnName = "id", nullable = false)
-    private Especialidade especialidade;
+    @Column(nullable = false)
+    private String uuidPaciente;
 
     @Column(nullable = false)
-    private LocalDateTime dataHora;
+    private String nomePaciente;
+
+    @Column(nullable = false)
+    private String uuidMedico;
+
+    @Column(nullable = false)
+    private String nomeMedico;
+
+    @Column(nullable = false)
+    private String descricaoEspecialidade;
+
+    @Column(nullable = false)
+    private TipoEspecialidade tipoEspecialidade;
+
+    @Column(nullable = false)
+    private LocalDate data;
+
+    @Column(nullable = false)
+    private LocalTime hora;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)

@@ -1,6 +1,6 @@
 package br.com.agendafacilsus.autorizacaoeusuarios.service;
 
-import br.com.agendafacilsus.autorizacaoeusuarios.exception.UsuarioNaoEncontradoException;
+import br.com.agendafacilsus.commonlibrary.domain.exception.UsuarioNaoEncontradoException;
 import br.com.agendafacilsus.autorizacaoeusuarios.infrastructure.gateway.UsuarioGateway;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;

@@ -33,7 +33,8 @@ public class SecurityConfigurationsAutorizacaoEUsuarios implements WebMvcConfigu
             "/v3/api-docs/**",
             "/swagger-ui/**",
             "/swagger-ui.html",
-            "/autorizacao-usuarios/**"
+            "/autorizacao-usuarios/**",
+            "/agendamentos/**"
     };
 
     private static final String ALLOWED_ORIGIN = "http://localhost:8080"; // Permite acesso do front-end
@@ -52,7 +53,7 @@ public class SecurityConfigurationsAutorizacaoEUsuarios implements WebMvcConfigu
                         .requestMatchers("/h2-console/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/autenticacao/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/autenticacao/validar-token").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/usuario/criar").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/criar").permitAll()
                         .requestMatchers(HttpMethod.GET, "/actuator/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/favicon.ico/**").permitAll()
                         .requestMatchers(SWAGGER_WHITELIST).permitAll()

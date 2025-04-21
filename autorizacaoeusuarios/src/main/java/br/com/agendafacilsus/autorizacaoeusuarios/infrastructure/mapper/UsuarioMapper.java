@@ -1,7 +1,7 @@
 package br.com.agendafacilsus.autorizacaoeusuarios.infrastructure.mapper;
 
 import br.com.agendafacilsus.autorizacaoeusuarios.domain.dto.UsuarioRequestDTO;
-import br.com.agendafacilsus.autorizacaoeusuarios.domain.dto.UsuarioResponseDTO;
+import br.com.agendafacilsus.commonlibrary.domain.dto.UsuarioResponseDTO;
 import br.com.agendafacilsus.commonlibrary.domain.model.Usuario;
 
 public class UsuarioMapper {

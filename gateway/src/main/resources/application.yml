@@ -17,6 +17,7 @@ spring:
             allowedMethods: "*"
             allowedHeaders: "*"
       routes:
+        # ==== AUTORIZAÇÃO E USUÁRIOS ====
         - id: autorizacao-usuarios
           uri: http://localhost:9000
           predicates:
@@ -27,6 +28,7 @@ spring:
           predicates:
             - Path=/api/**, /v3/api-docs/**, /swagger-ui/**, /swagger-ui.html, /autorizacao-usuarios/**
 
+        # ==== AGENDAMENTOS ====
         - id: agendamentos
           uri: http://localhost:10000
           predicates:
@@ -35,8 +37,9 @@ spring:
         - id: agendamentos-swagger
           uri: http://localhost:10000
           predicates:
-            - Path=/api/**, /v3/api-docs/**, /swagger-ui/**, /agendamentos/**
+            - Path=/api/**, /v3/api-docs/**, /swagger-ui/**, /swagger-ui.html, /agendamentos/**
 
+        # ==== ESPECIALIDADES ====
         - id: especialidades
           uri: http://localhost:11000
           predicates:
@@ -45,7 +48,8 @@ spring:
         - id: especialidades-swagger
           uri: http://localhost:11000
           predicates:
-            - Path=/api/**, /v3/api-docs/**, /swagger-ui/**, /especialidades/**
+            - Path=/api/**, /v3/api-docs/**, /swagger-ui/**, /swagger-ui.html, /especialidades/**
+
       default-filters:
         - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Methods Access-Control-Allow-Headers RETAIN_FIRST
 

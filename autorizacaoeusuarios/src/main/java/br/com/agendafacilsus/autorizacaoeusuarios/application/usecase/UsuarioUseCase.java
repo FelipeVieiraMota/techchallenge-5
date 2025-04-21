@@ -1,8 +1,8 @@
 package br.com.agendafacilsus.autorizacaoeusuarios.application.usecase;
 
 import br.com.agendafacilsus.autorizacaoeusuarios.domain.dto.UsuarioRequestDTO;
-import br.com.agendafacilsus.autorizacaoeusuarios.domain.dto.UsuarioResponseDTO;
-import br.com.agendafacilsus.autorizacaoeusuarios.exception.UsuarioNaoEncontradoException;
+import br.com.agendafacilsus.commonlibrary.domain.dto.UsuarioResponseDTO;
+import br.com.agendafacilsus.commonlibrary.domain.exception.UsuarioNaoEncontradoException;
 import br.com.agendafacilsus.autorizacaoeusuarios.infrastructure.gateway.UsuarioGateway;
 import br.com.agendafacilsus.autorizacaoeusuarios.infrastructure.mapper.UsuarioMapper;
 import br.com.agendafacilsus.commonlibrary.domain.enums.UserRole;

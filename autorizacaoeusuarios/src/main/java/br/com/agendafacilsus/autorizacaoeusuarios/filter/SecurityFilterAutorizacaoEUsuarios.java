@@ -32,44 +32,11 @@ public class SecurityFilterAutorizacaoEUsuarios extends OncePerRequestFilter {
     private String secret;
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request,
-                                    HttpServletResponse response,
-                                    FilterChain filterChain) throws IOException {
-
-        try {
-            val token = tokenService.recoverToken(request);
-
-            if (token != null) {
-                val login = tokenService.tokenSubject(secret, token);
-                val usuario = usuarioUseCase.buscarPorLogin(login);
-                val claims = tokenService.extractClaims(secret, token);
-
-                if (usuario == null || usuario.getAuthorities() == null) {
-                    throw new ForbiddenException("Sem permissão.");
-                }
-
-                if (tokenService.isTokenExpired(claims)) {
-                    throw new ForbiddenException("Sem permissão.");
-                }
-
-                val autenticacao = new UsernamePasswordAuthenticationToken(
-                        usuario,
-                        null,
-                        usuario.getAuthorities()
-                );
-
-                SecurityContextHolder.getContext().setAuthentication(autenticacao);
-            }
-
-            filterChain.doFilter(request, response);
-        } catch (ForbiddenException exception) {
-            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-            response.setContentType(APPLICATION_JSON);
-            response.getWriter().write(new ErrorResponseDto(exception.getMessage(), HttpStatus.FORBIDDEN).toString());
-        } catch (Throwable exception) {
-            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-            response.setContentType(APPLICATION_JSON);
-            response.getWriter().write(new ErrorResponseDto("Ocorreu um erro imprevisível.", HttpStatus.INTERNAL_SERVER_ERROR).toString());
-        }
+    protected void doFilterInternal(
+            final HttpServletRequest request,
+            final HttpServletResponse response,
+            final FilterChain filterChain
+    ) throws IOException {
+        tokenService.checkTokenRoles(secret, request, response, filterChain);
     }
 }

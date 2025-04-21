@@ -1,5 +1,6 @@
 package br.com.agendafacilsus.agendamentos.infrastructure.controller.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.time.LocalDate;
@@ -10,6 +11,7 @@ public record HorarioDisponivelDTO(
         String medicoId,
 
         @Schema(description = "Data disponível para agendamento", example = "2025-04-13")
+        @JsonFormat(pattern = "yyyy-MM-dd")
         LocalDate data,
 
         @Schema(description = "Lista de horários disponíveis", example = "[\"08:00\", \"09:30\"]")

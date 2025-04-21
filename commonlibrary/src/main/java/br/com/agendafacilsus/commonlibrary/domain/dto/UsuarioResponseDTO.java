@@ -1,4 +1,4 @@
-package br.com.agendafacilsus.autorizacaoeusuarios.domain.dto;
+package br.com.agendafacilsus.commonlibrary.domain.dto;
 
 import br.com.agendafacilsus.commonlibrary.domain.enums.UserRole;
 

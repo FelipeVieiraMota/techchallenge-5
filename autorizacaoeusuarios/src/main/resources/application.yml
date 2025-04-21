@@ -9,7 +9,7 @@ spring:
           name: autorizacaoeusuarios
         url: http://localhost:20000
   application:
-    name: autorizacaoeusuarios
+    name: autorizacao-usuarios
   h2:
     console:
       enabled: true

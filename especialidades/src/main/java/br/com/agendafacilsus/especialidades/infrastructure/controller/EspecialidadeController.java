@@ -2,7 +2,7 @@ package br.com.agendafacilsus.especialidades.infrastructure.controller;
 
 import br.com.agendafacilsus.especialidades.applicaton.usecase.EspecialidadeUseCase;
 import br.com.agendafacilsus.especialidades.infrastructure.controller.dto.EspecialidadeRequestDTO;
-import br.com.agendafacilsus.especialidades.infrastructure.controller.dto.EspecialidadeResponseDTO;
+import br.com.agendafacilsus.commonlibrary.domain.dto.EspecialidadeResponseDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -63,7 +63,6 @@ public class EspecialidadeController {
             @ApiResponse(responseCode = "404", description = "Especialidade não encontrada", content = @Content),
             @ApiResponse(responseCode = "500", description = "Erro interno no servidor", content = @Content)
     })
-    @PreAuthorize("hasAnyRole('ADMIN', 'MEDICO')")
     @GetMapping("/{id}")
     public ResponseEntity<EspecialidadeResponseDTO> buscarEspecialidadePorId(@PathVariable Long id) {
         return ResponseEntity.ok(useCase.buscarPorId(id));
