@@ -32,15 +32,13 @@ public class SecurityConfigurationAgendamentos implements WebMvcConfigurer {
             "/v3/api-docs/**",
             "/swagger-ui/**",
             "/swagger-ui.html",
-            "/agendamentos/swagger-ui/**",
-            "/agendamentos/api-docs/**"
+            "/agendamentos/**"
     };
 
     private static final String ALLOWED_ORIGIN = "http://localhost:8080";
 
     @Bean
     public SecurityFilterChain securityFilterChainAgendamentos(HttpSecurity httpSecurity) throws Exception {
-
         return  httpSecurity
                 .csrf(AbstractHttpConfigurer::disable)
                 .headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin))
@@ -49,6 +47,8 @@ public class SecurityConfigurationAgendamentos implements WebMvcConfigurer {
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .requestMatchers("/error").permitAll()
                         .requestMatchers("/h2-console/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/actuator/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/favicon.ico/**").permitAll()
                         .requestMatchers(swaggerWhiteList).permitAll()
                         .anyRequest().authenticated()
                 )

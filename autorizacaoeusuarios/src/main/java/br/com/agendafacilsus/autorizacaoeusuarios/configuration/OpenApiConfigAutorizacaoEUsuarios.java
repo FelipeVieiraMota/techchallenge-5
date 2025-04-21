@@ -1,22 +1,20 @@
 package br.com.agendafacilsus.autorizacaoeusuarios.configuration;
 
+import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
-import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.security.SecurityRequirement;
 import io.swagger.v3.oas.models.security.SecurityScheme;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
 
 @Configuration
 public class OpenApiConfigAutorizacaoEUsuarios {
 
     @Bean
-    @Primary
     public OpenAPI customOpenAPIAutorizacaoEUsuarios() {
         return new OpenAPI()
-                .info(new Info().title("Autorização-Usuarios-API").version("v1"))
+                .info(new Info().title("Autorização-Usuários-API").version("v1"))
                 .addSecurityItem(new SecurityRequirement().addList("Authorization"))
                 .components
                 (

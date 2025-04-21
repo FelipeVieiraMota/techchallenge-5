@@ -1,4 +1,3 @@
-
 server:
   port: 8080
 
@@ -18,37 +17,35 @@ spring:
             allowedMethods: "*"
             allowedHeaders: "*"
       routes:
-
-        - id: auth-service
+        - id: autorizacao-usuarios
           uri: http://localhost:9000
           predicates:
-            - Path=/auth/**
+            - Path=/autorizacao-usuarios/**
 
-        - id: auth-swagger
+        - id: autorizacao-usuarios-swagger
           uri: http://localhost:9000
           predicates:
-            - Path=/api/**, /v3/api-docs/**, /swagger-ui/**, /swagger-ui.html, /springdoc/**
+            - Path=/api/**, /v3/api-docs/**, /swagger-ui/**, /swagger-ui.html, /autorizacao-usuarios/**
 
         - id: agendamentos
-          uri: http://localhost:11000
+          uri: http://localhost:10000
           predicates:
             - Path=/agendamentos/**
 
         - id: agendamentos-swagger
-          uri: http://localhost:11000
+          uri: http://localhost:10000
           predicates:
-            - Path=/api/**, /v3/api-docs/**, /swagger-ui/**, /agendamentos/swagger-ui.html, /agendamentos/springdoc/**
+            - Path=/api/**, /v3/api-docs/**, /swagger-ui/**, /agendamentos/**
 
         - id: especialidades
-          uri: http://localhost:12000
+          uri: http://localhost:11000
           predicates:
             - Path=/especialidades/**
 
         - id: especialidades-swagger
-          uri: http://localhost:12000
+          uri: http://localhost:11000
           predicates:
-            - Path=/api/**, /v3/api-docs/**, /swagger-ui/**, /especialidades/swagger-ui.html, /especialidades/springdoc/**
-
+            - Path=/api/**, /v3/api-docs/**, /swagger-ui/**, /especialidades/**
       default-filters:
         - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Methods Access-Control-Allow-Headers RETAIN_FIRST
 

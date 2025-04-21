@@ -1,7 +1,7 @@
 package br.com.agendafacilsus.especialidades.infrastructure.controller;
 
+import br.com.agendafacilsus.commonlibrary.domain.enums.TipoEspecialidade;
 import br.com.agendafacilsus.especialidades.applicaton.usecase.EspecialidadeUseCase;
-import br.com.agendafacilsus.especialidades.domain.enums.TipoEspecialidade;
 import br.com.agendafacilsus.especialidades.infrastructure.controller.dto.EspecialidadeRequestDTO;
 import br.com.agendafacilsus.especialidades.infrastructure.controller.dto.EspecialidadeResponseDTO;
 import lombok.val;

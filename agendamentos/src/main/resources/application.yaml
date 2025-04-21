@@ -1,35 +1,19 @@
 server:
-  port: 11000
+  port: 10000
 
 spring:
-
   application:
     name: agendamentos
 
-  # Database Configuration
-  # datasource:
-  #   url: jdbc:postgresql://localhost:5432/agendamentos-db
-  #   username: postgres
-  #   password: postgres
-  #   driver-class-name: org.postgresql.Driver
-  # jpa:
-  #   hibernate:
-  #     ddl-auto: create
-  #   show-sql: true
-
-  h2:
-    console:
-      enabled: true
-      path: /h2-console
+  # Configuração do datasource para PostgreSQL
   datasource:
-    url: jdbc:h2:mem:authentication;
-    driverClassName: org.h2.Driver
-    username: sa
-    password:
+    url: jdbc:postgresql://testejp:5434/tech5  # Alterado para PostgreSQL
+    driverClassName: org.postgresql.Driver     # Driver do PostgreSQL
+    username: postgres                         # Seu nome de usuário do PostgreSQL
+    password: fiap5                            # Sua senha no PostgreSQL
   jpa:
     hibernate:
       ddl-auto: update
-
 api:
   security:
     token:
@@ -40,15 +24,6 @@ logging:
     org.springframework.security: TRACE
     org.springframework.security.web.FilterChainProxy: TRACE
 
-#springdoc:
-#  swagger-ui:
-#    path: /springdoc/swagger-ui.html
-#    enabled: true
-#    disable-swagger-default-url: true
-#    url: /springdoc/api-docs
-#  api-docs:
-#    path: /springdoc/api-docs
-
 springdoc:
   swagger-ui:
     path: /agendamentos/swagger-ui.html
@@ -57,3 +32,9 @@ springdoc:
     url: /agendamentos/api-docs
   api-docs:
     path: /agendamentos/api-docs
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"

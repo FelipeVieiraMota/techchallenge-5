@@ -1,9 +1,11 @@
 package br.com.agendafacilsus.especialidades.infrastructure.gateway;
 
-import br.com.agendafacilsus.especialidades.domain.model.Especialidade;
+import br.com.agendafacilsus.commonlibrary.domain.model.Especialidade;
+import br.com.agendafacilsus.especialidades.exception.EspecialidadeDuplicadaException;
 import br.com.agendafacilsus.especialidades.exception.EspecialidadeGatewayException;
 import br.com.agendafacilsus.especialidades.infrastructure.repository.EspecialidadeRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.val;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;
@@ -22,9 +24,17 @@ public class EspecialidadeGatewayImpl implements EspecialidadeGateway {
     @Override
     public Especialidade salvar(Especialidade especialidade) {
         try {
-            Especialidade consultaSalva = especialidadeRepository.save(especialidade);
+            val jaExisteEspecialidade = especialidadeRepository.existsByDescricaoIgnoreCase(especialidade.getDescricao());
+
+            if (jaExisteEspecialidade) {
+                logger.warn("Tentativa de salvar especialidade duplicada: {}", especialidade.getDescricao());
+                throw new EspecialidadeDuplicadaException();
+            }
+
+            val consultaSalva = especialidadeRepository.save(especialidade);
             logger.info("Especialidade salva com sucesso: {}", consultaSalva::toString);
             return consultaSalva;
+
         } catch (Exception e) {
             logger.error("Erro ao salvar especialidade: {}", e.getMessage());
             throw new EspecialidadeGatewayException("Erro ao salvar especialidade", e);

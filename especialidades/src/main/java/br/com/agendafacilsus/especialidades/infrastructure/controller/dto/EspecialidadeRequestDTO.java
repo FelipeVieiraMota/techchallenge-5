@@ -1,6 +1,6 @@
 package br.com.agendafacilsus.especialidades.infrastructure.controller.dto;
 
-import br.com.agendafacilsus.especialidades.domain.enums.TipoEspecialidade;
+import br.com.agendafacilsus.commonlibrary.domain.enums.TipoEspecialidade;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

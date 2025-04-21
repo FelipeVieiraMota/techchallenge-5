@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Configuration;
 public class OpenApiConfigEspecialidades {
 
     @Bean
-    public OpenAPI OpenAPIEspecialidades() {
+    public OpenAPI customOpenAPIEspecialidades() {
         return new OpenAPI()
                 .info(new Info().title("Especialidades-API").version("v1"))
                 .addSecurityItem(new SecurityRequirement().addList("Authorization"))

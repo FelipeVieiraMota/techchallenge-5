@@ -1,6 +1,6 @@
 package br.com.agendafacilsus.especialidades.infrastructure.gateway;
 
-import br.com.agendafacilsus.especialidades.domain.model.Especialidade;
+import br.com.agendafacilsus.commonlibrary.domain.model.Especialidade;
 
 import java.util.List;
 import java.util.Optional;

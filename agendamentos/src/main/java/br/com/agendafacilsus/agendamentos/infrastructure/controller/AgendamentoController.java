@@ -28,7 +28,9 @@ public class AgendamentoController {
             @ApiResponse(responseCode = "200", description = "Agendamento criado com sucesso",
                     content = @Content(schema = @Schema(implementation = AgendamentoResponseDTO.class))),
             @ApiResponse(responseCode = "401", description = "Requisição sem autenticação válida", content = @Content),
-            @ApiResponse(responseCode = "403", description = "Usuário autenticado, mas sem permissão", content = @Content)
+            @ApiResponse(responseCode = "403", description = "Usuário autenticado, mas sem permissão", content = @Content),
+            @ApiResponse(responseCode = "409", description = "Agendamento já cadastrado", content = @Content),
+            @ApiResponse(responseCode = "500", description = "Erro interno no servidor", content = @Content)
     })
     @PreAuthorize("hasAnyRole('PACIENTE', 'ADMIN')")
     @PostMapping
@@ -41,7 +43,8 @@ public class AgendamentoController {
             @ApiResponse(responseCode = "200", description = "Lista de agendamentos recuperada com sucesso",
                     content = @Content(schema = @Schema(implementation = AgendamentoResponseDTO.class))),
             @ApiResponse(responseCode = "401", description = "Requisição sem autenticação válida", content = @Content),
-            @ApiResponse(responseCode = "403", description = "Usuário autenticado, mas sem permissão", content = @Content)
+            @ApiResponse(responseCode = "403", description = "Usuário autenticado, mas sem permissão", content = @Content),
+            @ApiResponse(responseCode = "500", description = "Erro interno no servidor", content = @Content)
     })
     @PreAuthorize("hasAnyRole('ADMIN')")
     @GetMapping
@@ -55,7 +58,8 @@ public class AgendamentoController {
                     content = @Content(schema = @Schema(implementation = AgendamentoResponseDTO.class))),
             @ApiResponse(responseCode = "404", description = "Agendamento não encontrado", content = @Content),
             @ApiResponse(responseCode = "401", description = "Requisição sem autenticação válida", content = @Content),
-            @ApiResponse(responseCode = "403", description = "Usuário autenticado, mas sem permissão", content = @Content)
+            @ApiResponse(responseCode = "403", description = "Usuário autenticado, mas sem permissão", content = @Content),
+            @ApiResponse(responseCode = "500", description = "Erro interno no servidor", content = @Content)
     })
     @PreAuthorize("hasAnyRole('PACIENTE', 'MEDICO', 'ADMIN')")
     @GetMapping("/{id}")
@@ -69,7 +73,8 @@ public class AgendamentoController {
                     content = @Content(schema = @Schema(implementation = AgendamentoResponseDTO.class))),
             @ApiResponse(responseCode = "404", description = "Agendamento não encontrado", content = @Content),
             @ApiResponse(responseCode = "401", description = "Requisição sem autenticação válida", content = @Content),
-            @ApiResponse(responseCode = "403", description = "Usuário autenticado, mas sem permissão", content = @Content)
+            @ApiResponse(responseCode = "403", description = "Usuário autenticado, mas sem permissão", content = @Content),
+            @ApiResponse(responseCode = "500", description = "Erro interno no servidor", content = @Content)
     })
     @PreAuthorize("hasAnyRole('MEDICO', 'ADMIN')")
     @PutMapping("/{id}")
@@ -84,7 +89,8 @@ public class AgendamentoController {
                     content = @Content(schema = @Schema(implementation = AgendamentoResponseDTO.class))),
             @ApiResponse(responseCode = "404", description = "Agendamento não encontrado", content = @Content),
             @ApiResponse(responseCode = "401", description = "Requisição sem autenticação válida", content = @Content),
-            @ApiResponse(responseCode = "403", description = "Usuário autenticado, mas sem permissão", content = @Content)
+            @ApiResponse(responseCode = "403", description = "Usuário autenticado, mas sem permissão", content = @Content),
+            @ApiResponse(responseCode = "500", description = "Erro interno no servidor", content = @Content)
     })
     @PreAuthorize("hasAnyRole('MEDICO', 'ADMIN')")
     @PatchMapping("/{id}/status")
@@ -98,7 +104,8 @@ public class AgendamentoController {
             @ApiResponse(responseCode = "204", description = "Agendamento excluído com sucesso", content = @Content),
             @ApiResponse(responseCode = "404", description = "Agendamento não encontrado", content = @Content),
             @ApiResponse(responseCode = "401", description = "Requisição sem autenticação válida", content = @Content),
-            @ApiResponse(responseCode = "403", description = "Usuário autenticado, mas sem permissão", content = @Content)
+            @ApiResponse(responseCode = "403", description = "Usuário autenticado, mas sem permissão", content = @Content),
+            @ApiResponse(responseCode = "500", description = "Erro interno no servidor", content = @Content)
     })
     @PreAuthorize("hasAnyRole('ADMIN', 'PACIENTE')")
     @DeleteMapping("/{id}")

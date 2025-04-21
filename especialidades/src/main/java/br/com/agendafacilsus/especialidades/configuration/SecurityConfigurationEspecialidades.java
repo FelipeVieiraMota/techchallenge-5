@@ -32,16 +32,13 @@ public class SecurityConfigurationEspecialidades implements WebMvcConfigurer {
             "/v3/api-docs/**",
             "/swagger-ui/**",
             "/swagger-ui.html",
-            "/springdoc/**",
-            "/especialidades/swagger-ui/**",
-            "/especialidades/api-docs/**"
+            "/especialidades/**"
     };
 
     private static final String ALLOWED_ORIGIN = "http://localhost:8080";
 
     @Bean
     public SecurityFilterChain securityFilterChainEspecialidades(HttpSecurity httpSecurity) throws Exception {
-
         return  httpSecurity
                 .csrf(AbstractHttpConfigurer::disable)
                 .headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin))

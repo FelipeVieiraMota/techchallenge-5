@@ -30,9 +30,11 @@ public class EspecialidadeController {
             @ApiResponse(responseCode = "200", description = "Especialidade criada com sucesso",
                     content = @Content(schema = @Schema(implementation = EspecialidadeResponseDTO.class))),
             @ApiResponse(responseCode = "401", description = "Requisição sem autenticação válida", content = @Content),
-            @ApiResponse(responseCode = "403", description = "Usuário autenticado, mas sem permissão para acessar o recurso", content = @Content)
+            @ApiResponse(responseCode = "403", description = "Usuário autenticado, mas sem permissão para acessar o recurso", content = @Content),
+            @ApiResponse(responseCode = "409", description = "Especialidade já cadastrada", content = @Content),
+            @ApiResponse(responseCode = "500", description = "Erro interno no servidor", content = @Content)
     })
-    @PreAuthorize("hasAnyRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'MEDICO')")
     @PostMapping
     public ResponseEntity<EspecialidadeResponseDTO> criarEspecialidade(@Valid @RequestBody EspecialidadeRequestDTO dto) {
         return ResponseEntity.ok(useCase.criar(dto));
@@ -43,9 +45,10 @@ public class EspecialidadeController {
             @ApiResponse(responseCode = "200", description = "Lista de especialidades recuperada com sucesso",
                     content = @Content(schema = @Schema(implementation = EspecialidadeResponseDTO.class))),
             @ApiResponse(responseCode = "401", description = "Requisição sem autenticação válida", content = @Content),
-            @ApiResponse(responseCode = "403", description = "Usuário autenticado, mas sem permissão para acessar o recurso", content = @Content)
+            @ApiResponse(responseCode = "403", description = "Usuário autenticado, mas sem permissão para acessar o recurso", content = @Content),
+            @ApiResponse(responseCode = "500", description = "Erro interno no servidor", content = @Content)
     })
-//    @PreAuthorize("hasAnyRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'MEDICO')")
     @GetMapping
     public ResponseEntity<List<EspecialidadeResponseDTO>> listarEspecialidades() {
         return ResponseEntity.ok(useCase.listar());
@@ -57,9 +60,10 @@ public class EspecialidadeController {
                     content = @Content(schema = @Schema(implementation = EspecialidadeResponseDTO.class))),
             @ApiResponse(responseCode = "401", description = "Requisição sem autenticação válida", content = @Content),
             @ApiResponse(responseCode = "403", description = "Usuário autenticado, mas sem permissão para acessar o recurso", content = @Content),
-            @ApiResponse(responseCode = "404", description = "Especialidade não encontrada", content = @Content)
+            @ApiResponse(responseCode = "404", description = "Especialidade não encontrada", content = @Content),
+            @ApiResponse(responseCode = "500", description = "Erro interno no servidor", content = @Content)
     })
-//    @PreAuthorize("hasAnyRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'MEDICO')")
     @GetMapping("/{id}")
     public ResponseEntity<EspecialidadeResponseDTO> buscarEspecialidadePorId(@PathVariable Long id) {
         return ResponseEntity.ok(useCase.buscarPorId(id));
@@ -71,9 +75,10 @@ public class EspecialidadeController {
                     content = @Content(schema = @Schema(implementation = EspecialidadeResponseDTO.class))),
             @ApiResponse(responseCode = "401", description = "Requisição sem autenticação válida", content = @Content),
             @ApiResponse(responseCode = "403", description = "Usuário autenticado, mas sem permissão para acessar o recurso", content = @Content),
-            @ApiResponse(responseCode = "404", description = "Especialidade não encontrada", content = @Content)
+            @ApiResponse(responseCode = "404", description = "Especialidade não encontrada", content = @Content),
+            @ApiResponse(responseCode = "500", description = "Erro interno no servidor", content = @Content)
     })
-//    @PreAuthorize("hasAnyRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'MEDICO')")
     @PutMapping("/{id}")
     public ResponseEntity<EspecialidadeResponseDTO> atualizarEspecialidade(@PathVariable Long id,
                                                                            @Valid @RequestBody EspecialidadeRequestDTO dto) {
@@ -85,9 +90,10 @@ public class EspecialidadeController {
             @ApiResponse(responseCode = "204", description = "Especialidade excluída com sucesso", content = @Content),
             @ApiResponse(responseCode = "401", description = "Requisição sem autenticação válida", content = @Content),
             @ApiResponse(responseCode = "403", description = "Usuário autenticado, mas sem permissão para acessar o recurso", content = @Content),
-            @ApiResponse(responseCode = "404", description = "Especialidade não encontrada", content = @Content)
+            @ApiResponse(responseCode = "404", description = "Especialidade não encontrada", content = @Content),
+            @ApiResponse(responseCode = "500", description = "Erro interno no servidor", content = @Content)
     })
-//    @PreAuthorize("hasAnyRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'MEDICO')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> excluirEspecialidade(@PathVariable Long id) {
         useCase.excluir(id);

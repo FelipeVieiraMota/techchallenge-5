@@ -8,10 +8,10 @@ import br.com.agendafacilsus.agendamentos.infrastructure.controller.dto.Agendame
 import br.com.agendafacilsus.agendamentos.infrastructure.gateway.AgendamentoGateway;
 import br.com.agendafacilsus.agendamentos.infrastructure.gateway.HorarioDisponivelGateway;
 import br.com.agendafacilsus.agendamentos.infrastructure.mapper.AgendamentoMapper;
-import br.com.agendafacilsus.autorizacaoeusuarios.domain.model.User;
-import br.com.agendafacilsus.autorizacaoeusuarios.exception.UsuarioJPNaoEncontradoException;
-import br.com.agendafacilsus.autorizacaoeusuarios.infrastructure.gateway.user.UsuarioJPGateway;
-import br.com.agendafacilsus.especialidades.domain.model.Especialidade;
+import br.com.agendafacilsus.autorizacaoeusuarios.exception.UsuarioNaoEncontradoException;
+import br.com.agendafacilsus.autorizacaoeusuarios.infrastructure.gateway.UsuarioGateway;
+import br.com.agendafacilsus.commonlibrary.domain.model.Especialidade;
+import br.com.agendafacilsus.commonlibrary.domain.model.Usuario;
 import br.com.agendafacilsus.especialidades.exception.EspecialidadeNaoEncontradaException;
 import br.com.agendafacilsus.especialidades.infrastructure.gateway.EspecialidadeGateway;
 import br.com.agendafacilsus.notificacoes.domain.enums.TipoNotificacao;
@@ -21,7 +21,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.val;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -36,29 +35,26 @@ public class AgendamentoUseCase {
 
     private final AgendamentoGateway agendamentoGateway;
     private final NotificacaoGateway notificacaoGateway;
-    private final UsuarioJPGateway usuarioGateway;
+    private final UsuarioGateway usuarioGateway;
     private final EspecialidadeGateway especialidadeGateway;
     private final HorarioDisponivelGateway horarioDisponivelGateway;
     DateTimeFormatter dataFormatada = DateTimeFormatter.ofPattern("HH:mm");
 
     public AgendamentoResponseDTO criar(AgendamentoRequestDTO dto) {
-        val paciente = buscarPaciente(dto.idPaciente());
+        val paciente = buscarUsuario(dto.idPaciente());
+        val medico = buscarUsuario(dto.idMedico());
         val especialidade = buscarEspecialidade(dto.idEspecialidade());
-        val agendamento = toEntity(dto, paciente, especialidade);
+        val agendamento = toEntity(dto, paciente, medico, especialidade);
 
         agendamento.setStatus(StatusAgendamento.AGENDADO);
 
-        String medicoId = String.valueOf(dto.idMedico());
-        LocalDate data = dto.dataHora().toLocalDate();
-        LocalTime hora = LocalTime.parse(dto.dataHora().toLocalTime().format(dataFormatada));
+        val medicoId = String.valueOf(dto.idMedico());
+        val data = dto.dataHora().toLocalDate();
+        val hora = LocalTime.parse(dto.dataHora().toLocalTime().format(dataFormatada));
 
         horarioDisponivelGateway.marcarComoReservado(medicoId, data, hora);
-
-        enviarNotificacao(paciente.getName(), "Seu agendamento foi criado para " + dto.dataHora() + ".");
-
-
         val agendamentoSalvo = agendamentoGateway.salvar(agendamento);
-        enviarNotificacao(paciente.getName(), "Seu agendamento foi criado para " + dto.dataHora() + ".");
+        enviarNotificacao(paciente.getNome(), "Seu agendamento foi criado para " + dto.dataHora() + ".");
         return toResponseDTO(agendamentoSalvo);
     }
 
@@ -76,26 +72,25 @@ public class AgendamentoUseCase {
 
     public AgendamentoResponseDTO atualizar(Long id, AgendamentoRequestDTO dto) {
         val agendamento = buscarAgendamento(id);
-        val paciente = buscarPaciente(dto.idPaciente());
+        val paciente = buscarUsuario(dto.idPaciente());
         val especialidade = buscarEspecialidade(dto.idEspecialidade());
 
         agendamento.setPaciente(paciente);
         agendamento.setEspecialidade(especialidade);
         agendamento.setDataHora(dto.dataHora());
 
-        String medicoId = String.valueOf(dto.idMedico());
+        val medicoId = String.valueOf(dto.idMedico());
 
-        LocalDate dataDisponivel = agendamento.getDataHora().toLocalDate();
-        LocalTime horaDisponivel = LocalTime.parse(agendamento.getDataHora().toLocalTime().format(dataFormatada));
+        val dataDisponivel = agendamento.getDataHora().toLocalDate();
+        val horaDisponivel = LocalTime.parse(agendamento.getDataHora().toLocalTime().format(dataFormatada));
         horarioDisponivelGateway.marcarComoDisponivel(medicoId, dataDisponivel, horaDisponivel);
 
-        LocalDate dataReservado = dto.dataHora().toLocalDate();
-        LocalTime horaReservado = dto.dataHora().toLocalTime();
-
+        val dataReservado = dto.dataHora().toLocalDate();
+        val horaReservado = dto.dataHora().toLocalTime();
         horarioDisponivelGateway.marcarComoReservado(medicoId, dataReservado, horaReservado);
 
         val agendamentoAtualizado = agendamentoGateway.salvar(agendamento);
-        enviarNotificacao(paciente.getName(), "Seu agendamento foi atualizado para " + dto.dataHora() + ".");
+        enviarNotificacao(paciente.getNome(), "Seu agendamento foi atualizado para " + dto.dataHora() + ".");
         return toResponseDTO(agendamentoAtualizado);
     }
 
@@ -103,12 +98,12 @@ public class AgendamentoUseCase {
         val agendamento = buscarAgendamento(id);
         agendamentoGateway.excluir(id);
 
-        String medicoId = String.valueOf(agendamento.getMedico());
-        LocalDate dataDisponivel = agendamento.getDataHora().toLocalDate();
-        LocalTime horaDisponivel = LocalTime.parse(agendamento.getDataHora().toLocalTime().format(dataFormatada));
+        val medicoId = String.valueOf(agendamento.getMedico());
+        val dataDisponivel = agendamento.getDataHora().toLocalDate();
+        val horaDisponivel = LocalTime.parse(agendamento.getDataHora().toLocalTime().format(dataFormatada));
         horarioDisponivelGateway.marcarComoDisponivel(medicoId, dataDisponivel, horaDisponivel);
 
-        enviarNotificacao(agendamento.getPaciente().getName(), "Seu agendamento foi cancelado.");
+        enviarNotificacao(agendamento.getPaciente().getNome(), "Seu agendamento foi cancelado.");
     }
 
     public AgendamentoResponseDTO alterarStatus(Long id, StatusAgendamento novoStatus) {
@@ -122,13 +117,13 @@ public class AgendamentoUseCase {
             default -> "O status do seu agendamento foi alterado para: " + novoStatus;
         };
 
-        enviarNotificacao(agendamento.getPaciente().getName(), mensagem);
+        enviarNotificacao(agendamento.getPaciente().getNome(), mensagem);
         return toResponseDTO(agendamentoAtualizado);
     }
 
-    private User buscarPaciente(String idPaciente) {
+    private Usuario buscarUsuario(String idPaciente) {
         return usuarioGateway.buscarPorId(idPaciente)
-                .orElseThrow(() -> new UsuarioJPNaoEncontradoException(idPaciente));
+                .orElseThrow(() -> new UsuarioNaoEncontradoException(idPaciente));
     }
 
     private Especialidade buscarEspecialidade(Long idEspecialidade) {

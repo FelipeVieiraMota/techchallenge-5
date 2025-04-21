@@ -2,7 +2,8 @@ package br.com.agendafacilsus.agendamentos.infrastructure.gateway;
 
 
 import br.com.agendafacilsus.agendamentos.domain.model.HorarioDisponivel;
-import br.com.agendafacilsus.agendamentos.exception.HorarioNaoDipsonivelException;
+import br.com.agendafacilsus.agendamentos.exception.HorarioNaoDisponivelException;
+import br.com.agendafacilsus.agendamentos.exception.HorarioNaoEncontradoException;
 import br.com.agendafacilsus.agendamentos.infrastructure.controller.dto.HorarioDisponivelDTO;
 import br.com.agendafacilsus.agendamentos.infrastructure.repository.HorarioDisponivelRepository;
 import lombok.RequiredArgsConstructor;
@@ -29,7 +30,7 @@ public class HorarioDisponivelGatewayImpl implements HorarioDisponivelGateway {
                 .toList();
 
         if (horas.isEmpty()) {
-            throw new HorarioNaoDipsonivelException(data);
+            throw new HorarioNaoDisponivelException(data);
         }
 
         HorarioDisponivelDTO dto = new HorarioDisponivelDTO(medicoId, data, horas);
@@ -53,12 +54,19 @@ public class HorarioDisponivelGatewayImpl implements HorarioDisponivelGateway {
     }
 
     @Override
-    public void saveAll(List<HorarioDisponivel> horarios) {
+    public void salvarHorario(List<HorarioDisponivel> horarios) {
         repository.saveAll(horarios);
     }
 
     @Override
     public boolean existsByMedicoIdAndDataAndHora(String medicoId, LocalDate data, LocalTime hora) {
         return repository.existsByMedicoIdAndDataAndHora(medicoId, data, hora);
+    }
+
+    @Override
+    public void excluir(String medicoId, LocalDate data, LocalTime hora) {
+        HorarioDisponivel horario = repository.findByMedicoIdAndDataAndHora(medicoId, data, hora)
+                .orElseThrow(() -> new HorarioNaoEncontradoException(medicoId, data, hora));
+        repository.delete(horario);
     }
 }

@@ -6,9 +6,9 @@ import java.time.LocalDateTime;
 
 public record AgendamentoResponseDTO(
         Long id,
-        String idPaciente,
         String nomePaciente,
-        Long idEspecialidade,
+        String nomeMedico,
+        String descricaoEspecialidade,
         LocalDateTime dataHora,
         StatusAgendamento status
 ) {}

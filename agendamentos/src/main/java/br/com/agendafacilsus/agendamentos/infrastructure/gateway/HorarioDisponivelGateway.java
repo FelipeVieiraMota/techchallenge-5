@@ -11,6 +11,7 @@ public interface HorarioDisponivelGateway {
     List<HorarioDisponivelDTO> listarDisponiveis(String medicoId, LocalDate data);
     void marcarComoReservado(String medicoId, LocalDate data, LocalTime hora);
     void marcarComoDisponivel(String medicoId, LocalDate data, LocalTime hora);
-    void saveAll(List<HorarioDisponivel> horarios);
+    void salvarHorario(List<HorarioDisponivel> horarios);
     boolean existsByMedicoIdAndDataAndHora(String medicoId, LocalDate data, LocalTime hora);
+    void excluir(String medicoId, LocalDate data, LocalTime hora);
 }

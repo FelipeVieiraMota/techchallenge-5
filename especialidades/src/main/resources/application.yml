@@ -1,5 +1,5 @@
 server:
-  port: 12000
+  port: 11000
 
 spring:
   boot:
@@ -18,9 +18,8 @@ spring:
   datasource:
     url: jdbc:h2:mem:authentication;
     driverClassName: org.h2.Driver
-    username: sa
-    password:
-
+    username: postech
+    password: fase5
 api:
   security:
     token:

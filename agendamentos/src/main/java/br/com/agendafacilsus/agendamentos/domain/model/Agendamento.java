@@ -1,20 +1,20 @@
 package br.com.agendafacilsus.agendamentos.domain.model;
 
 import br.com.agendafacilsus.agendamentos.domain.enums.StatusAgendamento;
-import br.com.agendafacilsus.autorizacaoeusuarios.domain.model.User;
-import br.com.agendafacilsus.especialidades.domain.model.Especialidade;
+import br.com.agendafacilsus.commonlibrary.domain.model.Especialidade;
+import br.com.agendafacilsus.commonlibrary.domain.model.Usuario;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
 
+@Entity(name = "tb_agendamento")
+@Table(name = "tb_agendamento")
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
-@Table(name = "tb_agendamento")
-@Entity(name = "tb_agendamento")
 public class Agendamento {
 
     @Id
@@ -23,10 +23,11 @@ public class Agendamento {
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "id_paciente", referencedColumnName = "id", nullable = false)
-    private User paciente;
+    private Usuario paciente;
 
-    @Column(nullable = false)
-    private Long medico;
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "id_medico", referencedColumnName = "id", nullable = false)
+    private Usuario medico;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "id_especialidade", referencedColumnName = "id", nullable = false)
@@ -39,3 +40,4 @@ public class Agendamento {
     @Column(nullable = false)
     private StatusAgendamento status;
 }
+
