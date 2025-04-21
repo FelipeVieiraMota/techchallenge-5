@@ -10,15 +10,15 @@ public record UsuarioRequestDTO(
         @NotBlank
         String nome,
 
-        @Schema(description = "Login do usuário", example = "joao@email.com")
+        @Schema(description = "Login do usuário", example = "admin")
         @NotBlank
         String login,
 
-        @Schema(description = "Senha do usuário", example = "senha123")
+        @Schema(description = "Senha do usuário", example = "test123")
         @NotBlank
         String senha,
 
-        @Schema(description = "Papel do usuário", example = "PACIENTE")
+        @Schema(description = "Papel do usuário", example = "ADMIN")
         @NotNull
         UserRole role
 ) {}
