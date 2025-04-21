@@ -17,11 +17,6 @@ spring:
             allowedMethods: "*"
             allowedHeaders: "*"
       routes:
-        - id: notificacoes
-          uri: http://localhost:49153
-          predicates:
-            - Path=/notificacoes/**
-
         # ==== AUTORIZAÇÃO E USUÁRIOS ====
         - id: autorizacao-usuarios
           uri: http://localhost:9000
