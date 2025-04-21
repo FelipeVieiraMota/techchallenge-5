@@ -3,6 +3,7 @@ package br.com.agendafacilsus.agendamentos.application.usecase;
 import br.com.agendafacilsus.agendamentos.domain.enums.StatusAgendamento;
 import br.com.agendafacilsus.agendamentos.domain.model.Agendamento;
 import br.com.agendafacilsus.agendamentos.exception.AgendamentoNaoEncontradoException;
+import br.com.agendafacilsus.agendamentos.exception.HorarioNaoDisponivelException;
 import br.com.agendafacilsus.agendamentos.infrastructure.controller.dto.AgendamentoRequestDTO;
 import br.com.agendafacilsus.agendamentos.infrastructure.controller.dto.AgendamentoResponseDTO;
 import br.com.agendafacilsus.agendamentos.infrastructure.gateway.AgendamentoGateway;
@@ -43,12 +44,15 @@ public class AgendamentoUseCase {
         val paciente = buscarUsuario(dto.idPaciente(), tokenJWT);
         val medico = buscarUsuario(dto.idMedico(), tokenJWT);
         val especialidade = buscarEspecialidade(dto.idEspecialidade(), tokenJWT);
-
         val horaConvertida = LocalTime.parse(dto.hora(), DateTimeFormatter.ofPattern("HH:mm"));
+
+        boolean horarioDisponivel = !horarioDisponivelGateway.existsByMedicoIdAndDataAndHora(medico.id(), dto.data(), horaConvertida);
+        if (!horarioDisponivel) {
+            throw new HorarioNaoDisponivelException(dto.data());
+        }
 
         val agendamento = toEntity(dto, paciente, medico, especialidade);
         agendamento.setStatus(StatusAgendamento.AGENDADO);
-
         horarioDisponivelGateway.marcarComoReservado(medico.id(), dto.data(), horaConvertida);
         val agendamentoSalvo = agendamentoGateway.salvar(agendamento);
         enviarNotificacao(
