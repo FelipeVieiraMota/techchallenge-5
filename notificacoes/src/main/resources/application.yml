@@ -1,7 +1,26 @@
+server:
+  port: 11000
+
 spring:
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+
   cloud:
     stream:
       default-binder: rabbit
+      binders:
+        rabbit:
+          type: rabbit
+          environment:
+            spring:
+              rabbitmq:
+                host: localhost
+                port: 5672
+                username: guest
+                password: guest
       bindings:
         enviar-out-0:
           destination: notificacao.exchange
@@ -17,3 +36,10 @@ twilio:
   conta_sid: AC1173eb313a4cab7140cb6140ed2b0ecf
   auth_token: 876740ff405eb8219a27bf3b4782834d
   numero: +19497827123
+
+
+logging:
+  level:
+    org.springframework.cloud.stream: DEBUG
+    org.springframework.amqp.rabbit: DEBUG
+    org.springframework.messaging: DEBUG
