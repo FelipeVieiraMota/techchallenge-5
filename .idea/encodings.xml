@@ -5,9 +5,9 @@
     <file url="file://$PROJECT_DIR$/analytics/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/autorizacaoeusuarios/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/commonlibrary/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/consultas/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/consultas/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/dummy-api/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/especialidades/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/especialidades/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/exames/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/exames/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/gateway/src/main/java" charset="UTF-8" />

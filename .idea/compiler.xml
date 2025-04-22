@@ -8,13 +8,12 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="analytics" />
-        <module name="consultas" />
         <module name="notificacoes" />
         <module name="agendamentos" />
+        <module name="especialidades" />
         <module name="gateway" />
-        <module name="exames" />
       </profile>
-      <profile name="Annotation profile for dummy-api" enabled="true">
+      <profile name="Annotation profile for techchallenge-fase-5" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
@@ -23,14 +22,15 @@
           <entry name="$MAVEN_REPOSITORY$/org/springframework/boot/spring-boot-configuration-processor/unknown/spring-boot-configuration-processor-unknown.jar" />
         </processorPath>
         <module name="commonlibrary" />
-        <module name="dummy-api" />
         <module name="autorizacaoeusuarios" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="agendamentoseconsultas" target="17" />
-      <module name="analitics" target="17" />
       <module name="api-for-tests" target="17" />
+      <module name="consultas" target="17" />
+      <module name="dummy-api" target="17" />
+      <module name="exames" target="17" />
       <module name="jwt-security-library" target="17" />
       <module name="notificacao" target="17" />
     </bytecodeTargetLevel>
@@ -43,6 +43,7 @@
       <module name="commonlibrary" options="-parameters" />
       <module name="consultas" options="-parameters" />
       <module name="dummy-api" options="-parameters" />
+      <module name="especialidades" options="-parameters" />
       <module name="exames" options="-parameters" />
       <module name="gateway" options="-parameters" />
       <module name="jwt-security-library" options="-parameters" />

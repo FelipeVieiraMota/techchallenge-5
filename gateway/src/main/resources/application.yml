@@ -1,4 +1,3 @@
-
 server:
   port: 8080
 
@@ -18,46 +17,38 @@ spring:
             allowedMethods: "*"
             allowedHeaders: "*"
       routes:
-
-        - id: auth-service
+        # ==== AUTORIZAÇÃO E USUÁRIOS ====
+        - id: autorizacao-usuarios
           uri: http://localhost:9000
           predicates:
-            - Path=/auth/**
+            - Path=/autorizacao-usuarios/**
 
-        - id: auth-swagger
+        - id: autorizacao-usuarios-swagger
           uri: http://localhost:9000
           predicates:
-            - Path=/api/**, /v3/api-docs/**, /swagger-ui/**, /swagger-ui.html, /springdoc/**
+            - Path=/api/**, /v3/api-docs/**, /swagger-ui/**, /swagger-ui.html, /autorizacao-usuarios/**
 
+        # ==== AGENDAMENTOS ====
         - id: agendamentos
-          uri: http://localhost:11000
+          uri: http://localhost:10000
           predicates:
             - Path=/agendamentos/**
 
         - id: agendamentos-swagger
-          uri: http://localhost:11000
+          uri: http://localhost:10000
           predicates:
-            - Path=/api/**, /v3/api-docs/**, /swagger-ui/**, /agendamentos/swagger-ui.html, /agendamentos/springdoc/**
+            - Path=/api/**, /v3/api-docs/**, /swagger-ui/**, /swagger-ui.html, /agendamentos/**
 
-        - id: consultas
+        # ==== ESPECIALIDADES ====
+        - id: especialidades
           uri: http://localhost:12000
           predicates:
-            - Path=/consultas/**
+            - Path=/especialidades/**
 
-        - id: consultas-swagger
+        - id: especialidades-swagger
           uri: http://localhost:12000
           predicates:
-            - Path=/api/**, /v3/api-docs/**, /swagger-ui/**, /consultas/swagger-ui.html, /consultas/springdoc/**
-
-        - id: exames
-          uri: http://localhost:13000
-          predicates:
-            - Path=/exames/**
-
-        - id: exames-swagger
-          uri: http://localhost:13000
-          predicates:
-            - Path=/api/**, /v3/api-docs/**, /swagger-ui/**, /exames/swagger-ui.html, /exames/springdoc/**
+            - Path=/api/**, /v3/api-docs/**, /swagger-ui/**, /swagger-ui.html, /especialidades/**
 
       default-filters:
         - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Methods Access-Control-Allow-Headers RETAIN_FIRST

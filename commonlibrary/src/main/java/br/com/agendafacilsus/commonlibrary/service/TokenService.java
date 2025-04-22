@@ -1,7 +1,6 @@
 package br.com.agendafacilsus.commonlibrary.service;
 
-import br.com.agendafacilsus.commonlibrary.domains.dtos.UserDto;
-import br.com.agendafacilsus.commonlibrary.domains.exceptions.ForbiddenException;
+import br.com.agendafacilsus.commonlibrary.domain.exception.ForbiddenException;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
@@ -14,10 +13,12 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.val;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -27,56 +28,56 @@ import java.time.ZoneOffset;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class TokenService {
-
     private static final String APPLICATION_JSON = "application/json";
+    public static final String AUTH_API = "auth-api";
 
-    /*
-    * Use this method to validate JWT inside your API filter.
-    * */
-    public void checkTokenRoles(
-        final String secret,
-        final HttpServletRequest request,
-        final HttpServletResponse response,
-        final FilterChain filterChain
-    ) throws IOException {
+    public void checkTokenRoles(String secret, HttpServletRequest request,
+                                HttpServletResponse response, FilterChain filterChain) throws IOException {
         try {
-
-            final var token = recoverToken(request);
+            val token = recoverToken(request);
 
             if (token != null) {
-
-                final var claims = extractClaims(secret, token);
+                val claims = extractClaims(secret, token);
 
                 if (isTokenExpired(claims)) {
-                    throw new ForbiddenException("Not Allowed.");
+                    throw new ForbiddenException("Sem permissão.");
                 }
 
-                final var roles = claims.get("roles", List.class);
+                List<?> rawRoles = claims.get("roles", List.class);
+                List<String> roles = rawRoles.stream()
+                        .filter(String.class::isInstance)
+                        .map(String.class::cast)
+                        .toList();
 
-                final List<SimpleGrantedAuthority> authorities = getAuthorities(roles);
+                List<GrantedAuthority> autorizacao = getAuthorities(roles);
 
-                final var authentication = new UsernamePasswordAuthenticationToken(
+                val autenticacao = new UsernamePasswordAuthenticationToken(
                         claims.getSubject(),
                         null,
-                        authorities
+                        autorizacao
                 );
-                SecurityContextHolder.getContext().setAuthentication(authentication);
+                SecurityContextHolder.getContext().setAuthentication(autenticacao);
             }
 
             filterChain.doFilter(request, response);
         } catch (Exception exception) {
+            exception.printStackTrace(); // <-- Isso ajuda!
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             response.setContentType(APPLICATION_JSON);
             response.getWriter().write("{\"error\":\"Unauthorized access\"}");
         }
+
     }
 
-    private static List getAuthorities(List roles) {
-        return roles.stream().map(role -> new SimpleGrantedAuthority(role.toString())).toList();
+    private static List<GrantedAuthority> getAuthorities(List<String> roles) {
+        return roles.stream()
+                .map(SimpleGrantedAuthority::new)
+                .collect(Collectors.toList());
     }
 
     public Claims extractClaims(final String secret, final String token) {
@@ -95,13 +96,13 @@ public class TokenService {
         return claims.getExpiration().before(new Date());
     }
 
-    public String generateToken(final String secret, final UserDto user){
+    public String generateToken(String secret, UserDetails user){
         try{
             final List<String> roles = getRoles(user);
             final Algorithm algorithm = Algorithm.HMAC256(secret);
             return JWT.create()
-                    .withIssuer("auth-api")
-                    .withSubject(user.login())
+                    .withIssuer(AUTH_API)
+                    .withSubject(user.getUsername())
                     .withClaim("roles", roles)
                     .withExpiresAt(genExpirationDate())
                     .sign(algorithm);
@@ -110,8 +111,8 @@ public class TokenService {
         }
     }
 
-    private static List<String> getRoles(final UserDto user) {
-        final Collection<? extends GrantedAuthority> authorities = user.authorities();
+    private static List<String> getRoles(UserDetails user) {
+        final Collection<? extends GrantedAuthority> authorities = user.getAuthorities();
         return authorities.stream()
                 .map(GrantedAuthority::getAuthority)
                 .toList();
@@ -120,7 +121,7 @@ public class TokenService {
     public String tokenSubject(final String secret, final String token){
         try {
             return JWT.require(Algorithm.HMAC256(secret))
-                    .withIssuer("auth-api")
+                    .withIssuer(AUTH_API)
                     .build()
                     .verify(token)
                     .getSubject();
@@ -132,7 +133,7 @@ public class TokenService {
     public boolean validateToken(final String secret, final String token) {
         try {
             JWT.require(Algorithm.HMAC256(secret))
-                    .withIssuer("auth-api")
+                    .withIssuer(AUTH_API)
                     .build()
                     .verify(token);
             return true;

@@ -1,0 +1,3 @@
+2025-04-21 01:37:40.339536-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "TB_HORARIO_DISPONIVEL" not found; SQL statement:
+select hd1_0.id from tb_horario_disponivel hd1_0 where hd1_0.medico_id=? and hd1_0.data=? and hd1_0.hora=? fetch first ? rows only [42102-224]

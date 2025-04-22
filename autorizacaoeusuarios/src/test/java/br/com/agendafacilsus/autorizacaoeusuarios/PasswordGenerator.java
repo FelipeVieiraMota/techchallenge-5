@@ -6,7 +6,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 public class PasswordGenerator {
 
 	private void passwordGenerator() {
-
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         String rawPassword = "test123";
         String encodedPassword = encoder.encode(rawPassword);

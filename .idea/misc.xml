@@ -13,10 +13,12 @@
         <option value="$PROJECT_DIR$/commonlibrary/pom.xml" />
         <option value="$PROJECT_DIR$/dummy-api/pom.xml" />
         <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/analytics/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">
       <set>
+        <option value="$PROJECT_DIR$/exames/pom.xml" />
         <option value="$PROJECT_DIR$/jwt-security-library/pom.xml" />
       </set>
     </option>
