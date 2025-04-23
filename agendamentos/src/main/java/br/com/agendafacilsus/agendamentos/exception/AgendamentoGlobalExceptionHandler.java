@@ -22,8 +22,4 @@ public class AgendamentoGlobalExceptionHandler {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.CONFLICT);
     }
 
-    @ExceptionHandler(AgendamentoDuplicadoException.class)
-    public ResponseEntity<String> handleDuplicateHorario(AgendamentoDuplicadoException ex) {
-        return new ResponseEntity<>(ex.getMessage(), HttpStatus.CONFLICT);
-    }
 }
