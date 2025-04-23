@@ -5,7 +5,7 @@ import br.com.agendafacilsus.commonlibrary.domain.dto.UsuarioResponseDTO;
 import br.com.agendafacilsus.commonlibrary.domain.model.Usuario;
 
 public class UsuarioMapper {
-    private UsuarioMapper() {
+    UsuarioMapper() {
         throw new UnsupportedOperationException("Utility class");
     }
 
