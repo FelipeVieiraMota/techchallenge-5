@@ -34,7 +34,8 @@ public class EspecialidadeGatewayImpl implements EspecialidadeGateway {
             val consultaSalva = especialidadeRepository.save(especialidade);
             logger.info("Especialidade salva com sucesso: {}", consultaSalva::toString);
             return consultaSalva;
-
+        } catch (EspecialidadeDuplicadaException e) {
+            throw e;
         } catch (Exception e) {
             logger.error("Erro ao salvar especialidade: {}", e.getMessage());
             throw new EspecialidadeGatewayException("Erro ao salvar especialidade", e);
