@@ -39,6 +39,8 @@ public class UsuarioGatewayImpl implements UsuarioGateway {
             logger.info("Usuário salvo com sucesso: {}", usuarioSalvo::toString);
             return usuarioSalvo;
 
+        } catch (UsuarioDuplicadoException e) {
+            throw e;
         } catch (Exception e) {
             logger.error("Erro ao salvar usuário: {}", e.getMessage());
             throw new UsuarioGatewayException("Erro ao salvar usuário", e);
