@@ -60,7 +60,6 @@ class UsuarioUseCaseTest {
 
     @Test
     void shouldListUsersSuccessfully() {
-        // Arrange
         List<Usuario> usuarios = List.of(usuario);
         when(usuarioGateway.listar()).thenReturn(usuarios);
 
@@ -74,11 +73,9 @@ class UsuarioUseCaseTest {
 
     @Test
     void shouldThrowUsuarioNaoEncontradoExceptionWhenUserNotFoundById() {
-        // Arrange
         String userId = "nonExistentUserId";
         when(usuarioGateway.buscarPorId(userId)).thenReturn(Optional.empty());
 
-        // Act & Assert
         assertThrows(UsuarioNaoEncontradoException.class, () -> usuarioUseCase.buscarPorId(userId));
     }
 

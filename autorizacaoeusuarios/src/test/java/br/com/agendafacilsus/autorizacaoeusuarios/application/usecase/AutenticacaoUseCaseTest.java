@@ -27,18 +27,14 @@ class AutenticacaoUseCaseTest {
     @InjectMocks
     private AutenticacaoUseCase autenticacaoUseCase;
 
-    //private final String secret = "mock-secret";
     private LoginDto loginDto;
     private TokenDto tokenDto;
-    //private Usuario usuario;
 
 
     @BeforeEach
     void setUp() {
         loginDto = new LoginDto("user123", "password123");
         tokenDto = new TokenDto("testToken");
-        //usuario = new Usuario("user", "user123", "password123", UserRole.ADMIN);
-
     }
 
     @Test

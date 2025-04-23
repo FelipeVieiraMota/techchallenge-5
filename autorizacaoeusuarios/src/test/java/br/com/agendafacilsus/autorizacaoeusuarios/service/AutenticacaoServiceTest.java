@@ -24,7 +24,6 @@ class AutenticacaoServiceTest {
 
     @Test
     void shouldReturnUserDetailsWhenUsernameExists() throws UsuarioNaoEncontradoException {
-        // Arrange
         String username = "user123";
         UserDetails expectedUserDetails = User.builder()
                 .username(username)
@@ -34,22 +33,18 @@ class AutenticacaoServiceTest {
 
         when(usuarioGateway.buscarPorLogin(username)).thenReturn(expectedUserDetails);
 
-        // Act
         UserDetails userDetails = autenticacaoService.loadUserByUsername(username);
 
-        // Assert
         assertNotNull(userDetails);
         assertEquals(username, userDetails.getUsername());
     }
 
     @Test
     void shouldThrowUsuarioNaoEncontradoExceptionWhenUsernameDoesNotExist() {
-        // Arrange
         String username = "nonExistentUser";
 
         when(usuarioGateway.buscarPorLogin(username)).thenThrow(UsuarioNaoEncontradoException.class);
 
-        // Act & Assert
         assertThrows(UsuarioNaoEncontradoException.class, () -> {
             autenticacaoService.loadUserByUsername(username);
         });

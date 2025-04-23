@@ -16,7 +16,6 @@ class OpenApiConfigAutorizacaoEUsuariosTest {
 
     @Test
     void shouldContainAuthorizationSecurityScheme() {
-        // Verificando se o SecurityScheme "Authorization" foi configurado corretamente
         assertNotNull(openAPI.getComponents());
         SecurityScheme securityScheme = openAPI.getComponents().getSecuritySchemes().get("Authorization");
 
@@ -29,7 +28,6 @@ class OpenApiConfigAutorizacaoEUsuariosTest {
 
     @Test
     void shouldContainCorrectOpenApiInfo() {
-        // Verificando as informações do OpenAPI (título e versão)
         assertNotNull(openAPI.getInfo());
         assertEquals("Autorização-Usuários-API", openAPI.getInfo().getTitle());
         assertEquals("v1", openAPI.getInfo().getVersion());
@@ -37,7 +35,6 @@ class OpenApiConfigAutorizacaoEUsuariosTest {
 
     @Test
     void shouldContainSecurityRequirement() {
-        // Verificando se o SecurityRequirement foi adicionado corretamente
         assertNotNull(openAPI.getSecurity());
         assertFalse(openAPI.getSecurity().isEmpty());
         assertTrue(openAPI.getSecurity().get(0).containsKey("Authorization"));
