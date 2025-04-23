@@ -45,6 +45,8 @@ public class AgendamentoGatewayImpl implements AgendamentoGateway {
             logger.info("Agendamento salvo com sucesso: {}", agendamentoSalvo::toString);
             return agendamentoSalvo;
 
+        } catch (AgendamentoDuplicadoException e) {
+            throw e;
         } catch (Exception e) {
             logger.error("Erro ao salvar agendamento: {}", e.getMessage());
             throw new AgendamentoGatewayException("Erro ao salvar agendamento", e);

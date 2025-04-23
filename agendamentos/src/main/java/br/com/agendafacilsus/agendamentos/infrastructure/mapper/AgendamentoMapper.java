@@ -13,7 +13,7 @@ import java.time.format.DateTimeFormatter;
 
 public class AgendamentoMapper {
 
-    private AgendamentoMapper() {
+    AgendamentoMapper() {
         throw new UnsupportedOperationException("Utility class");
     }
 
